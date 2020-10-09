@@ -1,0 +1,21 @@
+# Files stuff
+.coverage
+make.bat
+Makefile
+
+# Folders stuff
+.examples/
+.idea/
+.tox/
+
+# Setuptools stuff
+build/
+dist/
+hdwallet.egg-info/
+python_hdwallet.egg-info/
+
+# Python stuff
+__pycache__/
+
+# py.test stuff
+.pytest_cache/
