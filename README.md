@@ -1,8 +1,6 @@
 # HDWallet
 
-[![Build Status](https://travis-ci.org/meherett/hdwallet.svg?branch=master)](https://travis-ci.org/meherett/python-hdwallet)
 [![PyPI Version](https://img.shields.io/pypi/v/python-hdwallet.svg?color=blue)](https://pypi.org/project/python-hdwallet)
-[![Coverage Status](https://coveralls.io/repos/github/meherett/hdwallet/badge.svg?branch=master)](https://coveralls.io/github/meherett/hdwallet?branch=master)
 
 The implementation of Hierarchical Deterministic (HD) wallet generator for Cryptocurrencies.
 
