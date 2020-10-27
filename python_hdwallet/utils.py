@@ -16,16 +16,27 @@ def get_bytes(string: AnyStr) -> bytes:
     elif isinstance(string, str):
         byte = bytes.fromhex(string)
     else:
-        raise TypeError("agreement must be either 'bytes' or 'string'!")
+        raise TypeError("Agreement must be either 'bytes' or 'string'!")
     return byte
 
 
 def generate_mnemonic(language: str = "english", strength: int = 128) -> str:
+    if language and language not in ["english", "french", "italian", "japanese",
+                                     "chinese_simplified", "chinese_traditional", "korean", "spanish"]:
+        raise ValueError("Invalid language, choose only the following options 'english', 'french', 'italian', "
+                         "'spanish', 'chinese_simplified', 'chinese_traditional', 'japanese or 'korean' languages.")
+
+    if strength not in [128, 160, 192, 224, 256]:
+        raise ValueError(
+            "Strength should be one of the following "
+            "[128, 160, 192, 224, 256], but it is not (%d)."
+            % strength
+        )
+
     return Mnemonic(language=language).generate(strength=strength)
 
 
 def generate_entropy(strength: int = 128) -> str:
-
     if strength not in [128, 160, 192, 224, 256]:
         raise ValueError(
             "Strength should be one of the following "
@@ -37,11 +48,10 @@ def generate_entropy(strength: int = 128) -> str:
 
 
 def is_mnemonic(mnemonic: str, language: str = None) -> bool:
-
     if language and language not in ["english", "french", "italian", "japanese",
                                      "chinese_simplified", "chinese_traditional", "korean", "spanish"]:
-        raise ValueError("Invalid language, use only this options english, french, "
-                         "italian, spanish, chinese_simplified, chinese_traditional, japanese & korean.")
+        raise ValueError("Invalid language, choose only the following options 'english', 'french', 'italian', "
+                         "'spanish', 'chinese_simplified', 'chinese_traditional', 'japanese or 'korean' languages.")
 
     try:
         if language is None:
@@ -59,9 +69,8 @@ def is_mnemonic(mnemonic: str, language: str = None) -> bool:
 
 
 def get_mnemonic_language(mnemonic: str) -> str:
-
     if not is_mnemonic(mnemonic=mnemonic):
-        raise ValueError("Invalid 12 word mnemonic.")
+        raise ValueError("Invalid Mnemonic words.")
 
     language = None
     for _language in ["english", "french", "italian",

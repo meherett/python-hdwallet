@@ -8,6 +8,7 @@ class Cryptocurrency:
 
     NAME: str
     SYMBOL: str
+    NETWORK: str
     SCRIPT_ADDRESS: bytes
     PUBLIC_KEY_ADDRESS: bytes
     WIF_SECRET_KEY: bytes
@@ -19,8 +20,9 @@ class Cryptocurrency:
 
 class BitcoinMainnet(Cryptocurrency):
 
-    NAME = "Bitcoin Mainnet"
+    NAME = "Bitcoin"
     SYMBOL = "BTC"
+    NETWORK = "mainnet"
     SCRIPT_ADDRESS = decode("05", "hex")
     PUBLIC_KEY_ADDRESS = decode("00", "hex")
     WIF_SECRET_KEY = decode("80", "hex")
@@ -32,8 +34,9 @@ class BitcoinMainnet(Cryptocurrency):
 
 class BitcoinTestnet(Cryptocurrency):
 
-    NAME = "Bitcoin Testnet"
+    NAME = "Bitcoin"
     SYMBOL = "BTCTEST"
+    NETWORK = "testnet"
     SCRIPT_ADDRESS = decode("c4", "hex")
     PUBLIC_KEY_ADDRESS = decode("6f", "hex")
     WIF_SECRET_KEY = decode("ef", "hex")
@@ -45,8 +48,9 @@ class BitcoinTestnet(Cryptocurrency):
 
 class EthereumMainnet(Cryptocurrency):
 
-    NAME = "Ethereum Mainnet"
+    NAME = "Ethereum"
     SYMBOL = "ETH"
+    NETWORK = "mainnet"
     WIF_SECRET_KEY = decode("80", "hex")
     EXTENDED_PRIVATE_KEY = decode("0488ade4", "hex")
     EXTENDED_PUBLIC_KEY = decode("0488b21e", "hex")
@@ -56,8 +60,9 @@ class EthereumMainnet(Cryptocurrency):
 
 class EthereumTestnet(Cryptocurrency):
 
-    NAME = "Ethereum Testnet"
+    NAME = "Ethereum"
     SYMBOL = "ETHTEST"
+    NETWORK = "testnet"
     WIF_SECRET_KEY = decode("80", "hex")
     EXTENDED_PRIVATE_KEY = decode("0488ade4", "hex")
     EXTENDED_PUBLIC_KEY = decode("0488b21e", "hex")
@@ -67,8 +72,9 @@ class EthereumTestnet(Cryptocurrency):
 
 class DogecoinMainnet(Cryptocurrency):
 
-    NAME = "Dogecoin Mainnet"
+    NAME = "Dogecoin"
     SYMBOL = "DOGE"
+    NETWORK = "mainnet"
     SCRIPT_ADDRESS = decode("16", "hex")
     PUBLIC_KEY_ADDRESS = decode("1e", "hex")
     WIF_SECRET_KEY = bytes([0x1e + 128])
@@ -80,8 +86,9 @@ class DogecoinMainnet(Cryptocurrency):
 
 class DogecoinTestnet(Cryptocurrency):
 
-    NAME = "Dogecoin Testnet"
+    NAME = "Dogecoin"
     SYMBOL = "DOGETEST"
+    NETWORK = "testnet"
     SCRIPT_ADDRESS = decode("c4", "hex")
     PUBLIC_KEY_ADDRESS = decode("71", "hex")
     WIF_SECRET_KEY = bytes([0x71 + 128])
@@ -93,34 +100,37 @@ class DogecoinTestnet(Cryptocurrency):
 
 class LitecoinMainnet(Cryptocurrency):
 
-    NAME = "Litecoin Mainnet"
+    NAME = "Litecoin"
     SYMBOL = "LTC"
+    NETWORK = "mainnet"
     SCRIPT_ADDRESS = decode("05", "hex")
     PUBLIC_KEY_ADDRESS = decode("30", "hex")
     WIF_SECRET_KEY = bytes([0x30 + 128])
-    EXTENDED_PRIVATE_KEY = decode("0488ade4", "hex")  # 019d9cfe
-    EXTENDED_PUBLIC_KEY = decode("0488b21e", "hex")  # 019da462
+    EXTENDED_PRIVATE_KEY = decode("019d9cfe", "hex")  # 0488ade4
+    EXTENDED_PUBLIC_KEY = decode("019da462", "hex")  # 0488b21e
     BIP44_PATH = "m/44'/2'/{account}'/{change}/{address}"
     DEFAULT_PATH = "m/44'/2'/0'/0/0"
 
 
 class LitecoinTestnet(Cryptocurrency):
 
-    NAME = "Litecoin Testnet"
+    NAME = "Litecoin"
     SYMBOL = "LTCTEST"
+    NETWORK = "testnet"
     SCRIPT_ADDRESS = decode("c4", "hex")
     PUBLIC_KEY_ADDRESS = decode("6f", "hex")
     WIF_SECRET_KEY = bytes([0x6f + 128])
-    EXTENDED_PRIVATE_KEY = decode("04358394", "hex")  # 0436ef7d
-    EXTENDED_PUBLIC_KEY = decode("043587cf", "hex")  # 0436f6e1
+    EXTENDED_PRIVATE_KEY = decode("0436ef7d", "hex")  # 04358394
+    EXTENDED_PUBLIC_KEY = decode("0436f6e1", "hex")  # 043587cf
     BIP44_PATH = "m/44'/1'/{account}'/{change}/{address}"
     DEFAULT_PATH = "m/44'/1'/0'/0/0"
 
 
 class OmniMainnet(Cryptocurrency):
 
-    NAME = "Omni Mainnet"
+    NAME = "Omni"
     SYMBOL = "OMNI"
+    NETWORK = "mainnet"
     SCRIPT_ADDRESS = decode("05", "hex")
     PUBLIC_KEY_ADDRESS = decode("00", "hex")
     WIF_SECRET_KEY = decode("80", "hex")
@@ -132,8 +142,9 @@ class OmniMainnet(Cryptocurrency):
 
 class OmniTestnet(Cryptocurrency):
 
-    NAME = "Omni Testnet"
+    NAME = "Omni"
     SYMBOL = "OMNITEST"
+    NETWORK = "testnet"
     SCRIPT_ADDRESS = decode("c4", "hex")
     PUBLIC_KEY_ADDRESS = decode("6f", "hex")
     WIF_SECRET_KEY = decode("ef", "hex")
@@ -145,8 +156,9 @@ class OmniTestnet(Cryptocurrency):
 
 class DashMainnet(Cryptocurrency):
 
-    NAME = "Dash Mainnet"
+    NAME = "Dash"
     SYMBOL = "DASH"
+    NETWORK = "mainnet"
     SCRIPT_ADDRESS = decode("10", "hex")
     PUBLIC_KEY_ADDRESS = decode("4c", "hex")
     WIF_SECRET_KEY = decode("cc", "hex")
@@ -158,8 +170,9 @@ class DashMainnet(Cryptocurrency):
 
 class DashTestnet(Cryptocurrency):
 
-    NAME = "Dash Testnet"
+    NAME = "Dash"
     SYMBOL = "DASHTEST"
+    NETWORK = "testnet"
     SCRIPT_ADDRESS = decode("13", "hex")
     PUBLIC_KEY_ADDRESS = decode("8c", "hex")
     WIF_SECRET_KEY = decode("ef", "hex")
@@ -171,8 +184,9 @@ class DashTestnet(Cryptocurrency):
 
 class QtumMainnet(Cryptocurrency):
 
-    NAME = "Qtum Mainnet"
+    NAME = "Qtum"
     SYMBOL = "QTUM"
+    NETWORK = "mainnet"
     SCRIPT_ADDRESS = decode("32", "hex")
     PUBLIC_KEY_ADDRESS = decode("3a", "hex")
     WIF_SECRET_KEY = decode("80", "hex")
@@ -184,8 +198,9 @@ class QtumMainnet(Cryptocurrency):
 
 class QtumTestnet(Cryptocurrency):
 
-    NAME = "Qtum Testnet"
+    NAME = "Qtum"
     SYMBOL = "QTUMTEST"
+    NETWORK = "testnet"
     SCRIPT_ADDRESS = decode("6e", "hex")
     PUBLIC_KEY_ADDRESS = decode("78", "hex")
     WIF_SECRET_KEY = decode("ef", "hex")
@@ -226,4 +241,4 @@ def get_cryptocurrency(symbol: str) -> Any:
     elif symbol.upper() == "QTUMTEST":
         return QtumTestnet
     else:
-        raise ValueError("Invalid cryptocurrency symbol.")
+        raise ValueError("Invalid Cryptocurrency symbol.")

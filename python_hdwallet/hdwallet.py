@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 
 from ecdsa.curves import SECP256k1
+from ecdsa.ellipticcurve import (
+    PointJacobi, Point
+)
+from ecdsa.keys import (
+    SigningKey, VerifyingKey
+)
 from ecdsa.ecdsa import (
     int_to_string, string_to_int
 )
@@ -34,22 +40,22 @@ from .utils import (
 MIN_ENTROPY_LEN: int = 128
 BIP32KEY_HARDEN: int = 0x80000000
 
-CURVE_GEN = ecdsa.ecdsa.generator_secp256k1
-CURVE_ORDER = CURVE_GEN.order()
-FIELD_ORDER = SECP256k1.curve.p()
-INFINITY = ecdsa.ellipticcurve.INFINITY
+CURVE_GEN: PointJacobi = ecdsa.ecdsa.generator_secp256k1
+CURVE_ORDER: int = CURVE_GEN.order()
+FIELD_ORDER: int = SECP256k1.curve.p()
+INFINITY: Point = ecdsa.ellipticcurve.INFINITY
 
 
-class HDWallet:
+class PythonHDWallet:
 
     def __init__(self, symbol: str = "BTC", cryptocurrency: Any = None, use_default_path: bool = False):
 
         if cryptocurrency:
             if not issubclass(cryptocurrency, Cryptocurrency):
-                raise TypeError("Invalid cryptocurrency type.")
-            self._cryptocurrency = cryptocurrency
+                raise TypeError("Invalid Cryptocurrency type, the sub class must be Cryptocurrency instance.")
+            self._cryptocurrency: Any = cryptocurrency
         else:
-            self._cryptocurrency = get_cryptocurrency(symbol=symbol)
+            self._cryptocurrency: Any = get_cryptocurrency(symbol=symbol)
 
         self._entropy: Optional[str] = None
         self._mnemonic: Optional[str] = None
@@ -63,8 +69,8 @@ class HDWallet:
 
         self._seed: Optional[bytes] = None
         self._private_key: Optional[bytes] = None
-        self._key: Optional[bytes] = None
-        self._verified_key: Optional[bytes] = None
+        self._key: Optional[SigningKey] = None
+        self._verified_key: Optional[VerifyingKey] = None
 
         self._private_key: Optional[bytes] = None
         self._public_key: Optional[str] = None
@@ -72,7 +78,7 @@ class HDWallet:
         self._depth: int = 0
         self._index: int = 0
         
-    def from_entropy(self, entropy: str, passphrase: str = None, language: str = "english") -> "HDWallet":
+    def from_entropy(self, entropy: str, passphrase: str = None, language: str = "english") -> "PythonHDWallet":
 
         if language not in ["english", "french", "italian", "japanese",
                             "chinese_simplified", "chinese_traditional", "korean", "spanish"]:
@@ -85,7 +91,7 @@ class HDWallet:
         self._seed = Mnemonic.to_seed(mnemonic=self._mnemonic, passphrase=self._passphrase)
         return self.from_seed(seed=hexlify(self._seed).decode())
 
-    def from_mnemonic(self, mnemonic: str, passphrase: str = None, language: str = None) -> "HDWallet":
+    def from_mnemonic(self, mnemonic: str, passphrase: str = None, language: str = None) -> "PythonHDWallet":
 
         if language and language not in ["english", "french", "italian", "japanese",
                                          "chinese_simplified", "chinese_traditional", "korean", "spanish"]:
@@ -101,7 +107,7 @@ class HDWallet:
         self._seed = Mnemonic.to_seed(mnemonic=self._mnemonic, passphrase=self._passphrase)
         return self.from_seed(seed=hexlify(self._seed).decode())
 
-    def from_seed(self, seed: str) -> "HDWallet":
+    def from_seed(self, seed: str) -> "PythonHDWallet":
 
         self._seed = unhexlify(seed)
         self._i = hmac.new(b"Bitcoin seed", get_bytes(seed), hashlib.sha512).digest()
@@ -118,7 +124,7 @@ class HDWallet:
         self._public_key = self.compressed()
         return self
 
-    def from_root_xprivate_key(self, root_xprivate_key: str) -> "HDWallet":
+    def from_root_xprivate_key(self, root_xprivate_key: str) -> "PythonHDWallet":
         if not is_root_xprivate_key(xprivate_key=root_xprivate_key, symbol=self._cryptocurrency.SYMBOL):
             raise ValueError("Invalid root xprivate key.")
         _deserialize_xprivate_key = self._deserialize_xprivate_key(xprivate_key=root_xprivate_key)
@@ -130,7 +136,7 @@ class HDWallet:
         self._public_key = self.compressed()
         return self
 
-    def from_xprivate_key(self, xprivate_key: str) -> "HDWallet":
+    def from_xprivate_key(self, xprivate_key: str) -> "PythonHDWallet":
         _deserialize_xprivate_key = self._deserialize_xprivate_key(xprivate_key=xprivate_key)
         self._depth, self._parent_fingerprint, self._index = (
             int.from_bytes(_deserialize_xprivate_key[1], "big"),
@@ -143,7 +149,7 @@ class HDWallet:
         self._public_key = self.compressed()
         return self
 
-    def from_wif(self, wif: str) -> "HDWallet":
+    def from_wif(self, wif: str) -> "PythonHDWallet":
         raw = check_decode(wif)[:-1]
         if not raw.startswith(self._cryptocurrency.WIF_SECRET_KEY):
             raise ValueError(f"Invalid {self.cryptocurrency()} wallet important format.")
@@ -153,14 +159,14 @@ class HDWallet:
         self._public_key = self.compressed()
         return self
 
-    def from_private_key(self, private_key) -> "HDWallet":
+    def from_private_key(self, private_key) -> "PythonHDWallet":
         self._private_key = unhexlify(private_key)
         self._key = ecdsa.SigningKey.from_string(self._private_key, curve=SECP256k1)
         self._verified_key = self._key.get_verifying_key()
         self._public_key = self.compressed()
         return self
 
-    def from_path(self, path: str) -> "HDWallet":
+    def from_path(self, path: str) -> "PythonHDWallet":
         if str(path)[0:2] != "m/":
             raise ValueError("Bad path, please insert like this type of path \"m/0'/0\"! ")
 
@@ -173,7 +179,7 @@ class HDWallet:
                 self._path += str("/" + index)
         return self
 
-    def from_index(self, index: int, harden: bool = False) -> "HDWallet":
+    def from_index(self, index: int, harden: bool = False) -> "PythonHDWallet":
         if not isinstance(index, int):
             raise ValueError("Bad index, Please import only integer number!")
 
@@ -184,7 +190,7 @@ class HDWallet:
             self._path += ("/%d" % index)
             return self._derive_key_by_index(index)
 
-    def _derive_key_by_index(self, index) -> Optional["HDWallet"]:
+    def _derive_key_by_index(self, index) -> Optional["PythonHDWallet"]:
 
         i_str = struct.pack(">L", index)
         if index & BIP32KEY_HARDEN:
@@ -293,7 +299,7 @@ class HDWallet:
             version, depth, parent_fingerprint, index, chain_code, data, encoded
         )
 
-    def clean_derivation(self) -> "HDWallet":
+    def clean_derivation(self) -> "PythonHDWallet":
         if self._i:
             self._path, self._depth, self._parent_fingerprint, self._index = (
                 "m", 0, b"\0\0\0\0", 0
@@ -350,6 +356,9 @@ class HDWallet:
     def symbol(self) -> Optional[str]:
         return str(self._cryptocurrency.SYMBOL)
 
+    def network(self) -> Optional[str]:
+        return str(self._cryptocurrency.NETWORK)
+
     def seed(self) -> Optional[str]:
         return hexlify(self._seed).decode() if self._seed else None
 
@@ -387,6 +396,7 @@ class HDWallet:
         return dict(
             cryptocurrency=self.cryptocurrency(),
             symbol=self.symbol(),
+            network=self.network(),
             entropy=self.entropy(),
             mnemonic=self.mnemonic(),
             language=self.language(),
