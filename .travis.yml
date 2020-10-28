@@ -14,5 +14,7 @@ matrix:
     python: 3.7
   - name: "3.8"
     python: 3.8
+  - name: "3.9"
+    python: 3.9
 script: tox
-after_success: if [ "${TRAVIS_PYTHON_VERSION}" == "3.8" ]; then coveralls; fi;
+after_success: if [ "${TRAVIS_PYTHON_VERSION}" == "3.9" ]; then coveralls; fi;
