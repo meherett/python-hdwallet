@@ -11,7 +11,6 @@ Makefile
 # Setuptools stuff
 build/
 dist/
-hdwallet.egg-info/
 python_hdwallet.egg-info/
 
 # Python stuff
