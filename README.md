@@ -2,9 +2,8 @@
 
 [![Build Status](https://travis-ci.org/meherett/python-hdwallet.svg?branch=master)](https://travis-ci.org/meherett/python-hdwallet?branch=master)
 [![PyPI Version](https://img.shields.io/pypi/v/python-hdwallet.svg?color=blue)](https://pypi.org/project/python-hdwallet)
-[![PyPI Licence](https://img.shields.io/pypi/l/python-hdwallet?color=black)](https://pypi.org/project/python-hdwallet)
 [![PyPI Python Version](https://img.shields.io/pypi/pyversions/python-hdwallet.svg)](https://pypi.org/project/python-hdwallet)
-[![Coverage Status](https://coveralls.io/repos/github/meherett/python-hdwallet/badge.svg?branch=master&kill_cache=1)](https://coveralls.io/github/meherett/python-hdwallet?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/meherett/python-hdwallet/badge.svg?branch=master)](https://coveralls.io/github/meherett/python-hdwallet?branch=master)
 
 Python-based library for the implementation of [Hierarchical Deterministic (HD)](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) wallet generator for Cryptocurrencies.
 
