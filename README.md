@@ -67,7 +67,7 @@ import json
 STRENGTH: int = 128  # Default is 128
 # Choose language english, french, italian, spanish, chinese_simplified, chinese_traditional, japanese or korean
 LANGUAGE: str = "korean"  # Default is english
-# Generate new entropy seed
+# Generate new entropy
 ENTROPY: str = generate_entropy(strength=STRENGTH)
 # Secret passphrase/password for mnemonic
 PASSPHRASE: Optional[str] = None  # str("meherett")
