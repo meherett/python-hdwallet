@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
 
-from hdwallet.libs.base58 import (
-    check_encode, check_decode, string_to_int
+from binascii import (
+    hexlify, unhexlify
 )
-from binascii import hexlify, unhexlify
 
 import pytest
 
+from python_hdwallet.libs.base58 import (
+    check_encode, check_decode, string_to_int
+)
 
-RAW = "0488ade405d5bc481680000000b5b40efbdef2e0a2e8ee6fa9d371f951f93e3b1e3c1b50fb31f9ea36cfc7c88100b9d3f3" \
-      "12b38951361597219c8979e177d99349fd0213bac55508c8469d02064f"
 
-ENCODED_RAW = "xpub6GzA69ujvGDmXQDwJnCnyDBr5FxBFri57tFBzD1Q3HTUkRRS35eZND12MPL1d7iXT15tLwbKmvxhJDFtExNc7SU" \
-              "efgYGNE7xCQan6Cmhp8f"
+RAW: str = "0488ade405d5bc481680000000b5b40efbdef2e0a2e8ee6fa9d371f951f93e3b1e3c1b50fb31f9ea36cfc7c88100b9d3f3" \
+           "12b38951361597219c8979e177d99349fd0213bac55508c8469d02064f"
+
+ENCODED_RAW: str = "xpub6GzA69ujvGDmXQDwJnCnyDBr5FxBFri57tFBzD1Q3HTUkRRS35eZND12MPL1d7iXT15tLwbKmvxhJDFtExNc7SU" \
+                   "efgYGNE7xCQan6Cmhp8f"
 
 
 def test_base58():
