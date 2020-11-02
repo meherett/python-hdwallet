@@ -23,6 +23,7 @@ import hmac
 import ecdsa
 import struct
 import sha3
+import unicodedata
 import hashlib
 import base58
 
@@ -33,7 +34,8 @@ from .cryptocurrencies import (
     Cryptocurrency, get_cryptocurrency
 )
 from .utils import (
-    get_bytes, is_mnemonic, get_mnemonic_language, is_root_xprivate_key
+    get_bytes, is_entropy, is_mnemonic, get_entropy_strength,
+    get_mnemonic_language, is_root_xprivate_key, get_mnemonic_strength
 )
 
 
@@ -49,7 +51,6 @@ INFINITY: Point = ecdsa.ellipticcurve.INFINITY
 class PythonHDWallet:
 
     def __init__(self, symbol: str = "BTC", cryptocurrency: Any = None, use_default_path: bool = False):
-
         if cryptocurrency:
             if not issubclass(cryptocurrency, Cryptocurrency):
                 raise TypeError("Invalid Cryptocurrency type, the sub class must be Cryptocurrency instance.")
@@ -57,6 +58,7 @@ class PythonHDWallet:
         else:
             self._cryptocurrency: Any = get_cryptocurrency(symbol=symbol)
 
+        self._strength: Optional[int] = None
         self._entropy: Optional[str] = None
         self._mnemonic: Optional[str] = None
         self._language: Optional[str] = None
@@ -79,36 +81,33 @@ class PythonHDWallet:
         self._index: int = 0
         
     def from_entropy(self, entropy: str, passphrase: str = None, language: str = "english") -> "PythonHDWallet":
+        if not is_entropy(entropy=entropy):
+            raise ValueError("Invalid entropy.")
+        if language and language not in ["english", "french", "italian", "japanese",
+                                         "chinese_simplified", "chinese_traditional", "korean", "spanish"]:
+            raise ValueError("Invalid language, choose only the following options 'english', 'french', 'italian', "
+                             "'spanish', 'chinese_simplified', 'chinese_traditional', 'japanese or 'korean' languages.")
 
-        if language not in ["english", "french", "italian", "japanese",
-                            "chinese_simplified", "chinese_traditional", "korean", "spanish"]:
-            raise ValueError("Invalid language value, use only this options english, french, "
-                             "italian, spanish, chinese_simplified, chinese_traditional, japanese & korean.")
-
+        self._strength = get_entropy_strength(entropy=entropy)
         self._entropy, self._language = unhexlify(entropy), language
         self._passphrase = str(passphrase) if passphrase else str()
-        self._mnemonic = Mnemonic(language=self._language).to_mnemonic(data=self._entropy)
+        mnemonic = Mnemonic(language=self._language).to_mnemonic(data=self._entropy)
+        self._mnemonic = unicodedata.normalize("NFKC", mnemonic)
         self._seed = Mnemonic.to_seed(mnemonic=self._mnemonic, passphrase=self._passphrase)
         return self.from_seed(seed=hexlify(self._seed).decode())
 
     def from_mnemonic(self, mnemonic: str, passphrase: str = None, language: str = None) -> "PythonHDWallet":
-
-        if language and language not in ["english", "french", "italian", "japanese",
-                                         "chinese_simplified", "chinese_traditional", "korean", "spanish"]:
-            raise ValueError("Invalid language value, use only this options english, french, "
-                             "italian, spanish, chinese_simplified, chinese_traditional, japanese & korean.")
-
         if not is_mnemonic(mnemonic=mnemonic, language=language):
-            raise ValueError("Invalid mnemonic value.")
+            raise ValueError("Invalid mnemonic words.")
 
-        self._mnemonic = mnemonic
+        self._mnemonic = unicodedata.normalize("NFKC", mnemonic)
+        self._strength = get_mnemonic_strength(mnemonic=self._mnemonic)
         self._language = language if language else get_mnemonic_language(mnemonic=self._mnemonic)
         self._passphrase = str(passphrase) if passphrase else str()
         self._seed = Mnemonic.to_seed(mnemonic=self._mnemonic, passphrase=self._passphrase)
         return self.from_seed(seed=hexlify(self._seed).decode())
 
     def from_seed(self, seed: str) -> "PythonHDWallet":
-
         self._seed = unhexlify(seed)
         self._i = hmac.new(b"Bitcoin seed", get_bytes(seed), hashlib.sha512).digest()
         il, ir = self._i[:32], self._i[32:]
@@ -127,6 +126,7 @@ class PythonHDWallet:
     def from_root_xprivate_key(self, root_xprivate_key: str) -> "PythonHDWallet":
         if not is_root_xprivate_key(xprivate_key=root_xprivate_key, symbol=self._cryptocurrency.SYMBOL):
             raise ValueError("Invalid root xprivate key.")
+
         _deserialize_xprivate_key = self._deserialize_xprivate_key(xprivate_key=root_xprivate_key)
         self._depth, self._parent_fingerprint, self._index = (0, b"\0\0\0\0", 0)
         self._i = _deserialize_xprivate_key[5] + _deserialize_xprivate_key[4]
@@ -153,6 +153,7 @@ class PythonHDWallet:
         raw = check_decode(wif)[:-1]
         if not raw.startswith(self._cryptocurrency.WIF_SECRET_KEY):
             raise ValueError(f"Invalid {self.cryptocurrency()} wallet important format.")
+
         self._private_key = raw.split(self._cryptocurrency.WIF_SECRET_KEY, 1).pop()
         self._key = ecdsa.SigningKey.from_string(self._private_key, curve=SECP256k1)
         self._verified_key = self._key.get_verifying_key()
@@ -338,11 +339,14 @@ class PythonHDWallet:
             return hexlify(ck).decode()
         return self.compressed()
 
+    def strength(self) -> Optional[int]:
+        return self._strength if self._strength else None
+
     def entropy(self) -> Optional[str]:
         return hexlify(self._entropy).decode() if self._entropy else None
 
     def mnemonic(self) -> Optional[str]:
-        return str(self._mnemonic) if self._mnemonic else None
+        return unicodedata.normalize("NFKC", self._mnemonic) if self._mnemonic else None
 
     def passphrase(self) -> Optional[str]:
         return str(self._passphrase) if self._passphrase else None
@@ -397,6 +401,7 @@ class PythonHDWallet:
             cryptocurrency=self.cryptocurrency(),
             symbol=self.symbol(),
             network=self.network(),
+            strength=self.strength(),
             entropy=self.entropy(),
             mnemonic=self.mnemonic(),
             language=self.language(),
