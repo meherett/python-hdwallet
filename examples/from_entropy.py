@@ -8,7 +8,7 @@ from typing import Optional
 import json
 
 # Choose strength 128, 160, 192, 224 or 256
-STRENGTH: int = 128  # Default is 128
+STRENGTH: int = 224  # Default is 128
 # Choose language english, french, italian, spanish, chinese_simplified, chinese_traditional, japanese or korean
 LANGUAGE: str = "korean"  # Default is english
 # Generate new entropy seed
@@ -38,6 +38,7 @@ python_hdwallet.from_index(0)
 print("Cryptocurrency:", python_hdwallet.cryptocurrency())
 print("Symbol:", python_hdwallet.symbol())
 print("Network:", python_hdwallet.network())
+print("Strength:", python_hdwallet.strength())
 print("Entropy:", python_hdwallet.entropy())
 print("Mnemonic:", python_hdwallet.mnemonic())
 print("Language:", python_hdwallet.language())

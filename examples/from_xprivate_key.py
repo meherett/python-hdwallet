@@ -15,7 +15,7 @@ python_hdwallet: PythonHDWallet = PythonHDWallet(symbol=ETH)
 python_hdwallet.from_xprivate_key(xprivate_key=XPRIVATE_KEY)
 
 # Print all Ethereum HDWallet information's
-print(json.dumps(python_hdwallet.dumps(), indent=4, ensure_ascii=False))
+# print(json.dumps(python_hdwallet.dumps(), indent=4, ensure_ascii=False))
 
 print("Cryptocurrency:", python_hdwallet.cryptocurrency())
 print("Symbol:", python_hdwallet.symbol())

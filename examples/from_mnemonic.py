@@ -7,7 +7,7 @@ from python_hdwallet.cryptocurrencies import LitecoinMainnet
 import json
 
 # Choose strength 128, 160, 192, 224 or 256
-STRENGTH: int = 128  # Default is 128
+STRENGTH: int = 160  # Default is 128
 # Choose language english, french, italian, spanish, chinese_simplified, chinese_traditional, japanese or korean
 LANGUAGE: str = "italian"  # Default is english
 # Generate new mnemonic words
@@ -38,6 +38,7 @@ hdwallet.from_path(path=LitecoinMainnet.DEFAULT_PATH)
 print("Cryptocurrency:", hdwallet.cryptocurrency())
 print("Symbol:", hdwallet.symbol())
 print("Network:", hdwallet.network())
+print("Strength:", hdwallet.strength())
 print("Mnemonic:", hdwallet.mnemonic())
 print("Language:", hdwallet.language())
 print("Passphrase:", hdwallet.passphrase())
