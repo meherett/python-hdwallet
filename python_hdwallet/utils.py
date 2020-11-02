@@ -5,6 +5,7 @@ from binascii import hexlify
 from typing import AnyStr
 
 import os
+import unicodedata
 
 from .cryptocurrencies import get_cryptocurrency
 from .libs.base58 import check_decode
@@ -47,6 +48,10 @@ def generate_entropy(strength: int = 128) -> str:
     return hexlify(os.urandom(strength // 8)).decode()
 
 
+def is_entropy(entropy: str) -> bool:
+    return len(entropy) in [32, 40, 48, 56, 64]
+
+
 def is_mnemonic(mnemonic: str, language: str = None) -> bool:
     if language and language not in ["english", "french", "italian", "japanese",
                                      "chinese_simplified", "chinese_traditional", "korean", "spanish"]:
@@ -68,9 +73,43 @@ def is_mnemonic(mnemonic: str, language: str = None) -> bool:
         return False
 
 
+def get_entropy_strength(entropy: str) -> int:
+    if not is_entropy(entropy=entropy):
+        raise ValueError("Invalid entropy.")
+
+    length = len(entropy)
+    if length == 32:
+        return 128
+    elif length == 40:
+        return 160
+    elif length == 48:
+        return 192
+    elif length == 56:
+        return 224
+    elif length == 64:
+        return 256
+
+
+def get_mnemonic_strength(mnemonic: str) -> int:
+    if not is_mnemonic(mnemonic=mnemonic):
+        raise ValueError("Invalid mnemonic words.")
+
+    words = len(unicodedata.normalize("NFKC", mnemonic).split(" "))
+    if words == 12:
+        return 128
+    elif words == 15:
+        return 160
+    elif words == 18:
+        return 192
+    elif words == 21:
+        return 224
+    elif words == 24:
+        return 256
+
+
 def get_mnemonic_language(mnemonic: str) -> str:
     if not is_mnemonic(mnemonic=mnemonic):
-        raise ValueError("Invalid Mnemonic words.")
+        raise ValueError("Invalid mnemonic words.")
 
     language = None
     for _language in ["english", "french", "italian",
