@@ -5,7 +5,7 @@
 [![PyPI Python Version](https://img.shields.io/pypi/pyversions/python-hdwallet.svg)](https://pypi.org/project/python-hdwallet)
 [![Coverage Status](https://coveralls.io/repos/github/meherett/python-hdwallet/badge.svg?branch=master)](https://coveralls.io/github/meherett/python-hdwallet?branch=master)
 
-Python-based library for the implementation of [Hierarchical Deterministic (HD)](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) wallet generator for Cryptocurrencies.
+Python-based library for the implementation of a [Hierarchical Deterministic (HD)](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) wallet generator for Cryptocurrencies.
 
 ## Available Cryptocurrencies
 
@@ -100,6 +100,7 @@ print(json.dumps(hdwallet.dumps(), indent=4, ensure_ascii=False))
     "symbol": "BTC",
     "network": "mainnet",
     "entropy": "e79e3c68ec0fd87a1fb4289724e2f607",
+    "strength": 128,
     "mnemonic": "페인트 할인 궁극적 최종 효율적 모습 실례 안방 오직 냉동 정말 고급",
     "language": "korean",
     "passphrase": null,
@@ -142,7 +143,7 @@ MNEMONIC: str = generate_mnemonic(language=STRENGTH, strength=LANGUAGE)
 PASSPHRASE: Optional[str] = None  # str("meherett")
 
 # Initialize Ethereum mainnet HDWallet
-python_hdwallet = PythonHDWallet(cryptocurrency=EthereumMainnet)
+python_hdwallet: PythonHDWallet = PythonHDWallet(cryptocurrency=EthereumMainnet)
 # Get Ethereum HDWallet from mnemonic
 python_hdwallet.from_mnemonic(
     mnemonic=MNEMONIC, passphrase=PASSPHRASE
