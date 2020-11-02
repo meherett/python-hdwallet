@@ -31,6 +31,7 @@ def test_dash_mainnet():
     assert python_hdwallet.cryptocurrency() == _["dash"]["mainnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["dash"]["mainnet"]["symbol"] == DASH
     assert python_hdwallet.network() == _["dash"]["mainnet"]["network"]
+    assert python_hdwallet.strength() == _["dash"]["mainnet"]["strength"]
     assert python_hdwallet.entropy() == _["dash"]["mainnet"]["entropy"]
     assert python_hdwallet.mnemonic() == _["dash"]["mainnet"]["mnemonic"]
     assert python_hdwallet.language() == _["dash"]["mainnet"]["language"]
@@ -84,6 +85,7 @@ def test_dash_testnet():
     assert python_hdwallet.cryptocurrency() == _["dash"]["testnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["dash"]["testnet"]["symbol"] == DASHTEST
     assert python_hdwallet.network() == _["dash"]["testnet"]["network"]
+    assert python_hdwallet.strength() == _["dash"]["testnet"]["strength"]
     assert python_hdwallet.entropy() == _["dash"]["testnet"]["entropy"]
     assert python_hdwallet.mnemonic() == _["dash"]["testnet"]["mnemonic"]
     assert python_hdwallet.language() == _["dash"]["testnet"]["language"]

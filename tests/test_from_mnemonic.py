@@ -30,6 +30,7 @@ def test_from_mnemonic():
     assert python_hdwallet.cryptocurrency() == _["qtum"]["mainnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["qtum"]["mainnet"]["symbol"]
     assert python_hdwallet.network() == _["qtum"]["mainnet"]["network"]
+    assert python_hdwallet.strength() == _["qtum"]["mainnet"]["strength"]
     assert python_hdwallet.entropy() is None
     assert python_hdwallet.mnemonic() == _["qtum"]["mainnet"]["mnemonic"]
     assert python_hdwallet.language() == _["qtum"]["mainnet"]["language"]

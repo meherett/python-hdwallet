@@ -31,6 +31,7 @@ def test_dogecoin_mainnet():
     assert python_hdwallet.cryptocurrency() == _["dogecoin"]["mainnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["dogecoin"]["mainnet"]["symbol"] == DOGE
     assert python_hdwallet.network() == _["dogecoin"]["mainnet"]["network"]
+    assert python_hdwallet.strength() == _["dogecoin"]["mainnet"]["strength"]
     assert python_hdwallet.entropy() == _["dogecoin"]["mainnet"]["entropy"]
     assert python_hdwallet.mnemonic() == _["dogecoin"]["mainnet"]["mnemonic"]
     assert python_hdwallet.language() == _["dogecoin"]["mainnet"]["language"]
@@ -84,6 +85,7 @@ def test_dogecoin_testnet():
     assert python_hdwallet.cryptocurrency() == _["dogecoin"]["testnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["dogecoin"]["testnet"]["symbol"] == DOGETEST
     assert python_hdwallet.network() == _["dogecoin"]["testnet"]["network"]
+    assert python_hdwallet.strength() == _["dogecoin"]["testnet"]["strength"]
     assert python_hdwallet.entropy() == _["dogecoin"]["testnet"]["entropy"]
     assert python_hdwallet.mnemonic() == _["dogecoin"]["testnet"]["mnemonic"]
     assert python_hdwallet.language() == _["dogecoin"]["testnet"]["language"]

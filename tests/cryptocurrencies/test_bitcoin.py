@@ -19,7 +19,7 @@ def test_bitcoin_mainnet():
     python_hdwallet: PythonHDWallet = PythonHDWallet(
         symbol=_["bitcoin"]["mainnet"]["symbol"]
     )
-    
+
     python_hdwallet.from_entropy(
         entropy=_["bitcoin"]["mainnet"]["entropy"],
         passphrase=_["bitcoin"]["mainnet"]["passphrase"],
@@ -31,6 +31,7 @@ def test_bitcoin_mainnet():
     assert python_hdwallet.cryptocurrency() == _["bitcoin"]["mainnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["bitcoin"]["mainnet"]["symbol"] == BTC
     assert python_hdwallet.network() == _["bitcoin"]["mainnet"]["network"]
+    assert python_hdwallet.strength() == _["bitcoin"]["mainnet"]["strength"]
     assert python_hdwallet.entropy() == _["bitcoin"]["mainnet"]["entropy"]
     assert python_hdwallet.mnemonic() == _["bitcoin"]["mainnet"]["mnemonic"]
     assert python_hdwallet.language() == _["bitcoin"]["mainnet"]["language"]
@@ -84,6 +85,7 @@ def test_bitcoin_testnet():
     assert python_hdwallet.cryptocurrency() == _["bitcoin"]["testnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["bitcoin"]["testnet"]["symbol"] == BTCTEST
     assert python_hdwallet.network() == _["bitcoin"]["testnet"]["network"]
+    assert python_hdwallet.strength() == _["bitcoin"]["testnet"]["strength"]
     assert python_hdwallet.entropy() == _["bitcoin"]["testnet"]["entropy"]
     assert python_hdwallet.mnemonic() == _["bitcoin"]["testnet"]["mnemonic"]
     assert python_hdwallet.language() == _["bitcoin"]["testnet"]["language"]

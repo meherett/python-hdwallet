@@ -31,6 +31,7 @@ def test_omni_mainnet():
     assert python_hdwallet.cryptocurrency() == _["omni"]["mainnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["omni"]["mainnet"]["symbol"] == OMNI
     assert python_hdwallet.network() == _["omni"]["mainnet"]["network"]
+    assert python_hdwallet.strength() == _["omni"]["mainnet"]["strength"]
     assert python_hdwallet.entropy() == _["omni"]["mainnet"]["entropy"]
     assert python_hdwallet.mnemonic() == _["omni"]["mainnet"]["mnemonic"]
     assert python_hdwallet.language() == _["omni"]["mainnet"]["language"]
@@ -84,6 +85,7 @@ def test_omni_testnet():
     assert python_hdwallet.cryptocurrency() == _["omni"]["testnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["omni"]["testnet"]["symbol"] == OMNITEST
     assert python_hdwallet.network() == _["omni"]["testnet"]["network"]
+    assert python_hdwallet.strength() == _["omni"]["testnet"]["strength"]
     assert python_hdwallet.entropy() == _["omni"]["testnet"]["entropy"]
     assert python_hdwallet.mnemonic() == _["omni"]["testnet"]["mnemonic"]
     assert python_hdwallet.language() == _["omni"]["testnet"]["language"]

@@ -31,6 +31,7 @@ def test_ethereum_mainnet():
     assert python_hdwallet.cryptocurrency() == _["ethereum"]["mainnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["ethereum"]["mainnet"]["symbol"] == ETH
     assert python_hdwallet.network() == _["ethereum"]["mainnet"]["network"]
+    assert python_hdwallet.strength() == _["ethereum"]["mainnet"]["strength"]
     assert python_hdwallet.entropy() == _["ethereum"]["mainnet"]["entropy"]
     assert python_hdwallet.mnemonic() == _["ethereum"]["mainnet"]["mnemonic"]
     assert python_hdwallet.language() == _["ethereum"]["mainnet"]["language"]
@@ -84,6 +85,7 @@ def test_ethereum_testnet():
     assert python_hdwallet.cryptocurrency() == _["ethereum"]["testnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["ethereum"]["testnet"]["symbol"] == ETHTEST
     assert python_hdwallet.network() == _["ethereum"]["testnet"]["network"]
+    assert python_hdwallet.strength() == _["ethereum"]["testnet"]["strength"]
     assert python_hdwallet.entropy() == _["ethereum"]["testnet"]["entropy"]
     assert python_hdwallet.mnemonic() == _["ethereum"]["testnet"]["mnemonic"]
     assert python_hdwallet.language() == _["ethereum"]["testnet"]["language"]

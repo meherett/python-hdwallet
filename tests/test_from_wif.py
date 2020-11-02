@@ -26,6 +26,7 @@ def test_from_wallet_important_format():
     assert python_hdwallet.cryptocurrency() == _["litecoin"]["mainnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["litecoin"]["mainnet"]["symbol"]
     assert python_hdwallet.network() == _["litecoin"]["mainnet"]["network"]
+    assert python_hdwallet.strength() is None
     assert python_hdwallet.entropy() is None
     assert python_hdwallet.mnemonic() is None
     assert python_hdwallet.language() is None
@@ -54,6 +55,7 @@ def test_from_wallet_important_format():
 
     dumps: dict = _["litecoin"]["mainnet"]
 
+    dumps["strength"] = None
     dumps["entropy"] = None
     dumps["mnemonic"] = None
     dumps["language"] = None

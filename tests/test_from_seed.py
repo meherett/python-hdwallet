@@ -28,6 +28,7 @@ def test_from_seed():
     assert python_hdwallet.cryptocurrency() == _["dash"]["testnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["dash"]["testnet"]["symbol"]
     assert python_hdwallet.network() == _["dash"]["testnet"]["network"]
+    assert python_hdwallet.strength() is None
     assert python_hdwallet.entropy() is None
     assert python_hdwallet.mnemonic() is None
     assert python_hdwallet.language() is None
@@ -56,6 +57,7 @@ def test_from_seed():
 
     dumps: dict = _["dash"]["testnet"]
 
+    dumps["strength"] = None
     dumps["entropy"] = None
     dumps["mnemonic"] = None
     dumps["language"] = None

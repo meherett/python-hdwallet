@@ -31,6 +31,7 @@ def test_qtum_mainnet():
     assert python_hdwallet.cryptocurrency() == _["qtum"]["mainnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["qtum"]["mainnet"]["symbol"] == QTUM
     assert python_hdwallet.network() == _["qtum"]["mainnet"]["network"]
+    assert python_hdwallet.strength() == _["qtum"]["mainnet"]["strength"]
     assert python_hdwallet.entropy() == _["qtum"]["mainnet"]["entropy"]
     assert python_hdwallet.mnemonic() == _["qtum"]["mainnet"]["mnemonic"]
     assert python_hdwallet.language() == _["qtum"]["mainnet"]["language"]
@@ -84,6 +85,7 @@ def test_qtum_testnet():
     assert python_hdwallet.cryptocurrency() == _["qtum"]["testnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["qtum"]["testnet"]["symbol"] == QTUMTEST
     assert python_hdwallet.network() == _["qtum"]["testnet"]["network"]
+    assert python_hdwallet.strength() == _["qtum"]["testnet"]["strength"]
     assert python_hdwallet.entropy() == _["qtum"]["testnet"]["entropy"]
     assert python_hdwallet.mnemonic() == _["qtum"]["testnet"]["mnemonic"]
     assert python_hdwallet.language() == _["qtum"]["testnet"]["language"]

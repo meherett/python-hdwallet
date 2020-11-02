@@ -31,6 +31,7 @@ def test_litecoin_mainnet():
     assert python_hdwallet.cryptocurrency() == _["litecoin"]["mainnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["litecoin"]["mainnet"]["symbol"] == LTC
     assert python_hdwallet.network() == _["litecoin"]["mainnet"]["network"]
+    assert python_hdwallet.strength() == _["litecoin"]["mainnet"]["strength"]
     assert python_hdwallet.entropy() == _["litecoin"]["mainnet"]["entropy"]
     assert python_hdwallet.mnemonic() == _["litecoin"]["mainnet"]["mnemonic"]
     assert python_hdwallet.language() == _["litecoin"]["mainnet"]["language"]
@@ -84,6 +85,7 @@ def test_litecoin_testnet():
     assert python_hdwallet.cryptocurrency() == _["litecoin"]["testnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["litecoin"]["testnet"]["symbol"] == LTCTEST
     assert python_hdwallet.network() == _["litecoin"]["testnet"]["network"]
+    assert python_hdwallet.strength() == _["litecoin"]["testnet"]["strength"]
     assert python_hdwallet.entropy() == _["litecoin"]["testnet"]["entropy"]
     assert python_hdwallet.mnemonic() == _["litecoin"]["testnet"]["mnemonic"]
     assert python_hdwallet.language() == _["litecoin"]["testnet"]["language"]

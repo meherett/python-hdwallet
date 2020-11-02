@@ -26,6 +26,7 @@ def test_from_private_key():
     assert python_hdwallet.cryptocurrency() == _["bitcoin"]["mainnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["bitcoin"]["mainnet"]["symbol"]
     assert python_hdwallet.network() == _["bitcoin"]["mainnet"]["network"]
+    assert python_hdwallet.strength() is None
     assert python_hdwallet.entropy() is None
     assert python_hdwallet.mnemonic() is None
     assert python_hdwallet.language() is None
@@ -54,6 +55,7 @@ def test_from_private_key():
 
     dumps: dict = _["bitcoin"]["mainnet"]
 
+    dumps["strength"] = None
     dumps["entropy"] = None
     dumps["mnemonic"] = None
     dumps["language"] = None

@@ -26,6 +26,7 @@ def test_from_xprivate_key():
     assert python_hdwallet.cryptocurrency() == _["bitcoin"]["testnet"]["cryptocurrency"]
     assert python_hdwallet.symbol() == _["bitcoin"]["testnet"]["symbol"]
     assert python_hdwallet.network() == _["bitcoin"]["testnet"]["network"]
+    assert python_hdwallet.strength() is None
     assert python_hdwallet.entropy() is None
     assert python_hdwallet.mnemonic() is None
     assert python_hdwallet.language() is None
@@ -54,6 +55,7 @@ def test_from_xprivate_key():
 
     dumps: dict = _["bitcoin"]["testnet"]
 
+    dumps["strength"] = None
     dumps["entropy"] = None
     dumps["mnemonic"] = None
     dumps["language"] = None
