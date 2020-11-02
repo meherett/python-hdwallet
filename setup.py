@@ -14,8 +14,8 @@ with open("requirements.txt", "r") as _requirements:
 
 setup(
     name="python-hdwallet",
-    version="0.2.0",
-    description="Python-based library for the implementation of "
+    version="0.2.1",
+    description="Python-based library for the implementation of a "
                 "Hierarchical Deterministic (HD) wallet generator for Cryptocurrencies.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -23,7 +23,7 @@ setup(
     author="Meheret Tesfaye",
     author_email="meherett@zoho.com",
     url="https://github.com/meherett/python-hdwallet",
-    keywords=["cryptography", "hd", "wallet", "cryptocurrencies", "bip32", "bip44", "hdwallet"],
+    keywords=["cryptography", "hd", "wallet", "cryptocurrencies", "bip32", "bip44", "bip39", "hdwallet"],
     python_requires=">=3.6,<4",
     packages=find_packages(),
     install_requires=requirements,
