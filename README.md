@@ -21,8 +21,18 @@ This library simplify the process of creating new HDWallet's for:
 | [Dash](https://github.com/dashpay/dash)                  |  `DASH`, `DASHTEST` | Yes     | Yes     | 5         | `m/44'/5'/0'/0/0`   |
 | [Qtum](https://github.com/qtumproject/qtum)              |  `QTUM`, `QTUMTEST` | Yes     | Yes     | 88        | `m/44'/88'/0'/0/0`  |
 
- [BIP44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki) Path | `m/44'/coin_type'/{account}'/{change}/{address}`
- ---------------------------------------------------------------------------: | :-----------------------------------------------
+[**BIP39**](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) Mnemonic code for generating deterministic keys:
+
+| Entropy | Checksum | Entropy + Checksum | Mnemonic Length |
+| :------ | :------: | :----------------: | :-------------: |
+| 128     |  4       | 132                | 12              |
+| 160     |  5       | 165                | 15              |
+| 192     |  6       | 198                | 18              |
+| 224     |  7       | 231                | 21              |
+| 256     |  8       | 264                | 24              |
+
+| [BIP44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki) Path | `m/44'/coin_type'/{account}'/{change}/{address}` |
+| ---------------------------------------------------------------------------: | :----------------------------------------------- |
 
 > **NOTICE:** All Cryptocurrencies testnet network default paths are set to `m/44'/1'/0'/0/0` except Ethereum and also Ethereum cryptocurrency `ETHTEST` testnet is an alias of `ETH` mainnet network.
 
@@ -63,7 +73,7 @@ from typing import Optional
 import json
 
 # Choose strength 128, 160, 192, 224 or 256
-STRENGTH: int = 128  # Default is 128
+STRENGTH: int = 160  # Default is 128
 # Choose language english, french, italian, spanish, chinese_simplified, chinese_traditional, japanese or korean
 LANGUAGE: str = "korean"  # Default is english
 # Generate new entropy
@@ -99,26 +109,26 @@ print(json.dumps(hdwallet.dumps(), indent=4, ensure_ascii=False))
     "cryptocurrency": "Bitcoin",
     "symbol": "BTC",
     "network": "mainnet",
-    "entropy": "e79e3c68ec0fd87a1fb4289724e2f607",
-    "strength": 128,
-    "mnemonic": "페인트 할인 궁극적 최종 효율적 모습 실례 안방 오직 냉동 정말 고급",
+    "strength": 160,
+    "entropy": "65e26aceca8c94c708728362288dace6100e8022",
+    "mnemonic": "서민 관객 장례 예약 증세 상태 기침 별도 상대 민간 세월 직장 가방 무덤 에어컨",
     "language": "korean",
     "passphrase": null,
-    "seed": "f134313acb31294a7ab9a931106390fc14af858aea142cafcb0c75077436c07964e81269a1e700c0593da0d844de64c0cb2b3fbbe722f4ae0fd105c788bea6ad",
-    "root_xprivate_key": "xprv9s21ZrQH143K324MxoQyDscpGqomWQtxkrr5v98GjfrTs2tkLq5RDYqxAjck9dRKfnPNFDoFqStXjd1bQDAY5BaX67DuscMAgd41fjQwAdX",
-    "root_xpublic_key": "xpub661MyMwAqRbcFW8q4pwyb1ZYpseFuscp85mgiXXtJ1PSjqDttNPfmMAS217EJP7gQMRK3SUwzsxsqC3a4Bw26WptqcZJZ1oTZCzPPfhT44N",
-    "xprivate_key": "xprvA2cCSUDr4fqf3UDgmr4hFCKoeNeQRrnYDqBtCcVYbLbLBfaAFUUiufrJ3HjZwDRChhPGYZQVRvscgj6WjEq8DJnvmREaBfji3jt69QQa9MN",
-    "xpublic_key": "xpub6FbYqykju3PxFxJ9ssbhcLGYCQUtqKWPb47UzzuA9g8K4TuJo1nyTUAmtYGEwRmykqvdbHSogUBmmtWt67ppVa1MKf2FZELaZtdSZC2oxEo",
-    "uncompressed": "5403e9ec33b1a4eba028cc5ce65bc783c4a69e7e5eac2d6b7e0b3f3ecf429e908678d0584b5a175c13234289c7419c27650d362a98010cf1a884817296033b84",
-    "compressed": "025403e9ec33b1a4eba028cc5ce65bc783c4a69e7e5eac2d6b7e0b3f3ecf429e90",
-    "chain_code": "2d99e2234657dfbf423b09b89f2431fbef32aa80e231fa7ca879f35b852a00a4",
-    "private_key": "961384849e0aefd7e7fd90a5757b6f10a02e2ef02f488244dc48ec6cae8b8d48",
-    "public_key": "025403e9ec33b1a4eba028cc5ce65bc783c4a69e7e5eac2d6b7e0b3f3ecf429e90",
-    "wif": "L2FSSfvrrcwJXp8M5ACdXk3VQyfqHsa8ct2jH29mmV2RfbnMtSq9",
-    "identifier": "61e3b1f3044374c5f54294f4cfcfeaede2eedf83",
-    "finger_print": "61e3b1f3",
+    "seed": "a9639475b35ba7b3af339d6da62e552d08e1e8e97ecfbf340cf5e2897449ae166a07300b2fe6272afabfa12880e11e9b2ff432249aa78c3973d4c2e7ef2cceea",
+    "root_xprivate_key": "xprv9s21ZrQH143K2HPXATdaGimWKV2TLKqSxR3w7ZD3u7WxedKQeodczeC8BueKUu2kRREd8gytRJmx7LEjUSyAggdZJG9zG3osqSdotr7pZnv",
+    "root_xpublic_key": "xpub661MyMwAqRbcEmTzGVAadriEsWrwjnZJKdyXuwcfTT3wXReZCLwsYSWc3DBActGNmx6KxNpxGFpETCqZ7KptShu7x1GtkmVoLziNP9kxM1w",
+    "xprivate_key": "xprvA2UGc9Qbxhqkx1YzyVRNGBrHuoCcXgmAi9WKzTg4jZ9vDEEnkc8qNpTE3gdDG5SU3ESBxaixFQusuRmbgo4iNYkUTCUnMezNC2T6JtY9a2a",
+    "xpublic_key": "xpub6FTd1ewVo5Q4AVdU5WxNdKo2Tq36w9V25NRvnr5gHtgu62ZwJ9T5vcmhtwka9yUDys5jzQmosevXGyP8VjUkkpZSjoPExptLw9djCRG1xjM",
+    "uncompressed": "142968a08a5d0a4e02b436407909f8b4c7026d6bf75568632b2e26136baf5c41cae1aededfacd8e4729ba425ee035c638e26ebcd0c01b9f2b5ab82f33942bfe8",
+    "compressed": "02142968a08a5d0a4e02b436407909f8b4c7026d6bf75568632b2e26136baf5c41",
+    "chain_code": "95c132b5ad5d01613ce9385942a5c89d72d063832c56ab36e3585565f2c7f000",
+    "private_key": "0775b991c4eec49e04c5fde700f5937c7460d89e96b1d0bb0fa2a2ab9bfa54d0",
+    "public_key": "02142968a08a5d0a4e02b436407909f8b4c7026d6bf75568632b2e26136baf5c41",
+    "wif": "KwUDF1wf29n9LUga7KxyTvF74ShhjNq9sbVR7wMGkrXMj4RapofF",
+    "identifier": "8495d3ea533d635726a12322b83fbaf0a5d298ab",
+    "finger_print": "8495d3ea",
     "path": "m/44'/0'/0'/0/0",
-    "address": "19vbK9Cqoqc9otknvGP6jmLxXkFigZAdrQ"
+    "address": "1D63gYH5yjcCPhn2htvMyVh8hvRXxP4BQh"
 }
 ```
 </details>
@@ -136,9 +146,9 @@ from typing import Optional
 # Choose strength 128, 160, 192, 224 or 256
 STRENGTH: int = 128  # Default is 128
 # Choose language english, french, italian, spanish, chinese_simplified, chinese_traditional, japanese or korean
-LANGUAGE: str = "italian"  # Default is english
+LANGUAGE: str = "english"  # Default is english
 # Generate new mnemonic words
-MNEMONIC: str = generate_mnemonic(language=STRENGTH, strength=LANGUAGE)
+MNEMONIC: str = generate_mnemonic(language=LANGUAGE, strength=STRENGTH)
 # Secret passphrase/password for mnemonic
 PASSPHRASE: Optional[str] = None  # str("meherett")
 
@@ -146,7 +156,7 @@ PASSPHRASE: Optional[str] = None  # str("meherett")
 python_hdwallet: PythonHDWallet = PythonHDWallet(cryptocurrency=EthereumMainnet)
 # Get Ethereum HDWallet from mnemonic
 python_hdwallet.from_mnemonic(
-    mnemonic=MNEMONIC, passphrase=PASSPHRASE
+    mnemonic=MNEMONIC, passphrase=PASSPHRASE, language=LANGUAGE
 )
 
 print("Mnemonic:", python_hdwallet.mnemonic())
@@ -170,19 +180,19 @@ for address_index in range(10):
   <summary>Output</summary><br/>
 
 ```shell script
-Mnemonic: obvious private cheap artwork cradle alone useless trust globe home scrub receive
+Mnemonic: laundry screen boy book wreck figure globe accuse minor tired person exile
 Base HD Path:  m/44'/60'/0'/0/{address_index} 
 
-(0) m/44'/60'/0'/0/0 0x03F3aFCA8d7F8D947FCb3de008053A7d22Ff44c9 0xa40e21e99464006be1f00146be864fb7ff4dfcfe2d7b8f3450edc778db9af462
-(1) m/44'/60'/0'/0/1 0x9e68BDDe22BEfBc027133415DE5a9d8091c80AAa 0x9db6c57bb27260442e7741982f57eaf0d3dbabbd5d0cf44012f140212068dd24
-(2) m/44'/60'/0'/0/2 0x973D9c9173bf927c8E9dC4c7d0371ea4278baD7C 0x59b6c9c20b7bb02a168256963e7cc96deca3499b290b14b26254e815956bca7a
-(3) m/44'/60'/0'/0/3 0x40498150AAfC4359db68Ecf3c9086f357772691a 0x2f0173d5592e7193f6a08217dbbc3e1daadbc6fece37a199cef213bd5e0984c3
-(4) m/44'/60'/0'/0/4 0x7493373d186A4C24f66cf519dA8837686b8817e8 0xb5293b9bea3a9a4fdfec54b07b128fc47ddbbe1ca9b9c036dd8a1905b4b74a5d
-(5) m/44'/60'/0'/0/5 0x8Db556BBD5baaBc51EAbFbE5F3E621113435779c 0xc5093d734e2b3d045a546c4af6567dc7ae3a8ea597b3aa00e740886495797044
-(6) m/44'/60'/0'/0/6 0x581dFbFB6705274D49c91Badef09d94134d81bDc 0xcf2e664d33fd18e8e64b4c5b19e1351f8d77f5e9e3836d2f40dad81dfb56e118
-(7) m/44'/60'/0'/0/7 0x39Da3993353e83B71C677695717963757B138BB7 0x0442f8a12c3e47fc279b6fd5b9f3cc3d1dba1acb648ffd80742f728aaf4745fb
-(8) m/44'/60'/0'/0/8 0x88DFf10366547EF5C27fdBb22D476198e5a021E4 0x1bc73d9763b6ec48652137cc18adc0c8302ff3c44eabeaf7aca8ceaa2634a42f
-(9) m/44'/60'/0'/0/9 0x196D893126fDA7f433fD0A5F49855D031C54f8D4 0xc72b824601bcb1088a62c09b7bc5c14c63a69de1fcfe5bb39eb3f6524f322522
+(0) m/44'/60'/0'/0/0 0xD6e56e76bDDC557b0Ef92E42F3CFbe3f30a4C295 0xebea344cd7444f9283043fea739ba2763fdc05da663c77e793b6567765285514
+(1) m/44'/60'/0'/0/1 0x88F762b29F3e066F34d683562685FFCCcbc1A666 0x173dc3299b30ae3a4d3c699cd7ab3c1eed1ecf711ca144be3fa1a50cce17de5d
+(2) m/44'/60'/0'/0/2 0x32607A23156036BcDa285CD443fE9645FeDc648e 0x86386357decd59199fec92b36d58b5deffc6b836dc72e52bae5d5f960f0451ae
+(3) m/44'/60'/0'/0/3 0xe0A1887DD307f5751394f02B165c5D47AF713A1E 0xadd3b8bdf73b1025233ec3cadd283563517b4365a790a3b39559b1ef694a3234
+(4) m/44'/60'/0'/0/4 0xCAB507Cd8C10D0575Df32B884f18b67150D6A091 0xa4bf2c21e26a45fc1a21fb39472fdc08d3dff4f34b92e53c7bf4e7a5f3387e31
+(5) m/44'/60'/0'/0/5 0x1E0f296e435CBD56e0FE0F387E5D68f1580c9E89 0xd1388aaf97b679121221f1816ad9e5b96fb82fb36afa3076d1628d05eb963dab
+(6) m/44'/60'/0'/0/6 0x4012109D622Dd11BB2257DBB6Fb78B57358BD9d2 0x87d001a56a56eb572f7a84d21c7eb8eb1cf4d04f4883db28e517c559c6baa260
+(7) m/44'/60'/0'/0/7 0x57eEf550A3F8F81dcaf566438d79a7fD8f980451 0xbfb1ec28ae643c917986306a548898ed981f6b849946c70a868e7e632e184407
+(8) m/44'/60'/0'/0/8 0xfE2fB0091ff9494b30852A268110174a2C97E110 0xb59df0d4175f3d6660447aca955bdd417a28cef3a78efdf97ef8fe423b8b3fdc
+(9) m/44'/60'/0'/0/9 0xD8714F4e98Abb554C84FD65D0F8c346D8b58307C 0xffeedf4dffe90692ef939e7a8a61ee966a73d957923695ffae2a519963895021
 ```
 </details>
 
