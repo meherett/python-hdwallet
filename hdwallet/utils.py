@@ -2,13 +2,18 @@
 
 from mnemonic import Mnemonic
 from binascii import hexlify
+from random import choice
 from typing import AnyStr
 
+import string
 import os
 import unicodedata
 
 from .cryptocurrencies import get_cryptocurrency
 from .libs.base58 import check_decode
+
+# Alphabet and digits.
+letters = string.ascii_letters + string.digits
 
 
 def get_bytes(string: AnyStr) -> bytes:
@@ -19,6 +24,10 @@ def get_bytes(string: AnyStr) -> bytes:
     else:
         raise TypeError("Agreement must be either 'bytes' or 'string'!")
     return byte
+
+
+def generate_passphrase(length: int = 32) -> str:
+    return str().join(choice(letters) for _ in range(length))
 
 
 def generate_mnemonic(language: str = "english", strength: int = 128) -> str:
