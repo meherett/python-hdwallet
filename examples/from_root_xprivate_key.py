@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from python_hdwallet import PythonHDWallet as HDWallet
-from python_hdwallet.utils import is_root_xprivate_key
-from python_hdwallet.symbols import BTC
+from hdwallet import HDWallet as HDWallet
+from hdwallet.utils import is_root_xprivate_key
+from hdwallet.symbols import BTC
 
 import json
 

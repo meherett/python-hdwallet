@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from python_hdwallet import PythonHDWallet
-from python_hdwallet.symbols import BTCTEST
+from hdwallet import HDWallet
+from hdwallet.symbols import BTCTEST
 
 import json
 
@@ -9,20 +9,20 @@ import json
 WALLET_IMPORTANT_FORMAT: str = "cVpnZ6XRfL5VVggwZDyndAU5KGVdT2TP1j1HB3td6ZKWCbh5wYvf"
 
 # Initialize Bitcoin testnet HDWallet
-python_hdwallet: PythonHDWallet = PythonHDWallet(symbol=BTCTEST)
+hdwallet: HDWallet = HDWallet(symbol=BTCTEST)
 # Get Bitcoin HDWallet from wallet important format
-python_hdwallet.from_wif(wif=WALLET_IMPORTANT_FORMAT)
+hdwallet.from_wif(wif=WALLET_IMPORTANT_FORMAT)
 
 # Print all Bitcoin HDWallet information's
-# print(json.dumps(python_hdwallet.dumps(), indent=4, ensure_ascii=False))
+# print(json.dumps(hdwallet.dumps(), indent=4, ensure_ascii=False))
 
-print("Cryptocurrency:", python_hdwallet.cryptocurrency())
-print("Symbol:", python_hdwallet.symbol())
-print("Network:", python_hdwallet.network())
-print("Uncompressed:", python_hdwallet.uncompressed())
-print("Compressed:", python_hdwallet.compressed())
-print("Private Key:", python_hdwallet.private_key())
-print("Public Key:", python_hdwallet.public_key())
-print("Wallet Important Format:", python_hdwallet.wif())
-print("Finger Print:", python_hdwallet.finger_print())
-print("Address:", python_hdwallet.address())
+print("Cryptocurrency:", hdwallet.cryptocurrency())
+print("Symbol:", hdwallet.symbol())
+print("Network:", hdwallet.network())
+print("Uncompressed:", hdwallet.uncompressed())
+print("Compressed:", hdwallet.compressed())
+print("Private Key:", hdwallet.private_key())
+print("Public Key:", hdwallet.public_key())
+print("Wallet Important Format:", hdwallet.wif())
+print("Finger Print:", hdwallet.finger_print())
+print("Address:", hdwallet.address())

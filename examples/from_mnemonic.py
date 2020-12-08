@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from python_hdwallet import PythonHDWallet as HDWallet
-from python_hdwallet.utils import generate_mnemonic, is_mnemonic
-from python_hdwallet.cryptocurrencies import LitecoinMainnet
+from hdwallet import HDWallet
+from hdwallet.utils import generate_mnemonic, is_mnemonic
+from hdwallet.cryptocurrencies import LitecoinMainnet
 
 import json
 
@@ -39,6 +39,7 @@ print("Cryptocurrency:", hdwallet.cryptocurrency())
 print("Symbol:", hdwallet.symbol())
 print("Network:", hdwallet.network())
 print("Strength:", hdwallet.strength())
+print("Entropy:", hdwallet.entropy())
 print("Mnemonic:", hdwallet.mnemonic())
 print("Language:", hdwallet.language())
 print("Passphrase:", hdwallet.passphrase())
