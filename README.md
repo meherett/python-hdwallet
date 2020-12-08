@@ -39,6 +39,14 @@ $ pip install git+git://github.com/meherett/python-hdwallet.git
 
 For the versions available, see the [tags on this repository](https://github.com/meherett/python-hdwallet/tags).
 
+## Development
+
+We welcome pull requests. To get started, just fork this repository, clone it locally, and run:
+
+```
+$ pip install -e .[tests] -r requirements.txt
+```
+
 ## Quick Start
 
 Simple Bitcoin cryptocurrency mainnet HDWallet generator:
@@ -60,7 +68,7 @@ LANGUAGE: str = "korean"  # Default is english
 # Generate new entropy hex string
 ENTROPY: str = generate_entropy(strength=STRENGTH)
 # Secret passphrase for mnemonic
-PASSPHRASE: Optional[str] = None
+PASSPHRASE: Optional[str] = None  # "meherett"
 
 # Initialize Bitcoin mainnet HDWallet
 hdwallet: HDWallet = HDWallet(symbol=BTC)
@@ -131,7 +139,7 @@ LANGUAGE: str = "english"  # Default is english
 # Generate new mnemonic words
 MNEMONIC: str = generate_mnemonic(language=LANGUAGE, strength=STRENGTH)
 # Secret passphrase for mnemonic
-PASSPHRASE: Optional[str] = None
+PASSPHRASE: Optional[str] = None  # "meherett"
 
 # Initialize Ethereum mainnet HDWallet
 hdwallet: HDWallet = HDWallet(cryptocurrency=EthereumMainnet)
@@ -178,14 +186,6 @@ Base HD Path:  m/44'/60'/0'/0/{address_index}
 </details>
 
 [Click this to see more examples](https://github.com/meherett/python-hdwallet/blob/master/examples).
-
-## Development
-
-We welcome pull requests. To get started, just fork this repository, clone it locally, and run:
-
-```
-$ pip install -e .[tests] -r requirements.txt
-```
 
 ## Testing
 
