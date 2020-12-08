@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 
 from ecdsa.curves import SECP256k1
-from ecdsa.ellipticcurve import (
-    PointJacobi, Point
-)
+from ecdsa.ellipticcurve import Point
 from ecdsa.keys import (
     SigningKey, VerifyingKey
 )
@@ -42,7 +40,7 @@ from .utils import (
 MIN_ENTROPY_LEN: int = 128
 BIP32KEY_HARDEN: int = 0x80000000
 
-CURVE_GEN: PointJacobi = ecdsa.ecdsa.generator_secp256k1
+CURVE_GEN: Any = ecdsa.ecdsa.generator_secp256k1
 CURVE_ORDER: int = CURVE_GEN.order()
 FIELD_ORDER: int = SECP256k1.curve.p()
 INFINITY: Point = ecdsa.ellipticcurve.INFINITY
