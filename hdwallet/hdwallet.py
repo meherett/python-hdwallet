@@ -48,7 +48,7 @@ FIELD_ORDER: int = SECP256k1.curve.p()
 INFINITY: Point = ecdsa.ellipticcurve.INFINITY
 
 
-class PythonHDWallet:
+class HDWallet:
 
     def __init__(self, symbol: str = "BTC", cryptocurrency: Any = None, use_default_path: bool = False):
         if cryptocurrency:

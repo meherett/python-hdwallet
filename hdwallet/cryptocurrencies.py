@@ -66,8 +66,8 @@ class EthereumTestnet(Cryptocurrency):
     WIF_SECRET_KEY = decode("80", "hex")
     EXTENDED_PRIVATE_KEY = decode("0488ade4", "hex")
     EXTENDED_PUBLIC_KEY = decode("0488b21e", "hex")
-    BIP44_PATH = "m/44'/60'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/60'/0'/0/0"
+    BIP44_PATH = "m/44'/1'/{account}'/{change}/{address}"
+    DEFAULT_PATH = "m/44'/1'/0'/0/0"
 
 
 class DogecoinMainnet(Cryptocurrency):
