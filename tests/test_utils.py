@@ -4,17 +4,17 @@ import json
 import unicodedata
 import os
 
-from python_hdwallet.utils import (
+from hdwallet.utils import (
     get_bytes, generate_mnemonic, generate_entropy, is_entropy, get_mnemonic_strength,
     get_entropy_strength, is_mnemonic, get_mnemonic_language,
     is_root_xprivate_key, is_root_xpublic_key
 )
 
 # Test Values
-base_path = os.path.dirname(__file__)
-file_path = os.path.abspath(os.path.join(base_path, "values.json"))
+base_path: str = os.path.dirname(__file__)
+file_path: str = os.path.abspath(os.path.join(base_path, "values.json"))
 values = open(file_path, "r", encoding="utf-8")
-_ = json.loads(values.read())
+_: dict = json.loads(values.read())
 values.close()
 
 

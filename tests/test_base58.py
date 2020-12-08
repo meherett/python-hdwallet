@@ -6,7 +6,7 @@ from binascii import (
 
 import pytest
 
-from python_hdwallet.libs.base58 import (
+from hdwallet.libs.base58 import (
     check_encode, check_decode, string_to_int
 )
 
