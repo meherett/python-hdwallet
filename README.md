@@ -1,15 +1,15 @@
-# Python-HDWallet
+# HDWallet
 
 [![Build Status](https://travis-ci.org/meherett/python-hdwallet.svg?branch=master)](https://travis-ci.org/meherett/python-hdwallet?branch=master)
-[![PyPI Version](https://img.shields.io/pypi/v/python-hdwallet.svg?color=blue)](https://pypi.org/project/python-hdwallet)
-[![PyPI Python Version](https://img.shields.io/pypi/pyversions/python-hdwallet.svg)](https://pypi.org/project/python-hdwallet)
+[![PyPI Version](https://img.shields.io/pypi/v/hdwallet.svg?color=blue)](https://pypi.org/project/hdwallet)
+[![PyPI Python Version](https://img.shields.io/pypi/pyversions/hdwallet.svg)](https://pypi.org/project/hdwallet)
 [![Coverage Status](https://coveralls.io/repos/github/meherett/python-hdwallet/badge.svg?branch=master)](https://coveralls.io/github/meherett/python-hdwallet?branch=master)
 
 Python-based library for the implementation of a [Hierarchical Deterministic (HD)](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) wallet generator for Cryptocurrencies.
 
 ## Available Cryptocurrencies
 
-This library simplify the process of creating new HDWallet's for:
+This library simplifies the process of creating a new HDWallet's for:
 
 | Cryptocurrencies                                         | Symbols             | Mainnet | Testnet | Coin Type | Default Paths       |
 | :------------------------------------------------------- | :-----------------: | :-----: | :-----: | :-------: | :-----------------: |
@@ -21,25 +21,14 @@ This library simplify the process of creating new HDWallet's for:
 | [Dash](https://github.com/dashpay/dash)                  |  `DASH`, `DASHTEST` | Yes     | Yes     | 5         | `m/44'/5'/0'/0/0`   |
 | [Qtum](https://github.com/qtumproject/qtum)              |  `QTUM`, `QTUMTEST` | Yes     | Yes     | 88        | `m/44'/88'/0'/0/0`  |
 
-[**BIP39**](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) Mnemonic code for generating deterministic keys:
-
-| Entropy | Checksum | Entropy + Checksum | Mnemonic Length |
-| :------ | :------: | :----------------: | :-------------: |
-| 128     |  4       | 132                | 12              |
-| 160     |  5       | 165                | 15              |
-| 192     |  6       | 198                | 18              |
-| 224     |  7       | 231                | 21              |
-| 256     |  8       | 264                | 24              |
-
-| [BIP44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki) Path | `m/44'/coin_type'/{account}'/{change}/{address}` |
-| ---------------------------------------------------------------------------: | :----------------------------------------------- |
-
-> **NOTICE:** All Cryptocurrencies testnet network default paths are set to `m/44'/1'/0'/0/0` except Ethereum and also Ethereum cryptocurrency `ETHTEST` testnet is an alias of `ETH` mainnet network.
+> **NOTICE:** All Cryptocurrencies testnet networks default paths are set to **`m/44'/1'/0'/0/0`** value.
 
 ## Installation
 
+PIP to install HDWallet globally, for Linux `sudo` may be required:
+
 ```
-$ pip install python-hdwallet
+$ pip install hdwallet
 ```
 
 If you want to run the latest version of the code, you can install from git:
@@ -50,14 +39,6 @@ $ pip install git+git://github.com/meherett/python-hdwallet.git
 
 For the versions available, see the [tags on this repository](https://github.com/meherett/python-hdwallet/tags).
 
-## Development
-
-We welcome pull requests. To get started, just fork this repository, clone it locally, and run:
-
-```
-$ pip install -e .[tests] -r requirements.txt
-```
-
 ## Quick Start
 
 Simple Bitcoin cryptocurrency mainnet HDWallet generator:
@@ -65,9 +46,9 @@ Simple Bitcoin cryptocurrency mainnet HDWallet generator:
 ```python
 #!/usr/bin/env python3
 
-from python_hdwallet import PythonHDWallet as HDWallet
-from python_hdwallet.utils import generate_entropy
-from python_hdwallet.symbols import BTC
+from hdwallet import HDWallet
+from hdwallet.utils import generate_entropy
+from hdwallet.symbols import BTC
 from typing import Optional
 
 import json
@@ -76,16 +57,16 @@ import json
 STRENGTH: int = 160  # Default is 128
 # Choose language english, french, italian, spanish, chinese_simplified, chinese_traditional, japanese or korean
 LANGUAGE: str = "korean"  # Default is english
-# Generate new entropy
+# Generate new entropy hex string
 ENTROPY: str = generate_entropy(strength=STRENGTH)
-# Secret passphrase/password for mnemonic
-PASSPHRASE: Optional[str] = None  # str("meherett")
+# Secret passphrase for mnemonic
+PASSPHRASE: Optional[str] = None
 
 # Initialize Bitcoin mainnet HDWallet
 hdwallet: HDWallet = HDWallet(symbol=BTC)
 # Get Bitcoin HDWallet from entropy
 hdwallet.from_entropy(
-    entropy=ENTROPY, passphrase=PASSPHRASE, language=LANGUAGE
+    entropy=ENTROPY, language=LANGUAGE, passphrase=PASSPHRASE
 )
 
 # Derivation from path
@@ -133,14 +114,14 @@ print(json.dumps(hdwallet.dumps(), indent=4, ensure_ascii=False))
 ```
 </details>
 
-Ethereum cryptocurrency testnet [Ganache-CLI/TestRPC](https://github.com/trufflesuite/ganache-cli) wallet look's like:
+Ethereum cryptocurrency mainnet [Ganache-CLI](https://github.com/trufflesuite/ganache-cli) wallet look's like:
 
 ```python
 #!/usr/bin/env python3
 
-from python_hdwallet import PythonHDWallet
-from python_hdwallet.cryptocurrencies import EthereumMainnet  # Alias EthereumTestnet
-from python_hdwallet.utils import generate_mnemonic
+from hdwallet import HDWallet
+from hdwallet.cryptocurrencies import EthereumMainnet
+from hdwallet.utils import generate_mnemonic
 from typing import Optional
 
 # Choose strength 128, 160, 192, 224 or 256
@@ -149,31 +130,31 @@ STRENGTH: int = 128  # Default is 128
 LANGUAGE: str = "english"  # Default is english
 # Generate new mnemonic words
 MNEMONIC: str = generate_mnemonic(language=LANGUAGE, strength=STRENGTH)
-# Secret passphrase/password for mnemonic
-PASSPHRASE: Optional[str] = None  # str("meherett")
+# Secret passphrase for mnemonic
+PASSPHRASE: Optional[str] = None
 
 # Initialize Ethereum mainnet HDWallet
-python_hdwallet: PythonHDWallet = PythonHDWallet(cryptocurrency=EthereumMainnet)
+hdwallet: HDWallet = HDWallet(cryptocurrency=EthereumMainnet)
 # Get Ethereum HDWallet from mnemonic
-python_hdwallet.from_mnemonic(
+hdwallet.from_mnemonic(
     mnemonic=MNEMONIC, passphrase=PASSPHRASE, language=LANGUAGE
 )
 
-print("Mnemonic:", python_hdwallet.mnemonic())
+print("Mnemonic:", hdwallet.mnemonic())
 print("Base HD Path:  m/44'/60'/0'/0/{address_index}", "\n")
 
 # Get Ethereum HDWallet information's from address indexes
 for address_index in range(10):
     # Derivation from Ethereum BIP44 path
-    python_hdwallet.from_path(
+    hdwallet.from_path(
         path=EthereumMainnet.BIP44_PATH.format(
             account=0, change=0, address=address_index
         )
     )
     # Print address_index, path, address and private_key
-    print(f"({address_index}) {python_hdwallet.path()} {python_hdwallet.address()} 0x{python_hdwallet.private_key()}")
+    print(f"({address_index}) {hdwallet.path()} {hdwallet.address()} 0x{hdwallet.private_key()}")
     # Clean derivation indexes/path
-    python_hdwallet.clean_derivation()
+    hdwallet.clean_derivation()
 ```
 
 <details>
@@ -197,6 +178,14 @@ Base HD Path:  m/44'/60'/0'/0/{address_index}
 </details>
 
 [Click this to see more examples](https://github.com/meherett/python-hdwallet/blob/master/examples).
+
+## Development
+
+We welcome pull requests. To get started, just fork this repository, clone it locally, and run:
+
+```
+$ pip install -e .[tests] -r requirements.txt
+```
 
 ## Testing
 
