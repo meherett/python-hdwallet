@@ -46,6 +46,34 @@ class BitcoinTestnet(Cryptocurrency):
     DEFAULT_PATH = "m/44'/1'/0'/0/0"
 
 
+class BitcoinCashMainnet(Cryptocurrency):
+
+    NAME = "Bitcoin Cash"
+    SYMBOL = "BCH"
+    NETWORK = "mainnet"
+    SCRIPT_ADDRESS = decode("28", "hex")
+    PUBLIC_KEY_ADDRESS = decode("1c", "hex")
+    WIF_SECRET_KEY = decode("80", "hex")
+    EXTENDED_PRIVATE_KEY = decode("0488ade4", "hex")
+    EXTENDED_PUBLIC_KEY = decode("0488b21e", "hex")
+    BIP44_PATH = "m/44'/145'/{account}'/{change}/{address}"
+    DEFAULT_PATH = "m/44'/145'/0'/0/0"
+
+
+class BitcoinGoldMainnet(Cryptocurrency):
+
+    NAME = "Bitcoin Gold"
+    SYMBOL = "BTG"
+    NETWORK = "mainnet"
+    SCRIPT_ADDRESS = decode("17", "hex")
+    PUBLIC_KEY_ADDRESS = decode("26", "hex")
+    WIF_SECRET_KEY = decode("80", "hex")
+    EXTENDED_PRIVATE_KEY = decode("0488ade4", "hex")
+    EXTENDED_PUBLIC_KEY = decode("0488b21e", "hex")
+    BIP44_PATH = "m/44'/156'/{account}'/{change}/{address}"
+    DEFAULT_PATH = "m/44'/156'/0'/0/0"
+
+
 class EthereumMainnet(Cryptocurrency):
 
     NAME = "Ethereum"
@@ -216,6 +244,10 @@ def get_cryptocurrency(symbol: str) -> Any:
         return BitcoinMainnet
     elif symbol.upper() == "BTCTEST":
         return BitcoinTestnet
+    elif symbol.upper() == "BTG":
+        return BitcoinGoldMainnet
+    elif symbol.upper() == "BCH":
+        return BitcoinCashMainnet
     elif symbol.upper() == "ETH":
         return EthereumMainnet
     elif symbol.upper() == "ETHTEST":

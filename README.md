@@ -11,15 +11,17 @@ Python-based library for the implementation of a [Hierarchical Deterministic (HD
 
 This library simplifies the process of creating a new HDWallet's for:
 
-| Cryptocurrencies                                         | Symbols             | Mainnet | Testnet | Coin Type | Default Paths       |
-| :------------------------------------------------------- | :-----------------: | :-----: | :-----: | :-------: | :-----------------: |
-| [Bitcoin](https://github.com/bitcoin/bitcoin)            |  `BTC`, `BTCTEST`   | Yes     | Yes     | 0         | `m/44'/0'/0'/0/0`   |
-| [Ethereum](https://github.com/ethereum/go-ethereum)      |  `ETH`, `ETHTEST`   | Yes     | Yes     | 60        | `m/44'/60'/0'/0/0`  |
-| [Dogecoin](https://github.com/dogecoin/dogecoin)         |  `DOGE`, `DOGETEST` | Yes     | Yes     | 3         | `m/44'/3'/0'/0/0`   |
-| [Litecoin](https://github.com/litecoin-project/litecoin) |  `LTC`, `LTCTEST`   | Yes     | Yes     | 2         | `m/44'/2'/0'/0/0`   |
-| [Omni](https://github.com/omnilayer/omnicore)            |  `OMNI`, `OMNITEST` | Yes     | Yes     | 200       | `m/44'/200'/0'/0/0` |
-| [Dash](https://github.com/dashpay/dash)                  |  `DASH`, `DASHTEST` | Yes     | Yes     | 5         | `m/44'/5'/0'/0/0`   |
-| [Qtum](https://github.com/qtumproject/qtum)              |  `QTUM`, `QTUMTEST` | Yes     | Yes     | 88        | `m/44'/88'/0'/0/0`  |
+| Cryptocurrencies                                                  | Symbols             | Mainnet | Testnet | Coin Type | Default Paths       |
+| :---------------------------------------------------------------- | :-----------------: | :-----: | :-----: | :-------: | :-----------------: |
+| [Bitcoin](https://github.com/bitcoin/bitcoin)                     |  `BTC`, `BTCTEST`   | Yes     | Yes     | 0         | `m/44'/0'/0'/0/0`   |
+| [Bitcoin Cash](https://github.com/bitcoincashorg/bitcoincash.org) |  `BCH`              | Yes     | No      | 145       | `m/44'/145'/0'/0/0` |
+| [Bitcoin Gold](https://github.com/BTCGPU/BTCGPU)                  |  `BTG`              | Yes     | No      | 156       | `m/44'/156'/0'/0/0` |
+| [Ethereum](https://github.com/ethereum/go-ethereum)               |  `ETH`, `ETHTEST`   | Yes     | Yes     | 60        | `m/44'/60'/0'/0/0`  |
+| [Dogecoin](https://github.com/dogecoin/dogecoin)                  |  `DOGE`, `DOGETEST` | Yes     | Yes     | 3         | `m/44'/3'/0'/0/0`   |
+| [Litecoin](https://github.com/litecoin-project/litecoin)          |  `LTC`, `LTCTEST`   | Yes     | Yes     | 2         | `m/44'/2'/0'/0/0`   |
+| [Omni](https://github.com/omnilayer/omnicore)                     |  `OMNI`, `OMNITEST` | Yes     | Yes     | 200       | `m/44'/200'/0'/0/0` |
+| [Dash](https://github.com/dashpay/dash)                           |  `DASH`, `DASHTEST` | Yes     | Yes     | 5         | `m/44'/5'/0'/0/0`   |
+| [Qtum](https://github.com/qtumproject/qtum)                       |  `QTUM`, `QTUMTEST` | Yes     | Yes     | 88        | `m/44'/88'/0'/0/0`  |
 
 > **NOTICE:** All Cryptocurrencies testnet networks default paths are set to **`m/44'/1'/0'/0/0`** value.
 

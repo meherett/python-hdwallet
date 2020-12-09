@@ -4,24 +4,30 @@
 Available Mainnet & Testnet symbols
 """
 
-# Bitcoin symbols
+# Bitcoin
 BTC, BTCTEST = "BTC", "BTCTEST"
-# Ethereum symbols
+# Bitcoin Cash
+BCH = "BCH"
+# Bitcoin Gold
+BTG = "BTG"
+# Ethereum
 ETH, ETHTEST = "ETH", "ETHTEST"
-# Dogecoin symbols
+# Dogecoin
 DOGE, DOGETEST = "DOGE", "DOGETEST"
-# Litecoin symbols
+# Litecoin
 LTC, LTCTEST = "LTC", "LTCTEST"
-# Omni symbols
+# Omni
 OMNI, OMNITEST = "OMNI", "OMNITEST"
-# Dash symbols
+# Dash
 DASH, DASHTEST = "DASH", "DASHTEST"
-# Qtum symbols
+# Qtum
 QTUM, QTUMTEST = "QTUM", "QTUMTEST"
 
 
 __all__ = [
     "BTC", "BTCTEST",
+    "BCH",
+    "BTG",
     "ETH", "ETHTEST",
     "DOGE", "DOGETEST",
     "LTC", "LTCTEST",
