@@ -14,7 +14,7 @@ with open("requirements.txt", "r") as _requirements:
 
 setup(
     name="hdwallet",
-    version="0.1.1",
+    version="0.2.0",
     description="Python-based library for the implementation of a "
                 "Hierarchical Deterministic (HD) wallet generator for Cryptocurrencies.",
     long_description=long_description,
