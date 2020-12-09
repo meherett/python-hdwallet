@@ -138,6 +138,68 @@
             "address": "mxH5hNLD2iqnK3SWe15ZgFniQ3Pnckkdfe"
         }
     },
+    "bitcoin_cash": {
+        "mainnet": {
+            "cryptocurrency": "Bitcoin Cash",
+            "symbol": "BCH",
+            "network": "mainnet",
+            "strength": 160,
+            "entropy": "0fed29d2d8481a77621caf7f21ca72f31c782504",
+            "mnemonic": "avocado harsh input rack like desert mask nominee left atom original tower shy barely base",
+            "language": "english",
+            "passphrase": null,
+            "seed": "292b66695c46274e3a83d088d456b55554821ddf628c9e5f33d30139ad629438ec6f87cca67be8fb706a77723202e5f4db6b6680ed6f51243837ebceb1372536",
+            "root_xprivate_key_hex": "0488ade4000000000000000000ad41ef910cdcae932cb4060777b4284ee38f5b29c5fb60fda8416f298a14702c007a286fa06bdb8cc821b1d34d88547b36bf7ab434c632db7ee21fc77b4130a852",
+            "root_xprivate_key": "xprv9s21ZrQH143K3nQRmmivfV9RstNXkiuGcp6XCaUQyNeD4Zczidb8K3ue3LCVSA47aRqvbpVj5NKLxv8DJi1adCzPmzXVJiyJ7o5WkRTDuFe",
+            "root_xpublic_key_hex": "0488b21e000000000000000000ad41ef910cdcae932cb4060777b4284ee38f5b29c5fb60fda8416f298a14702c02949b9f64223e124eb9a8383fba0b21b5845fcfbdc84dec7692d21c716410eab0",
+            "root_xpublic_key": "xpub661MyMwAqRbcGGUtsoFw2d6ARvD2ABd7z327zxt2XiBBwMx9GAuNrrE7tbRuWF5MjjZ1BzDsRdaSHc9nVKAgHzQrv6pwYW3Hd7LSzbh8sWS",
+            "xprivate_key_hex": "0488ade40546cac0b60000000096791082351a5a8e272d104995926dc133366d5f7f7d96ab4939baa38fd3a620004aff71cc203c91dc0a399af2c15d723b991ed302a1554f390bf665f13cd7f062",
+            "xprivate_key": "xprvA2wsGC6r3No2mZDjbHx8wmYLdW2CZ9Yqxze9HzSRzssxXHq2dmUSjnmX8iB4QHWFVobAt1FRJvrodZ9G23foPESyNaQ87nJAntqf7hpX2w2",
+            "xpublic_key_hex": "0488b21e0546cac0b60000000096791082351a5a8e272d104995926dc133366d5f7f7d96ab4939baa38fd3a62003b6e91ff3a79914348bf4368ede21a364aa02d7a44c07d1326c401bc3adc71a01",
+            "xpublic_key": "xpub6FwDfhdjskMKz3JChKV9JuV5BXrgxcGhLDZk6Nr3ZDQwQ6ABBJnhHb5zz1y6WTbeNKNcympkTCzas644mCEPq7XfNZPxHJqaZmBfmVJnsFU",
+            "uncompressed": "b6e91ff3a79914348bf4368ede21a364aa02d7a44c07d1326c401bc3adc71a01809b683e97a20bd7734e33a1289f0523e68f0fe5836ef8bc33cd536125ae5893",
+            "compressed": "03b6e91ff3a79914348bf4368ede21a364aa02d7a44c07d1326c401bc3adc71a01",
+            "chain_code": "96791082351a5a8e272d104995926dc133366d5f7f7d96ab4939baa38fd3a620",
+            "private_key": "4aff71cc203c91dc0a399af2c15d723b991ed302a1554f390bf665f13cd7f062",
+            "public_key": "03b6e91ff3a79914348bf4368ede21a364aa02d7a44c07d1326c401bc3adc71a01",
+            "wif": "KyjVmhZ8BiVcDWkvjv2TNzzyjeBzSaUnpkNWJ6G5q1WeXUNpCAuu",
+            "identifier": "cced05d1d09a5317c2b25408b4e0e46fd9106356",
+            "finger_print": "cced05d1",
+            "path": "m/44'/145'/0'/0/0",
+            "address": "Cb9SMoX4ofmsZTuhshS1uoVscAgNYEyZ1P"
+        }
+    },
+    "bitcoin_gold": {
+        "mainnet": {
+            "cryptocurrency": "Bitcoin Gold",
+            "symbol": "BTG",
+            "network": "mainnet",
+            "strength": 160,
+            "entropy": "0fed29d2d8481a77621caf7f21ca72f31c782504",
+            "mnemonic": "avocado harsh input rack like desert mask nominee left atom original tower shy barely base",
+            "language": "english",
+            "passphrase": null,
+            "seed": "292b66695c46274e3a83d088d456b55554821ddf628c9e5f33d30139ad629438ec6f87cca67be8fb706a77723202e5f4db6b6680ed6f51243837ebceb1372536",
+            "root_xprivate_key_hex": "0488ade4000000000000000000ad41ef910cdcae932cb4060777b4284ee38f5b29c5fb60fda8416f298a14702c007a286fa06bdb8cc821b1d34d88547b36bf7ab434c632db7ee21fc77b4130a852",
+            "root_xprivate_key": "xprv9s21ZrQH143K3nQRmmivfV9RstNXkiuGcp6XCaUQyNeD4Zczidb8K3ue3LCVSA47aRqvbpVj5NKLxv8DJi1adCzPmzXVJiyJ7o5WkRTDuFe",
+            "root_xpublic_key_hex": "0488b21e000000000000000000ad41ef910cdcae932cb4060777b4284ee38f5b29c5fb60fda8416f298a14702c02949b9f64223e124eb9a8383fba0b21b5845fcfbdc84dec7692d21c716410eab0",
+            "root_xpublic_key": "xpub661MyMwAqRbcGGUtsoFw2d6ARvD2ABd7z327zxt2XiBBwMx9GAuNrrE7tbRuWF5MjjZ1BzDsRdaSHc9nVKAgHzQrv6pwYW3Hd7LSzbh8sWS",
+            "xprivate_key_hex": "0488ade4053fed2b9500000000640ba48f6466fd00df6c98d25c66e622b912d14219df21861e3722d07323412f007a3498de72e8551ac7da0f24199e8a17193070ef6c1777cfc0df4c1ec5546762",
+            "xprivate_key": "xprvA2twWEo3reo9PgekzyTZdspt2F8nWATLdFXWycvKR3o3H6f88SsnFEGjEZrsByxjLdhmhMZbxmhLH2wjuQbQkb4jmmDerLVAyJW8XhDW7qC",
+            "xpublic_key_hex": "0488b21e053fed2b9500000000640ba48f6466fd00df6c98d25c66e622b912d14219df21861e3722d07323412f038364dc90df290767d3a43175feccaeace550e932fde9f15e3c702b58f6bfc086",
+            "xpublic_key": "xpub6FtHukKwh2MScAjE6zza11mcaGyGudBBzUT7n1KvyPL29tzGfzC2o2bD5ruRWxfawgfk7MAKyz29TWEfu9VGsnYzLradWQYDoYxUq9Epm9N",
+            "uncompressed": "8364dc90df290767d3a43175feccaeace550e932fde9f15e3c702b58f6bfc086f42b85034d958e133251e40afa1a0b90803873d5eff6796e0bc8feefbc34d459",
+            "compressed": "038364dc90df290767d3a43175feccaeace550e932fde9f15e3c702b58f6bfc086",
+            "chain_code": "640ba48f6466fd00df6c98d25c66e622b912d14219df21861e3722d07323412f",
+            "private_key": "7a3498de72e8551ac7da0f24199e8a17193070ef6c1777cfc0df4c1ec5546762",
+            "public_key": "038364dc90df290767d3a43175feccaeace550e932fde9f15e3c702b58f6bfc086",
+            "wif": "L1KGAhmpJZm549XDc6ropoLcjwXKDibeynSb7Q8Knpj9Wc4RVPP3",
+            "identifier": "4c380d3109ee2b850cecfb6f9d811b30d9a590f4",
+            "finger_print": "4c380d31",
+            "path": "m/44'/156'/0'/0/0",
+            "address": "GQnvvEa7W93CXSNJSEeYux8jNjLv3SicKB"
+        }
+    },
     "ethereum": {
         "mainnet": {
             "cryptocurrency": "Ethereum",
