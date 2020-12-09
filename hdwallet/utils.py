@@ -68,6 +68,7 @@ def is_mnemonic(mnemonic: str, language: str = None) -> bool:
                          "'spanish', 'chinese_simplified', 'chinese_traditional', 'japanese or 'korean' languages.")
 
     try:
+        mnemonic = unicodedata.normalize("NFKD", mnemonic)
         if language is None:
             for _language in ["english", "french", "italian",
                               "chinese_simplified", "chinese_traditional", "japanese", "korean", "spanish"]:
@@ -103,7 +104,7 @@ def get_mnemonic_strength(mnemonic: str) -> int:
     if not is_mnemonic(mnemonic=mnemonic):
         raise ValueError("Invalid mnemonic words.")
 
-    words = len(unicodedata.normalize("NFKC", mnemonic).split(" "))
+    words = len(unicodedata.normalize("NFKD", mnemonic).split(" "))
     if words == 12:
         return 128
     elif words == 15:

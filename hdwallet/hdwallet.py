@@ -90,7 +90,7 @@ class HDWallet:
         self._entropy, self._language = unhexlify(entropy), language
         self._passphrase = str(passphrase) if passphrase else str()
         mnemonic = Mnemonic(language=self._language).to_mnemonic(data=self._entropy)
-        self._mnemonic = unicodedata.normalize("NFKC", mnemonic)
+        self._mnemonic = unicodedata.normalize("NFKD", mnemonic)
         self._seed = Mnemonic.to_seed(mnemonic=self._mnemonic, passphrase=self._passphrase)
         return self.from_seed(seed=hexlify(self._seed).decode())
 
@@ -98,7 +98,7 @@ class HDWallet:
         if not is_mnemonic(mnemonic=mnemonic, language=language):
             raise ValueError("Invalid mnemonic words.")
 
-        self._mnemonic = unicodedata.normalize("NFKC", mnemonic)
+        self._mnemonic = unicodedata.normalize("NFKD", mnemonic)
         self._strength = get_mnemonic_strength(mnemonic=self._mnemonic)
         self._language = language if language else get_mnemonic_language(mnemonic=self._mnemonic)
         self._entropy = Mnemonic(language=self._language).to_entropy(self._mnemonic)
