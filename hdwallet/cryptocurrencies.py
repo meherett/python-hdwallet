@@ -1,21 +1,73 @@
 #!/usr/bin/env python3
 
-from codecs import decode
-from typing import Any
+from typing import Any, Optional, Union
+from types import SimpleNamespace
 
 
-class Cryptocurrency:
+class NestedNamespace(SimpleNamespace):
+    def __init__(self, dictionary, **kwargs):
+        super().__init__(**kwargs)
+        for key, value in dictionary.items():
+            if isinstance(value, dict):
+                self.__setattr__(key, NestedNamespace(value))
+            else:
+                self.__setattr__(key, value)
+
+
+class SegwitAddress(NestedNamespace):
+
+    HRP: Optional[str] = None
+    VERSION: int = 0x00
+
+
+class CoinType(NestedNamespace):
+
+    INDEX: int
+    HARDENED: bool
+    
+    def __str__(self):
+        return f"{self.INDEX}'" if self.HARDENED else f"{self.INDEX}"
+
+
+class ExtendedKey(NestedNamespace):
+
+    P2PKH: int
+    P2SH: int
+
+    P2WPKH: Optional[int] = None
+    P2WPKH_IN_P2SH: Optional[int] = None
+
+    P2WSH: Optional[int] = None
+    P2WSH_IN_P2SH: Optional[int] = None
+
+
+class ExtendedPrivateKey(ExtendedKey):
+
+    pass
+
+
+class ExtendedPublicKey(ExtendedKey):
+
+    pass
+
+
+class Cryptocurrency(NestedNamespace):
 
     NAME: str
     SYMBOL: str
     NETWORK: str
-    SCRIPT_ADDRESS: bytes
-    PUBLIC_KEY_ADDRESS: bytes
-    WIF_SECRET_KEY: bytes
-    EXTENDED_PRIVATE_KEY: bytes
-    EXTENDED_PUBLIC_KEY: bytes
-    BIP44_PATH: str
+    COIN_TYPE: CoinType
+
+    SCRIPT_ADDRESS: int
+    PUBLIC_KEY_ADDRESS: int
+    SEGWIT_ADDRESS: SegwitAddress
+
+    EXTENDED_PRIVATE_KEY: ExtendedPrivateKey
+    EXTENDED_PUBLIC_KEY: ExtendedPublicKey
+
+    MESSAGE_PREFIX: Union[str, bytes]
     DEFAULT_PATH: str
+    WIF_SECRET_KEY: int
 
 
 class BitcoinMainnet(Cryptocurrency):
@@ -23,13 +75,38 @@ class BitcoinMainnet(Cryptocurrency):
     NAME = "Bitcoin"
     SYMBOL = "BTC"
     NETWORK = "mainnet"
-    SCRIPT_ADDRESS = decode("05", "hex")
-    PUBLIC_KEY_ADDRESS = decode("00", "hex")
-    WIF_SECRET_KEY = decode("80", "hex")
-    EXTENDED_PRIVATE_KEY = decode("0488ade4", "hex")
-    EXTENDED_PUBLIC_KEY = decode("0488b21e", "hex")
-    BIP44_PATH = "m/44'/0'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/0'/0'/0/0"
+    COIN_TYPE = CoinType({
+        "INDEX": 0,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x05
+    PUBLIC_KEY_ADDRESS = 0x00
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "bc",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x0488ade4,
+        "P2SH": 0x0488ade4,
+        "P2WPKH": 0x04b2430c,
+        "P2WPKH_IN_P2SH": 0x049d7878,
+        "P2WSH": 0x02aa7a99,
+        "P2WSH_IN_P2SH": 0x0295b005
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x0488b21e,
+        "P2SH": 0x0488b21e,
+        "P2WPKH": 0x04b24746,
+        "P2WPKH_IN_P2SH": 0x049d7cb2,
+        "P2WSH": 0x02aa7ed3,
+        "P2WSH_IN_P2SH": 0x0295b43f
+    })
+
+    MESSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
 
 
 class BitcoinTestnet(Cryptocurrency):
@@ -37,13 +114,38 @@ class BitcoinTestnet(Cryptocurrency):
     NAME = "Bitcoin"
     SYMBOL = "BTCTEST"
     NETWORK = "testnet"
-    SCRIPT_ADDRESS = decode("c4", "hex")
-    PUBLIC_KEY_ADDRESS = decode("6f", "hex")
-    WIF_SECRET_KEY = decode("ef", "hex")
-    EXTENDED_PRIVATE_KEY = decode("04358394", "hex")
-    EXTENDED_PUBLIC_KEY = decode("043587cf", "hex")
-    BIP44_PATH = "m/44'/1'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/1'/0'/0/0"
+    COIN_TYPE = CoinType({
+        "INDEX": 1,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xc4
+    PUBLIC_KEY_ADDRESS = 0x6f
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "tb",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x04358394,
+        "P2SH": 0x04358394,
+        "P2WPKH": 0x045f18bc,
+        "P2WPKH_IN_P2SH": 0x044a4e28,
+        "P2WSH": 0x02575048,
+        "P2WSH_IN_P2SH": 0x024285b5
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x043587cf,
+        "P2SH": 0x043587cf,
+        "P2WPKH": 0x045f1cf6,
+        "P2WPKH_IN_P2SH": 0x044a5262,
+        "P2WSH": 0x02575483,
+        "P2WSH_IN_P2SH": 0x024289ef
+    })
+
+    MESSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xef
 
 
 class BitcoinCashMainnet(Cryptocurrency):
@@ -51,13 +153,38 @@ class BitcoinCashMainnet(Cryptocurrency):
     NAME = "Bitcoin Cash"
     SYMBOL = "BCH"
     NETWORK = "mainnet"
-    SCRIPT_ADDRESS = decode("28", "hex")
-    PUBLIC_KEY_ADDRESS = decode("1c", "hex")
-    WIF_SECRET_KEY = decode("80", "hex")
-    EXTENDED_PRIVATE_KEY = decode("0488ade4", "hex")
-    EXTENDED_PUBLIC_KEY = decode("0488b21e", "hex")
-    BIP44_PATH = "m/44'/145'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/145'/0'/0/0"
+    COIN_TYPE = CoinType({
+        "INDEX": 145,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x28
+    PUBLIC_KEY_ADDRESS = 0x1c
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "bc",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x0488ade4,
+        "P2SH": 0x0488ade4,
+        "P2WPKH": 0x04b2430c,
+        "P2WPKH_IN_P2SH": 0x049d7878,
+        "P2WSH": 0x02aa7a99,
+        "P2WSH_IN_P2SH": 0x0295b005
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x0488b21e,
+        "P2SH": 0x0488b21e,
+        "P2WPKH": 0x04b24746,
+        "P2WPKH_IN_P2SH": 0x049d7cb2,
+        "P2WSH": 0x02aa7ed3,
+        "P2WSH_IN_P2SH": 0x0295b43f
+    })
+
+    MESSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
 
 
 class BitcoinGoldMainnet(Cryptocurrency):
@@ -65,13 +192,38 @@ class BitcoinGoldMainnet(Cryptocurrency):
     NAME = "Bitcoin Gold"
     SYMBOL = "BTG"
     NETWORK = "mainnet"
-    SCRIPT_ADDRESS = decode("17", "hex")
-    PUBLIC_KEY_ADDRESS = decode("26", "hex")
-    WIF_SECRET_KEY = decode("80", "hex")
-    EXTENDED_PRIVATE_KEY = decode("0488ade4", "hex")
-    EXTENDED_PUBLIC_KEY = decode("0488b21e", "hex")
-    BIP44_PATH = "m/44'/156'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/156'/0'/0/0"
+    COIN_TYPE = CoinType({
+        "INDEX": 156,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x17
+    PUBLIC_KEY_ADDRESS = 0x26
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "btg",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x0488ade4,
+        "P2SH": 0x0488ade4,
+        "P2WPKH": 0x04b2430c,
+        "P2WPKH_IN_P2SH": 0x049d7878,
+        "P2WSH": 0x02aa7a99,
+        "P2WSH_IN_P2SH": 0x0295b005
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x0488b21e,
+        "P2SH": 0x0488b21e,
+        "P2WPKH": 0x04b24746,
+        "P2WPKH_IN_P2SH": 0x049d7cb2,
+        "P2WSH": 0x02aa7ed3,
+        "P2WSH_IN_P2SH": 0x0295b43f
+    })
+
+    MESSAGE_PREFIX = "\x1DBitcoin Gold Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
 
 
 class EthereumMainnet(Cryptocurrency):
@@ -79,11 +231,39 @@ class EthereumMainnet(Cryptocurrency):
     NAME = "Ethereum"
     SYMBOL = "ETH"
     NETWORK = "mainnet"
-    WIF_SECRET_KEY = decode("80", "hex")
-    EXTENDED_PRIVATE_KEY = decode("0488ade4", "hex")
-    EXTENDED_PUBLIC_KEY = decode("0488b21e", "hex")
-    BIP44_PATH = "m/44'/60'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/60'/0'/0/0"
+
+    COIN_TYPE = CoinType({
+        "INDEX": 60,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x05
+    PUBLIC_KEY_ADDRESS = 0x00
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "bc",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x0488ade4,
+        "P2SH": 0x0488ade4,
+        "P2WPKH": 0x04b2430c,
+        "P2WPKH_IN_P2SH": 0x049d7878,
+        "P2WSH": 0x02aa7a99,
+        "P2WSH_IN_P2SH": 0x0295b005
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x0488b21e,
+        "P2SH": 0x0488b21e,
+        "P2WPKH": 0x04b24746,
+        "P2WPKH_IN_P2SH": 0x049d7cb2,
+        "P2WSH": 0x02aa7ed3,
+        "P2WSH_IN_P2SH": 0x0295b43f
+    })
+
+    MESSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
 
 
 class EthereumTestnet(Cryptocurrency):
@@ -91,11 +271,38 @@ class EthereumTestnet(Cryptocurrency):
     NAME = "Ethereum"
     SYMBOL = "ETHTEST"
     NETWORK = "testnet"
-    WIF_SECRET_KEY = decode("80", "hex")
-    EXTENDED_PRIVATE_KEY = decode("0488ade4", "hex")
-    EXTENDED_PUBLIC_KEY = decode("0488b21e", "hex")
-    BIP44_PATH = "m/44'/1'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/1'/0'/0/0"
+    COIN_TYPE = CoinType({
+        "INDEX": 1,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xc4
+    PUBLIC_KEY_ADDRESS = 0x6f
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "tb",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x04358394,
+        "P2SH": 0x04358394,
+        "P2WPKH": 0x045f18bc,
+        "P2WPKH_IN_P2SH": 0x044a4e28,
+        "P2WSH": 0x02575048,
+        "P2WSH_IN_P2SH": 0x024285b5
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x043587cf,
+        "P2SH": 0x043587cf,
+        "P2WPKH": 0x045f1cf6,
+        "P2WPKH_IN_P2SH": 0x044a5262,
+        "P2WSH": 0x02575483,
+        "P2WSH_IN_P2SH": 0x024289ef
+    })
+
+    MESSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xef
 
 
 class DogecoinMainnet(Cryptocurrency):
@@ -103,13 +310,38 @@ class DogecoinMainnet(Cryptocurrency):
     NAME = "Dogecoin"
     SYMBOL = "DOGE"
     NETWORK = "mainnet"
-    SCRIPT_ADDRESS = decode("16", "hex")
-    PUBLIC_KEY_ADDRESS = decode("1e", "hex")
+    COIN_TYPE = CoinType({
+        "INDEX": 3,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x16
+    PUBLIC_KEY_ADDRESS = 0x1e
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x02fac398,
+        "P2SH": 0x02fac398,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x02facafd,
+        "P2SH": 0x02facafd,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MESSAGE_PREFIX = "\x19Dogecoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = bytes([0x1e + 128])
-    EXTENDED_PRIVATE_KEY = decode("02fac398", "hex")
-    EXTENDED_PUBLIC_KEY = decode("02facafd", "hex")
-    BIP44_PATH = "m/44'/3'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/3'/0'/0/0"
 
 
 class DogecoinTestnet(Cryptocurrency):
@@ -117,13 +349,116 @@ class DogecoinTestnet(Cryptocurrency):
     NAME = "Dogecoin"
     SYMBOL = "DOGETEST"
     NETWORK = "testnet"
-    SCRIPT_ADDRESS = decode("c4", "hex")
-    PUBLIC_KEY_ADDRESS = decode("71", "hex")
-    WIF_SECRET_KEY = bytes([0x71 + 128])
-    EXTENDED_PRIVATE_KEY = decode("04358394", "hex")
-    EXTENDED_PUBLIC_KEY = decode("043587cf", "hex")
-    BIP44_PATH = "m/44'/1'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/1'/0'/0/0"
+    COIN_TYPE = CoinType({
+        "INDEX": 3,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xc4
+    PUBLIC_KEY_ADDRESS = 0x71
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "dogecointestnet",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x04358394,
+        "P2SH": 0x04358394,
+        "P2WPKH": 0x04358394,
+        "P2WPKH_IN_P2SH": 0x04358394,
+        "P2WSH": 0x04358394,
+        "P2WSH_IN_P2SH": 0x04358394
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x043587cf,
+        "P2SH": 0x043587cf,
+        "P2WPKH": 0x043587cf,
+        "P2WPKH_IN_P2SH": 0x043587cf,
+        "P2WSH": 0x043587cf,
+        "P2WSH_IN_P2SH": 0x043587cf
+    })
+
+    MESSAGE_PREFIX = "\x19Dogecoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xf1
+
+
+class XinFinMainnet(Cryptocurrency):
+
+    NAME = "XinFin"
+    SYMBOL = "XDC"
+    NETWORK = "mainnet"
+    COIN_TYPE = CoinType({
+        "INDEX": 550,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x05
+    PUBLIC_KEY_ADDRESS = 0x00
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "bc",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x0488ade4,
+        "P2SH": 0x0488ade4,
+        "P2WPKH": 0x04b2430c,
+        "P2WPKH_IN_P2SH": 0x049d7878,
+        "P2WSH": 0x02aa7a99,
+        "P2WSH_IN_P2SH": 0x0295b005
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x0488b21e,
+        "P2SH": 0x0488b21e,
+        "P2WPKH": 0x04b24746,
+        "P2WPKH_IN_P2SH": 0x049d7cb2,
+        "P2WSH": 0x02aa7ed3,
+        "P2WSH_IN_P2SH": 0x0295b43f
+    })
+
+    MESSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
+
+
+class XinFinTestnet(Cryptocurrency):
+
+    NAME = "XinFin"
+    SYMBOL = "XDCTEST"
+    NETWORK = "testnet"
+    COIN_TYPE = CoinType({
+        "INDEX": 1,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xc4
+    PUBLIC_KEY_ADDRESS = 0x6f
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "tb",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x04358394,
+        "P2SH": 0x04358394,
+        "P2WPKH": 0x045f18bc,
+        "P2WPKH_IN_P2SH": 0x044a4e28,
+        "P2WSH": 0x02575048,
+        "P2WSH_IN_P2SH": 0x024285b5
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x043587cf,
+        "P2SH": 0x043587cf,
+        "P2WPKH": 0x045f1cf6,
+        "P2WPKH_IN_P2SH": 0x044a5262,
+        "P2WSH": 0x02575483,
+        "P2WSH_IN_P2SH": 0x024289ef
+    })
+
+    MESSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xef
 
 
 class LitecoinMainnet(Cryptocurrency):
@@ -131,13 +466,38 @@ class LitecoinMainnet(Cryptocurrency):
     NAME = "Litecoin"
     SYMBOL = "LTC"
     NETWORK = "mainnet"
-    SCRIPT_ADDRESS = decode("05", "hex")
-    PUBLIC_KEY_ADDRESS = decode("30", "hex")
-    WIF_SECRET_KEY = bytes([0x30 + 128])
-    EXTENDED_PRIVATE_KEY = decode("019d9cfe", "hex")  # 0488ade4
-    EXTENDED_PUBLIC_KEY = decode("019da462", "hex")  # 0488b21e
-    BIP44_PATH = "m/44'/2'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/2'/0'/0/0"
+    COIN_TYPE = CoinType({
+        "INDEX": 2,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x32
+    PUBLIC_KEY_ADDRESS = 0x30
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "ltc",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x019d9cfe,
+        "P2SH": 0x019d9cfe,
+        "P2WPKH": 0x04b2430c,
+        "P2WPKH_IN_P2SH": 0x01b26792,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x019da462,
+        "P2SH": 0x019da462,
+        "P2WPKH": 0x04b24746,
+        "P2WPKH_IN_P2SH": 0x01b26ef6,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MESSAGE_PREFIX = "\x19Litecoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xb0
 
 
 class LitecoinTestnet(Cryptocurrency):
@@ -145,13 +505,77 @@ class LitecoinTestnet(Cryptocurrency):
     NAME = "Litecoin"
     SYMBOL = "LTCTEST"
     NETWORK = "testnet"
-    SCRIPT_ADDRESS = decode("c4", "hex")
-    PUBLIC_KEY_ADDRESS = decode("6f", "hex")
-    WIF_SECRET_KEY = bytes([0x6f + 128])
-    EXTENDED_PRIVATE_KEY = decode("0436ef7d", "hex")  # 04358394
-    EXTENDED_PUBLIC_KEY = decode("0436f6e1", "hex")  # 043587cf
-    BIP44_PATH = "m/44'/1'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/1'/0'/0/0"
+    COIN_TYPE = CoinType({
+        "INDEX": 1,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xc4
+    PUBLIC_KEY_ADDRESS = 0x6f
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "litecointestnet",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x0436ef7d,
+        "P2SH": 0x0436ef7d,
+        "P2WPKH": 0x04358394,
+        "P2WPKH_IN_P2SH": 0x04358394,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x0436f6e1,
+        "P2SH": 0x0436f6e1,
+        "P2WPKH": 0x043587cf,
+        "P2WPKH_IN_P2SH": 0x043587cf,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MESSAGE_PREFIX = "\x19Litecoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xb0
+
+
+class NavcoinMainnet(Cryptocurrency):
+
+    NAME = "Navcoin"
+    SYMBOL = "NAV"
+    NETWORK = "mainnet"
+    COIN_TYPE = CoinType({
+        "INDEX": 130,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x55
+    PUBLIC_KEY_ADDRESS = 0x35
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "bc",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x0488ade4,
+        "P2SH": 0x0488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x0488b21e,
+        "P2SH": 0x0488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MESSAGE_PREFIX = "\x18Navcoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x96
 
 
 class OmniMainnet(Cryptocurrency):
@@ -159,13 +583,38 @@ class OmniMainnet(Cryptocurrency):
     NAME = "Omni"
     SYMBOL = "OMNI"
     NETWORK = "mainnet"
-    SCRIPT_ADDRESS = decode("05", "hex")
-    PUBLIC_KEY_ADDRESS = decode("00", "hex")
-    WIF_SECRET_KEY = decode("80", "hex")
-    EXTENDED_PRIVATE_KEY = decode("0488ade4", "hex")
-    EXTENDED_PUBLIC_KEY = decode("0488b21e", "hex")
-    BIP44_PATH = "m/44'/200'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/200'/0'/0/0"
+    COIN_TYPE = CoinType({
+        "INDEX": 200,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x05
+    PUBLIC_KEY_ADDRESS = 0x00
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x0488ade4,
+        "P2SH": 0x0488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x0488b21e,
+        "P2SH": 0x0488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MESSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
 
 
 class OmniTestnet(Cryptocurrency):
@@ -173,13 +622,38 @@ class OmniTestnet(Cryptocurrency):
     NAME = "Omni"
     SYMBOL = "OMNITEST"
     NETWORK = "testnet"
-    SCRIPT_ADDRESS = decode("c4", "hex")
-    PUBLIC_KEY_ADDRESS = decode("6f", "hex")
-    WIF_SECRET_KEY = decode("ef", "hex")
-    EXTENDED_PRIVATE_KEY = decode("04358394", "hex")
-    EXTENDED_PUBLIC_KEY = decode("043587cf", "hex")
-    BIP44_PATH = "m/44'/1'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/1'/0'/0/0"
+    COIN_TYPE = CoinType({
+        "INDEX": 1,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xc4
+    PUBLIC_KEY_ADDRESS = 0x6f
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x04358394,
+        "P2SH": 0x04358394,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x043587cf,
+        "P2SH": 0x043587cf,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MESSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xef
 
 
 class DashMainnet(Cryptocurrency):
@@ -187,13 +661,38 @@ class DashMainnet(Cryptocurrency):
     NAME = "Dash"
     SYMBOL = "DASH"
     NETWORK = "mainnet"
-    SCRIPT_ADDRESS = decode("10", "hex")
-    PUBLIC_KEY_ADDRESS = decode("4c", "hex")
-    WIF_SECRET_KEY = decode("cc", "hex")
-    EXTENDED_PRIVATE_KEY = decode("0488ade4", "hex")
-    EXTENDED_PUBLIC_KEY = decode("0488b21e", "hex")
-    BIP44_PATH = "m/44'/5'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/5'/0'/0/0"
+    COIN_TYPE = CoinType({
+        "INDEX": 5,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x10
+    PUBLIC_KEY_ADDRESS = 0x4c
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x0488ade4,
+        "P2SH": 0x0488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x0488b21e,
+        "P2SH": 0x0488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MESSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xcc
 
 
 class DashTestnet(Cryptocurrency):
@@ -201,13 +700,38 @@ class DashTestnet(Cryptocurrency):
     NAME = "Dash"
     SYMBOL = "DASHTEST"
     NETWORK = "testnet"
-    SCRIPT_ADDRESS = decode("13", "hex")
-    PUBLIC_KEY_ADDRESS = decode("8c", "hex")
-    WIF_SECRET_KEY = decode("ef", "hex")
-    EXTENDED_PRIVATE_KEY = decode("04358394", "hex")
-    EXTENDED_PUBLIC_KEY = decode("043587cf", "hex")
-    BIP44_PATH = "m/44'/1'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/1'/0'/0/0"
+    COIN_TYPE = CoinType({
+        "INDEX": 1,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x13
+    PUBLIC_KEY_ADDRESS = 0x8c
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x04358394,
+        "P2SH": 0x04358394,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x043587cf,
+        "P2SH": 0x043587cf,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MESSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xef
 
 
 class QtumMainnet(Cryptocurrency):
@@ -215,13 +739,38 @@ class QtumMainnet(Cryptocurrency):
     NAME = "Qtum"
     SYMBOL = "QTUM"
     NETWORK = "mainnet"
-    SCRIPT_ADDRESS = decode("32", "hex")
-    PUBLIC_KEY_ADDRESS = decode("3a", "hex")
-    WIF_SECRET_KEY = decode("80", "hex")
-    EXTENDED_PRIVATE_KEY = decode("0488ade4", "hex")
-    EXTENDED_PUBLIC_KEY = decode("0488b21e", "hex")
-    BIP44_PATH = "m/44'/88'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/88'/0'/0/0"
+    COIN_TYPE = CoinType({
+        "INDEX": 2301,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x32
+    PUBLIC_KEY_ADDRESS = 0x3a
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "qc1",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x0488ade4,
+        "P2SH": 0x0488ade4,
+        "P2WPKH": 0x045f18bc,
+        "P2WPKH_IN_P2SH": 0x049d7878,
+        "P2WSH": 0x02aa7a99,
+        "P2WSH_IN_P2SH": 0x0295b005
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x0488b21e,
+        "P2SH": 0x0488b21e,
+        "P2WPKH": 0x045f1cf6,
+        "P2WPKH_IN_P2SH": 0x049d7cb2,
+        "P2WSH": 0x02aa7ed3,
+        "P2WSH_IN_P2SH": 0x0295b43f
+    })
+
+    MESSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
 
 
 class QtumTestnet(Cryptocurrency):
@@ -229,13 +778,38 @@ class QtumTestnet(Cryptocurrency):
     NAME = "Qtum"
     SYMBOL = "QTUMTEST"
     NETWORK = "testnet"
-    SCRIPT_ADDRESS = decode("6e", "hex")
-    PUBLIC_KEY_ADDRESS = decode("78", "hex")
-    WIF_SECRET_KEY = decode("ef", "hex")
-    EXTENDED_PRIVATE_KEY = decode("04358394", "hex")
-    EXTENDED_PUBLIC_KEY = decode("043587cf", "hex")
-    BIP44_PATH = "m/44'/1'/{account}'/{change}/{address}"
-    DEFAULT_PATH = "m/44'/1'/0'/0/0"
+    COIN_TYPE = CoinType({
+        "INDEX": 1,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x6e
+    PUBLIC_KEY_ADDRESS = 0x78
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "tq1",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x04358394,
+        "P2SH": 0x04358394,
+        "P2WPKH": 0x045f18bc,
+        "P2WPKH_IN_P2SH": 0x044a4e28,
+        "P2WSH": 0x02575048,
+        "P2WSH_IN_P2SH": 0x024285b5
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x043587cf,
+        "P2SH": 0x043587cf,
+        "P2WPKH": 0x045f1cf6,
+        "P2WPKH_IN_P2SH": 0x044a5262,
+        "P2WSH": 0x02575483,
+        "P2WSH_IN_P2SH": 0x024289ef
+    })
+
+    MESSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xef
 
 
 def get_cryptocurrency(symbol: str) -> Any:
@@ -256,10 +830,16 @@ def get_cryptocurrency(symbol: str) -> Any:
         return DogecoinMainnet
     elif symbol.upper() == "DOGETEST":
         return DogecoinTestnet
+    elif symbol.upper() == "XDC":
+        return XinFinMainnet
+    elif symbol.upper() == "XDCTEST":
+        return XinFinTestnet
     elif symbol.upper() == "LTC":
         return LitecoinMainnet
     elif symbol.upper() == "LTCTEST":
         return LitecoinTestnet
+    elif symbol.upper() == "NAV":
+        return NavcoinMainnet
     elif symbol.upper() == "OMNI":
         return OmniMainnet
     elif symbol.upper() == "OMNITEST":
