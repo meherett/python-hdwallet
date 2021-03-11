@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from typing import Any, Optional, Union
 from types import SimpleNamespace
+from typing import Any, Optional
 
 
 class NestedNamespace(SimpleNamespace):
@@ -65,7 +65,7 @@ class Cryptocurrency(NestedNamespace):
     EXTENDED_PRIVATE_KEY: ExtendedPrivateKey
     EXTENDED_PUBLIC_KEY: ExtendedPublicKey
 
-    MESSAGE_PREFIX: Union[str, bytes]
+    MESSAGE_PREFIX: Optional[str]
     DEFAULT_PATH: str
     WIF_SECRET_KEY: int
 
@@ -341,7 +341,7 @@ class DogecoinMainnet(Cryptocurrency):
 
     MESSAGE_PREFIX = "\x19Dogecoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
-    WIF_SECRET_KEY = bytes([0x1e + 128])
+    WIF_SECRET_KEY = 0xf1
 
 
 class DogecoinTestnet(Cryptocurrency):
@@ -552,7 +552,7 @@ class NavcoinMainnet(Cryptocurrency):
     SCRIPT_ADDRESS = 0x55
     PUBLIC_KEY_ADDRESS = 0x35
     SEGWIT_ADDRESS = SegwitAddress({
-        "HRP": "bc",
+        "HRP": None,
         "VERSION": 0x00
     })
 

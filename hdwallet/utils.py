@@ -1,19 +1,28 @@
 #!/usr/bin/env python3
 
 from mnemonic import Mnemonic
-from binascii import hexlify
+from binascii import hexlify, unhexlify
 from random import choice
-from typing import AnyStr
+from typing import AnyStr, Optional
 
 import string
 import os
 import unicodedata
+import binascii
 
+from .exceptions import SemanticError
 from .cryptocurrencies import get_cryptocurrency
 from .libs.base58 import check_decode
 
 # Alphabet and digits.
 letters = string.ascii_letters + string.digits
+
+
+def _unhexlify(integer: int):
+    try:
+        return unhexlify("0%x" % integer)
+    except binascii.Error:
+        return unhexlify("%x" % integer)
 
 
 def get_bytes(string: AnyStr) -> bytes:
@@ -27,15 +36,65 @@ def get_bytes(string: AnyStr) -> bytes:
 
 
 def generate_passphrase(length: int = 32) -> str:
+    """
+    Generate entropy hex string.
+
+    :param length: Passphrase length, default to 32.
+    :type length: int
+
+    :returns: str -- Passphrase hex string.
+
+    >>> from hdwallet.utils import generate_passphrase
+    >>> generate_passphrase(length=32)
+    "N39rPfa3QvF2Tm2nPyoBpXNiBFXJywTz"
+    """
+
     return str().join(choice(letters) for _ in range(length))
 
 
+def generate_entropy(strength: int = 128) -> str:
+    """
+    Generate entropy hex string.
+
+    :param strength: Entropy strength, default to 128.
+    :type strength: int
+
+    :returns: str -- Entropy hex string.
+
+    >>> from hdwallet.utils import generate_entropy
+    >>> generate_entropy(strength=128)
+    "ee535b143b0d9d1f87546f9df0d06b1a"
+    """
+
+    if strength not in [128, 160, 192, 224, 256]:
+        raise ValueError(
+            "Strength should be one of the following "
+            "[128, 160, 192, 224, 256], but it is not (%d)."
+            % strength
+        )
+    return hexlify(os.urandom(strength // 8)).decode()
+
+
 def generate_mnemonic(language: str = "english", strength: int = 128) -> str:
+    """
+    Generate mnemonic words.
+
+    :param language: Mnemonic language, default to english.
+    :type language: str
+    :param strength: Entropy strength, default to 128.
+    :type strength: int
+
+    :returns: str -- Mnemonic words.
+
+    >>> from hdwallet.utils import generate_mnemonic
+    >>> generate_mnemonic(language="french")
+    "sceptre capter séquence girafe absolu relatif fleur zoologie muscle sirop saboter parure"
+    """
+
     if language and language not in ["english", "french", "italian", "japanese",
                                      "chinese_simplified", "chinese_traditional", "korean", "spanish"]:
-        raise ValueError("Invalid language, choose only the following options 'english', 'french', 'italian', "
-                         "'spanish', 'chinese_simplified', 'chinese_traditional', 'japanese or 'korean' languages.")
-
+        raise ValueError("invalid language, use only this options english, french, "
+                         "italian, spanish, chinese_simplified, chinese_traditional, japanese or korean languages.")
     if strength not in [128, 160, 192, 224, 256]:
         raise ValueError(
             "Strength should be one of the following "
@@ -46,27 +105,43 @@ def generate_mnemonic(language: str = "english", strength: int = 128) -> str:
     return Mnemonic(language=language).generate(strength=strength)
 
 
-def generate_entropy(strength: int = 128) -> str:
-    if strength not in [128, 160, 192, 224, 256]:
-        raise ValueError(
-            "Strength should be one of the following "
-            "[128, 160, 192, 224, 256], but it is not (%d)."
-            % strength
-        )
-
-    return hexlify(os.urandom(strength // 8)).decode()
-
-
 def is_entropy(entropy: str) -> bool:
-    return len(entropy) in [32, 40, 48, 56, 64]
+    """
+    Check entropy hex string.
+
+    :param entropy: Mnemonic words.
+    :type entropy: str
+
+    :returns: bool -- Entropy valid/invalid.
+
+    >>> from hdwallet.utils import is_entropy
+    >>> is_entropy(entropy="ee535b143b0d9d1f87546f9df0d06b1a")
+    True
+    """
+
+    return len(unhexlify(entropy)) in [16, 20, 24, 28, 32]
 
 
-def is_mnemonic(mnemonic: str, language: str = None) -> bool:
+def is_mnemonic(mnemonic: str, language: Optional[str] = None) -> bool:
+    """
+    Check mnemonic words.
+
+    :param mnemonic: Mnemonic words.
+    :type mnemonic: str
+    :param language: Mnemonic language, default to None.
+    :type language: str
+
+    :returns: bool -- Mnemonic valid/invalid.
+
+    >>> from hdwallet.utils import is_mnemonic
+    >>> is_mnemonic(mnemonic="sceptre capter séquence girafe absolu relatif fleur zoologie muscle sirop saboter parure")
+    True
+    """
+
     if language and language not in ["english", "french", "italian", "japanese",
                                      "chinese_simplified", "chinese_traditional", "korean", "spanish"]:
-        raise ValueError("Invalid language, choose only the following options 'english', 'french', 'italian', "
-                         "'spanish', 'chinese_simplified', 'chinese_traditional', 'japanese or 'korean' languages.")
-
+        raise ValueError("invalid language, use only this options english, french, "
+                         "italian, spanish, chinese_simplified, chinese_traditional, japanese or korean languages.")
     try:
         mnemonic = unicodedata.normalize("NFKD", mnemonic)
         if language is None:
@@ -84,24 +159,52 @@ def is_mnemonic(mnemonic: str, language: str = None) -> bool:
 
 
 def get_entropy_strength(entropy: str) -> int:
-    if not is_entropy(entropy=entropy):
-        raise ValueError("Invalid entropy.")
+    """
+    Get entropy strength.
 
-    length = len(entropy)
-    if length == 32:
+    :param entropy: Entropy hex string.
+    :type entropy: str
+
+    :returns: int -- Entropy strength.
+
+    >>> from hdwallet.utils import get_entropy_strength
+    >>> get_entropy_strength(entropy="ee535b143b0d9d1f87546f9df0d06b1a")
+    128
+    """
+
+    if not is_entropy(entropy=entropy):
+        raise ValueError("Invalid entropy hex string.")
+
+    length = len(unhexlify(entropy))
+    if length == 16:
         return 128
-    elif length == 40:
+    elif length == 20:
         return 160
-    elif length == 48:
+    elif length == 24:
         return 192
-    elif length == 56:
+    elif length == 28:
         return 224
-    elif length == 64:
+    elif length == 32:
         return 256
 
 
-def get_mnemonic_strength(mnemonic: str) -> int:
-    if not is_mnemonic(mnemonic=mnemonic):
+def get_mnemonic_strength(mnemonic: str, language: Optional[str] = None) -> int:
+    """
+    Get mnemonic strength.
+
+    :param mnemonic: Mnemonic words.
+    :type mnemonic: str
+    :param language: Mnemonic language, default to None.
+    :type language: str
+
+    :returns: int -- Mnemonic strength.
+
+    >>> from hdwallet.utils import get_mnemonic_strength
+    >>> get_mnemonic_strength(mnemonic="sceptre capter séquence girafe absolu relatif fleur zoologie muscle sirop saboter parure")
+    128
+    """
+
+    if not is_mnemonic(mnemonic=mnemonic, language=language):
         raise ValueError("Invalid mnemonic words.")
 
     words = len(unicodedata.normalize("NFKD", mnemonic).split(" "))
@@ -118,10 +221,24 @@ def get_mnemonic_strength(mnemonic: str) -> int:
 
 
 def get_mnemonic_language(mnemonic: str) -> str:
+    """
+    Get mnemonic language.
+
+    :param mnemonic: Mnemonic words.
+    :type mnemonic: str
+
+    :returns: str -- Mnemonic language.
+
+    >>> from hdwallet.utils import get_mnemonic_language
+    >>> get_mnemonic_language(mnemonic="sceptre capter séquence girafe absolu relatif fleur zoologie muscle sirop saboter parure")
+    "french"
+    """
+
     if not is_mnemonic(mnemonic=mnemonic):
         raise ValueError("Invalid mnemonic words.")
 
     language = None
+    mnemonic = unicodedata.normalize("NFKD", mnemonic)
     for _language in ["english", "french", "italian",
                       "chinese_simplified", "chinese_traditional", "japanese", "korean", "spanish"]:
         if Mnemonic(language=_language).check(mnemonic=mnemonic) is True:
@@ -130,21 +247,90 @@ def get_mnemonic_language(mnemonic: str) -> str:
     return language
 
 
-def is_root_xprivate_key(xprivate_key: str, symbol: str) -> bool:
+def entropy_to_mnemonic(entropy: str, language: str = "english") -> str:
+    """
+    Get mnemonic from entropy hex string.
+
+    :param entropy: Entropy hex string.
+    :type entropy: str
+    :param language: Mnemonic language, default to english.
+    :type language: str
+
+    :returns: str -- Mnemonic words.
+
+    >>> from hdwallet.utils import entropy_to_mnemonic
+    >>> entropy_to_mnemonic(entropy="ee535b143b0d9d1f87546f9df0d06b1a", language="korean")
+    "학력 외침 주민 스위치 출연 연습 근본 여전히 울음 액수 귀신 마누라"
+    """
+
+    if not is_entropy(entropy=entropy):
+        raise ValueError("Invalid entropy hex string.")
+
+    if language and language not in ["english", "french", "italian", "japanese",
+                                     "chinese_simplified", "chinese_traditional", "korean", "spanish"]:
+        raise ValueError("Invalid language, use only this options english, french, "
+                         "italian, spanish, chinese_simplified, chinese_traditional, japanese or korean languages.")
+
+    return Mnemonic(language=language).to_mnemonic(unhexlify(entropy))
+
+
+def mnemonic_to_entropy(mnemonic: str, language: Optional[str] = None) -> str:
+    """
+    Get entropy from mnemonic words.
+
+    :param mnemonic: Mnemonic words.
+    :type mnemonic: str
+    :param language: Mnemonic language, default to english.
+    :type language: str
+
+    :returns: str -- Enropy hex string.
+
+    >>> from hdwallet.utils import mnemonic_to_entropy
+    >>> mnemonic_to_entropy(mnemonic="학력 외침 주민 스위치 출연 연습 근본 여전히 울음 액수 귀신 마누라", language="korean")
+    "ee535b143b0d9d1f87546f9df0d06b1a"
+    """
+
+    if not is_mnemonic(mnemonic=mnemonic, language=language):
+        raise ValueError("Invalid mnemonic words.")
+
+    mnemonic = unicodedata.normalize("NFKD", mnemonic)
+    language = language if language else get_mnemonic_language(mnemonic=mnemonic)
+    return Mnemonic(language=language).to_entropy(mnemonic).hex()
+
+
+def is_root_xprivate_key(xprivate_key: str, symbol: str, semantic: str = "p2pkh") -> bool:
+    if semantic not in ["p2pkh", "p2sh", "p2wpkh", "p2wpkh_in_p2sh", "p2wsh", "p2wsh_in_p2sh"]:
+        raise SemanticError(
+            "Wrong extended semantic",
+            "choose only the following options 'p2pkh', 'p2sh', 'p2wpkh', 'p2wpkh_in_p2sh', 'p2wsh' or 'p2wsh_in_p2sh' semantics."
+        )
     decoded_xprivate_key = check_decode(xprivate_key).hex()
     if len(decoded_xprivate_key) != 156:  # 78
         raise ValueError("Invalid xprivate key.")
     cryptocurrency = get_cryptocurrency(symbol=symbol)
-    version = cryptocurrency.EXTENDED_PRIVATE_KEY.hex()
-    raw = f"{version}000000000000000000"
+    version = cryptocurrency.EXTENDED_PRIVATE_KEY.__getattribute__(
+        semantic.upper()
+    )
+    if version is None:
+        raise NotImplementedError(semantic)
+    raw = f"{_unhexlify(version).hex()}000000000000000000"
     return decoded_xprivate_key.startswith(raw)
 
 
-def is_root_xpublic_key(xpublic_key: str, symbol: str) -> bool:
+def is_root_xpublic_key(xpublic_key: str, symbol: str, semantic: str = "p2pkh") -> bool:
+    if semantic not in ["p2pkh", "p2sh", "p2wpkh", "p2wpkh_in_p2sh", "p2wsh", "p2wsh_in_p2sh"]:
+        raise SemanticError(
+            "Wrong extended semantic",
+            "choose only the following options 'p2pkh', 'p2sh', 'p2wpkh', 'p2wpkh_in_p2sh', 'p2wsh' or 'p2wsh_in_p2sh' semantics."
+        )
     decoded_xpublic_key = check_decode(xpublic_key).hex()
     if len(decoded_xpublic_key) != 156:  # 78
         raise ValueError("Invalid xpublic key.")
     cryptocurrency = get_cryptocurrency(symbol=symbol)
-    version = cryptocurrency.EXTENDED_PUBLIC_KEY.hex()
-    raw = f"{version}000000000000000000"
+    version = cryptocurrency.EXTENDED_PUBLIC_KEY.__getattribute__(
+        semantic.upper()
+    )
+    if version is None:
+        raise NotImplementedError(semantic)
+    raw = f"{_unhexlify(version).hex()}000000000000000000"
     return decoded_xpublic_key.startswith(raw)

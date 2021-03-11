@@ -11,10 +11,13 @@ from ecdsa.ecdsa import (
 from binascii import (
     hexlify, unhexlify
 )
+from typing import (
+    Tuple, Union, Optional
+)
 from mnemonic import Mnemonic
 from hashlib import sha256
 from typing import (
-    Optional, Any
+    Optional, Any, Union
 )
 
 import hmac
@@ -25,17 +28,24 @@ import unicodedata
 import hashlib
 import base58
 
+from .libs.bech32 import (
+    bech32_encode, encode, bech32_decode, decode
+)
 from .libs.base58 import (
     check_encode, checksum_encode, check_decode, ensure_string
 )
 from .cryptocurrencies import (
-    Cryptocurrency, get_cryptocurrency
+    Cryptocurrency, get_cryptocurrency, SegwitAddress
 )
+from .derivations import (
+    Derivation, BIP32Derivation, BIP44Derivation,
+    BIP49Derivation, BIP84Derivation, BIP141Derivation
+)
+from .exceptions import SemanticError
 from .utils import (
-    get_bytes, is_entropy, is_mnemonic, get_entropy_strength,
+    get_bytes, is_entropy, is_mnemonic, get_entropy_strength, _unhexlify,
     get_mnemonic_language, is_root_xprivate_key, get_mnemonic_strength
 )
-
 
 MIN_ENTROPY_LEN: int = 128
 BIP32KEY_HARDEN: int = 0x80000000
@@ -47,8 +57,27 @@ INFINITY: Point = ecdsa.ellipticcurve.INFINITY
 
 
 class HDWallet:
+    """
+    Hierarchical Deterministic Wallet
 
-    def __init__(self, symbol: str = "BTC", cryptocurrency: Any = None, use_default_path: bool = False):
+    :param symbol: Cryptocurrency symbol, defaults to ``BTC``.
+    :type symbol: str
+    :param cryptocurrency: Cryptocurrency instance, defaults to ``None``.
+    :type cryptocurrency: Cryptocurrency
+    :param semantic: Extended semantic, defaults to ``P2PKH``.
+    :type semantic: str
+    :param use_default_path: Use default derivation path, defaults to ``False``.
+    :type use_default_path: bool
+
+    :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
+
+    .. note::
+        To initialize HDWallet symbol or cryptocurrency is required.
+    """
+
+    def __init__(self, symbol: str = "BTC", cryptocurrency: Any = None,
+                 semantic: str = "p2pkh", use_default_path: bool = False):
+        self._cryptocurrency: Any = None
         if cryptocurrency:
             if not issubclass(cryptocurrency, Cryptocurrency):
                 raise TypeError("Invalid Cryptocurrency type, the sub class must be Cryptocurrency instance.")
@@ -71,14 +100,36 @@ class HDWallet:
         self._private_key: Optional[bytes] = None
         self._key: Optional[SigningKey] = None
         self._verified_key: Optional[VerifyingKey] = None
+        self._semantic: str = semantic
+        self._from_class: bool = False
+        self._path_class: str = "m"
 
         self._private_key: Optional[bytes] = None
         self._public_key: Optional[str] = None
         self._chain_code: Optional[bytes] = None
         self._depth: int = 0
         self._index: int = 0
-        
+
     def from_entropy(self, entropy: str, language: str = "english", passphrase: str = None) -> "HDWallet":
+        """
+        Master from Entropy hex string.
+
+        :param entropy: Entropy hex string.
+        :type entropy: str
+        :param language: Mnemonic language, default to ``english``.
+        :type language: str
+        :param passphrase: Mnemonic passphrase or password, default to ``None``.
+        :type passphrase: str
+
+        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_entropy(entropy="ee535b143b0d9d1f87546f9df0d06b1a", language="english", passphrase=None)
+        <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
+        """
+
         if not is_entropy(entropy=entropy):
             raise ValueError("Invalid entropy.")
         if language and language not in ["english", "french", "italian", "japanese",
@@ -95,6 +146,25 @@ class HDWallet:
         return self.from_seed(seed=hexlify(self._seed).decode())
 
     def from_mnemonic(self, mnemonic: str, language: str = None, passphrase: str = None) -> "HDWallet":
+        """
+        Master from Mnemonic words.
+
+        :param mnemonic: Mnemonic words.
+        :type mnemonic: str
+        :param language: Mnemonic language, default to ``None``.
+        :type language: str
+        :param passphrase: Mnemonic passphrase or password, default to ``None``.
+        :type passphrase: str
+
+        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="sceptre capter séquence girafe absolu relatif fleur zoologie muscle sirop saboter parure", passphrase=None)
+        <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
+        """
+
         if not is_mnemonic(mnemonic=mnemonic, language=language):
             raise ValueError("Invalid mnemonic words.")
 
@@ -107,6 +177,21 @@ class HDWallet:
         return self.from_seed(seed=hexlify(self._seed).decode())
 
     def from_seed(self, seed: str) -> "HDWallet":
+        """
+        Master from Seed hex string.
+
+        :param seed: Seed hex string.
+        :type seed: str
+
+        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import ETH
+        >>> hdwallet = HDWallet(symbol=ETH)
+        >>> hdwallet.from_seed(seed="8d5f4fe5b81a6a6a18b08603b6b3f59df9f4bbb25d10c55d23e0cbdc5ee385e5fddad9d7e6114f11afdec45928328081f9a598151a7613dc5f5a0c16a4612aa4")
+        <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
+        """
+
         self._seed = unhexlify(seed)
         self._i = hmac.new(b"Bitcoin seed", get_bytes(seed), hashlib.sha512).digest()
         il, ir = self._i[:32], self._i[32:]
@@ -120,9 +205,26 @@ class HDWallet:
         if self._use_default_path:
             self.from_path(path=self._cryptocurrency.DEFAULT_PATH)
         self._public_key = self.compressed()
+        if self._from_class:
+            self.from_path(path=self._path_class)
         return self
 
     def from_root_xprivate_key(self, root_xprivate_key: str) -> "HDWallet":
+        """
+        Master from Root XPrivate Key.
+
+        :param root_xprivate_key: Root xprivate key.
+        :type root_xprivate_key: str
+
+        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_root_xprivate_key(root_xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
+        <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
+        """
+
         if not is_root_xprivate_key(xprivate_key=root_xprivate_key, symbol=self._cryptocurrency.SYMBOL):
             raise ValueError("Invalid root xprivate key.")
 
@@ -136,6 +238,21 @@ class HDWallet:
         return self
 
     def from_xprivate_key(self, xprivate_key: str) -> "HDWallet":
+        """
+        Master from XPrivate Key.
+
+        :param xprivate_key: XPrivate key.
+        :type xprivate_key: str
+
+        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_xprivate_key(xprivate_key="xprvA3BYGWQ9FmhyaNRRXB2f1LphNPnaY9T6gngw4BaTbkFtscSH4RCuJhgWUSKs9S6ciGioHd4TX4UeyUg53MkfN9Xh38xkS1j2Wb9YKsYpJHQ")
+        <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
+        """
+
         _deserialize_xprivate_key = self._deserialize_xprivate_key(xprivate_key=xprivate_key)
         self._depth, self._parent_fingerprint, self._index = (
             int.from_bytes(_deserialize_xprivate_key[1], "big"),
@@ -149,25 +266,73 @@ class HDWallet:
         return self
 
     def from_wif(self, wif: str) -> "HDWallet":
+        """
+        Master from Wallet Important Format (WIF).
+
+        :param wif: Wallet important format.
+        :type wif: str
+
+        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_wif(wif="KzsHWUJsrTWUUhBGPfMMxLLydiH7NhEn6z7mKHXD5qNkUWaC4TEn")
+        <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
+        """
+
         raw = check_decode(wif)[:-1]
-        if not raw.startswith(self._cryptocurrency.WIF_SECRET_KEY):
+        if not raw.startswith(_unhexlify(self._cryptocurrency.WIF_SECRET_KEY)):
             raise ValueError(f"Invalid {self.cryptocurrency()} wallet important format.")
 
-        self._private_key = raw.split(self._cryptocurrency.WIF_SECRET_KEY, 1).pop()
+        self._private_key = raw.split(_unhexlify(self._cryptocurrency.WIF_SECRET_KEY), 1).pop()
         self._key = ecdsa.SigningKey.from_string(self._private_key, curve=SECP256k1)
         self._verified_key = self._key.get_verifying_key()
         self._public_key = self.compressed()
         return self
 
-    def from_private_key(self, private_key) -> "HDWallet":
+    def from_private_key(self, private_key: str) -> "HDWallet":
+        """
+        Master from Private Key.
+
+        :param private_key: Private key.
+        :type private_key: str
+
+        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_private_key(private_key="6cd78b0d69eab1a47bfa53a52b9d8c4331e858b5d7a599270a95d9735fdb0b94")
+        <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
+        """
+
         self._private_key = unhexlify(private_key)
         self._key = ecdsa.SigningKey.from_string(self._private_key, curve=SECP256k1)
         self._verified_key = self._key.get_verifying_key()
         self._public_key = self.compressed()
         return self
 
-    def from_path(self, path: str) -> "HDWallet":
-        if str(path)[0:2] != "m/":
+    def from_path(self, path: Union[str, Derivation]) -> "HDWallet":
+        """
+        Derivation from Path.
+
+        :param path: Derivation path.
+        :type path: str, Derivation
+
+        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_root_xprivate_key(root_xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
+        >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
+        <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
+        """
+
+        if isinstance(path, Derivation):
+            path = str(path)
+        elif str(path)[0:2] != "m/":
             raise ValueError("Bad path, please insert like this type of path \"m/0'/0\"! ")
 
         for index in path.lstrip("m/").split("/"):
@@ -179,11 +344,33 @@ class HDWallet:
                 self._path += str("/" + index)
         return self
 
-    def from_index(self, index: int, harden: bool = False) -> "HDWallet":
+    def from_index(self, index: int, hardened: bool = False) -> "HDWallet":
+        """
+        Derivation from Index.
+
+        :param index: Derivation index.
+        :type index: int
+        :param hardened: Hardened address, default to ``False``.
+        :type hardened: bool
+
+        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_root_xprivate_key(root_xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
+        >>> hdwallet.from_index(index=44, hardened=True)
+        >>> hdwallet.from_index(index=0, hardened=True)
+        >>> hdwallet.from_index(index=0, hardened=True)
+        >>> hdwallet.from_index(index=0)
+        >>> hdwallet.from_index(index=0)
+        <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
+        """
+
         if not isinstance(index, int):
             raise ValueError("Bad index, Please import only integer number!")
 
-        if harden:
+        if hardened:
             self._path += ("/%d'" % index)
             self._derive_key_by_index(index + BIP32KEY_HARDEN)
         else:
@@ -252,7 +439,28 @@ class HDWallet:
             return None
 
     def root_xprivate_key(self, encoded: bool = True) -> Optional[str]:
-        version = self._cryptocurrency.EXTENDED_PRIVATE_KEY
+        """
+        Get Root XPrivate Key.
+
+        :param encoded: Encoded root xprivate key, default to ``True``.
+        :type encoded: bool
+
+        :returns: str -- Root XPrivate Key.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_entropy(entropy="ee535b143b0d9d1f87546f9df0d06b1a")
+        >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
+        >>> hdwallet.root_xprivate_key()
+        "xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF"
+        """
+
+        version = self._cryptocurrency.EXTENDED_PRIVATE_KEY.__getattribute__(
+            self._semantic.upper()
+        )
+        if version is None:
+            raise NotImplementedError(self)
         if not self._i:
             return None
         secret_key, chain_code = self._i[:32], self._i[32:]
@@ -261,11 +469,32 @@ class HDWallet:
         index = struct.pack(">L", 0)
         data = b"\x00" + secret_key
         return self._serialize_xkeys(
-            version, depth, parent_fingerprint, index, chain_code, data, encoded
+            _unhexlify(version), depth, parent_fingerprint, index, chain_code, data, encoded
         )
 
     def root_xpublic_key(self, encoded: bool = True) -> Optional[str]:
-        version = self._cryptocurrency.EXTENDED_PUBLIC_KEY
+        """
+        Get Root XPublic Key.
+
+        :param encoded: Encoded root xpublic key, default to ``True``.
+        :type encoded: bool
+
+        :returns: str -- Root XPublic Key.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_entropy(entropy="ee535b143b0d9d1f87546f9df0d06b1a")
+        >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
+        >>> hdwallet.root_xpublic_key()
+        "xpub661MyMwAqRbcGSTjb2Mp3Sb4STUDhD2x986ubXKjQa2QsFTCVqzdA98qeZjcncHT1AaZcMSjiP1HJ16jH97q72RwyFfiNhmG8zQ6KBB5PaQ"
+        """
+
+        version = self._cryptocurrency.EXTENDED_PUBLIC_KEY.__getattribute__(
+            self._semantic.upper()
+        )
+        if version is None:
+            raise NotImplementedError(self)
         if not self._i:
             return None
         secret_key, chain_code = self._i[:32], self._i[32:]
@@ -274,32 +503,92 @@ class HDWallet:
         index = struct.pack(">L", 0)
         data = unhexlify(self.public_key(private_key=secret_key.hex()))
         return self._serialize_xkeys(
-            version, depth, parent_fingerprint, index, chain_code, data, encoded
+            _unhexlify(version), depth, parent_fingerprint, index, chain_code, data, encoded
         )
 
     def xprivate_key(self, encoded=True) -> Optional[str]:
-        version = self._cryptocurrency.EXTENDED_PRIVATE_KEY
+        """
+        Get XPrivate Key.
+
+        :param encoded: Encoded xprivate key, default to ``True``.
+        :type encoded: bool
+
+        :returns: str -- Root XPrivate Key.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_entropy(entropy="ee535b143b0d9d1f87546f9df0d06b1a")
+        >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
+        >>> hdwallet.xprivate_key()
+        "xprvA3BYGWQ9FmhyaNRRXB2f1LphNPnaY9T6gngw4BaTbkFtscSH4RCuJhgWUSKs9S6ciGioHd4TX4UeyUg53MkfN9Xh38xkS1j2Wb9YKsYpJHQ"
+        """
+
+        version = self._cryptocurrency.EXTENDED_PRIVATE_KEY.__getattribute__(
+            self._semantic.upper()
+        )
+        if version is None:
+            raise NotImplementedError(self)
         depth = bytes(bytearray([self._depth]))
         parent_fingerprint = self._parent_fingerprint
         index = struct.pack(">L", self._index)
         chain_code = self._chain_code
         data = b"\x00" + unhexlify(self.private_key())
         return self._serialize_xkeys(
-            version, depth, parent_fingerprint, index, chain_code, data, encoded
+            _unhexlify(version), depth, parent_fingerprint, index, chain_code, data, encoded
         )
 
     def xpublic_key(self, encoded: bool = True) -> Optional[str]:
-        version = self._cryptocurrency.EXTENDED_PUBLIC_KEY
+        """
+        Get XPublic Key.
+
+        :param encoded: Encoded xpublic key, default to ``True``.
+        :type encoded: bool
+
+        :returns: str -- XPublic Key.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_entropy(entropy="ee535b143b0d9d1f87546f9df0d06b1a")
+        >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
+        >>> hdwallet.xpublic_key()
+        "xpub6GAtg1w369GGnrVtdCZfNUmRvRd4wcAx41cXrZz5A5nskQmRbxX9rVzzKiRU4JruirBrfm4KQXNSU7GfqL1tzZWpZYe9Zo4xKGJYohWoQe7"
+        """
+
+        version = self._cryptocurrency.EXTENDED_PUBLIC_KEY.__getattribute__(
+            self._semantic.upper()
+        )
+        if version is None:
+            raise NotImplementedError(self)
         depth = bytes(bytearray([self._depth]))
         parent_fingerprint = self._parent_fingerprint
         index = struct.pack(">L", self._index)
         chain_code = self._chain_code
         data = unhexlify(self.public_key())
         return self._serialize_xkeys(
-            version, depth, parent_fingerprint, index, chain_code, data, encoded
+            _unhexlify(version), depth, parent_fingerprint, index, chain_code, data, encoded
         )
 
     def clean_derivation(self) -> "HDWallet":
+        """
+        Clean derivation Path or Indexes.
+
+        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_root_xprivate_key(root_xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
+        >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
+        >>> hdwallet.path()
+        "m/44'/0'/'0/0/0"
+        >>> hdwallet.clean_derivation()
+        <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
+        >>> hdwallet.path()
+        None
+        """
+
         if self._i:
             self._path, self._depth, self._parent_fingerprint, self._index = (
                 "m", 0, b"\0\0\0\0", 0
@@ -310,9 +599,37 @@ class HDWallet:
         return self
 
     def uncompressed(self) -> str:
+        """
+        Get Uncommpresed Public Key.
+
+        :returns: str -- Uncommpresed public key.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.uncompressed()
+        "f93f58b97c3bb616645c3dda256ec946d87c45baf531984c022dd0fd1503b0a875f63285a539213ac241fc4a88e7137ba1c8d897b1c1e5efb81bfc6b45a22d40"
+        """
+
         return hexlify(self._verified_key.to_string()).decode()
 
     def compressed(self) -> str:
+        """
+        Get Commpresed Public Key.
+
+        :returns: str -- Commpresed public key.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.compressed()
+        "02f93f58b97c3bb616645c3dda256ec946d87c45baf531984c022dd0fd1503b0a8"
+        """
+
         padx = (b"\0" * 32 + int_to_string(
             self._verified_key.pubkey.point.x()))[-32:]
         if self._verified_key.pubkey.point.y() & 1:
@@ -322,9 +639,37 @@ class HDWallet:
         return hexlify(ck).decode()
 
     def private_key(self) -> str:
+        """
+        Get Private Key.
+
+        :returns: str -- Private key.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.private_key()
+        "6cd78b0d69eab1a47bfa53a52b9d8c4331e858b5d7a599270a95d9735fdb0b94"
+        """
+
         return hexlify(self._key.to_string()).decode()
 
     def public_key(self, private_key: str = None) -> str:
+        """
+        Get Public Key.
+
+        :returns: str -- Public key.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.public_key()
+        "02f93f58b97c3bb616645c3dda256ec946d87c45baf531984c022dd0fd1503b0a8"
+        """
+
         if private_key:
             key = ecdsa.SigningKey.from_string(
                 unhexlify(private_key), curve=SECP256k1)
@@ -339,63 +684,410 @@ class HDWallet:
         return self.compressed()
 
     def strength(self) -> Optional[int]:
+        """
+        Get Entropy strength.
+
+        :returns: int -- Entropy strength.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash")
+        >>> hdwallet.strength()
+        160
+        """
+
         return self._strength if self._strength else None
 
     def entropy(self) -> Optional[str]:
+        """
+        Get Entropy hex string.
+
+        :returns: str -- Entropy hex string.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash")
+        >>> hdwallet.entropy()
+        "f24afe7fc1418815ee7fd256beb55518e7c34ecd"
+        """
+
         return hexlify(self._entropy).decode() if self._entropy else None
 
     def mnemonic(self) -> Optional[str]:
-        return unicodedata.normalize("NFKC", self._mnemonic) if self._mnemonic else None
+        """
+        Get Mnemonic words.
+
+        :returns: str -- Mnemonic words.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash")
+        >>> hdwallet.mnemonic()
+        "venture fitness paper little blush april rigid where find volcano fetch crack label polar dash"
+        """
+
+        return unicodedata.normalize("NFKD", self._mnemonic) if self._mnemonic else None
 
     def passphrase(self) -> Optional[str]:
+        """
+        Get Mnemonic passphrase.
+
+        :returns: str -- Mnemonic passphrase.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.passphrase()
+        "meherett"
+        """
+
         return str(self._passphrase) if self._passphrase else None
 
     def language(self) -> Optional[str]:
+        """
+        Get Mnemonic language.
+
+        :returns: str -- Mnemonic language.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.language()
+        "english"
+        """
+
         return str(self._language) if self._language else None
 
     def cryptocurrency(self) -> Optional[str]:
+        """
+        Get Cryptocurrency name.
+
+        :returns: str -- Cryptocurrency name.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.cryptocurrency()
+        "Bitcoin"
+        """
+
         return str(self._cryptocurrency.NAME)
 
     def symbol(self) -> Optional[str]:
+        """
+        Get Cryptocurrency symbol.
+
+        :returns: str -- Cryptocurrency symbol.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.symbol()
+        "BTC"
+        """
+
         return str(self._cryptocurrency.SYMBOL)
 
+    def semantic(self) -> Optional[str]:
+        """
+        Get Extended semantic.
+
+        :returns: str -- Extended semantic.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.semantic()
+        "p2pkh"
+        """
+
+        return self._semantic if self._semantic else None
+
     def network(self) -> Optional[str]:
+        """
+        Get Cryptocurrency network type.
+
+        :returns: str -- Cryptocurrency network type.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.network()
+        "mainnet"
+        """
+
         return str(self._cryptocurrency.NETWORK)
 
     def seed(self) -> Optional[str]:
+        """
+        Get Seed hex string.
+
+        :returns: str -- Seed hex string.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.seed()
+        "8d5f4fe5b81a6a6a18b08603b6b3f59df9f4bbb25d10c55d23e0cbdc5ee385e5fddad9d7e6114f11afdec45928328081f9a598151a7613dc5f5a0c16a4612aa4"
+        """
+
         return hexlify(self._seed).decode() if self._seed else None
 
     def path(self) -> Optional[str]:
+        """
+        Get Derivation path.
+
+        :returns: str -- Drivation path.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.path()
+        "m/44'/0'/0'/0/0"
+        """
+
         return str(self._path) if not self._path == "m" else None
 
     def chain_code(self) -> Optional[str]:
+        """
+        Get Chain code.
+
+        :returns: str -- Chain code.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.chain_code()
+        "ed45793b944d1f22522f2d6f48c487029fae2cfcd999ed23087a148bcdda6314"
+        """
+
         return hexlify(self._chain_code).decode() if self._chain_code else None
 
-    def identifier(self, private_key: str = None):
+    def hash(self, private_key: str = None):
+        """
+        Get Public Key Hash.
+
+        :returns: str -- Identifier.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.hash()
+        "4d887566d408dfe5ea8090f2b716f9639523ca89"
+        """
+
         return hashlib.new("ripemd160", sha256(unhexlify(self.public_key(
             private_key=private_key if private_key else self.private_key()
         ))).digest()).hexdigest()
 
     def finger_print(self) -> str:
-        return self.identifier(self.private_key())[:8]
+        """
+        Get Finger print.
 
-    def address(self) -> str:
+        :returns: str -- Finger print.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.finger_print()
+        "4d887566"
+        """
+
+        return self.hash(self.private_key())[:8]
+
+    def p2pkh_address(self) -> str:
+        """
+        Get Pay to Public Key Hash (P2PKH) address.
+
+        :returns: str -- P2PKH address.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.p2pkh_address()
+        "184xW5gWDnhS7LriL2JAZs1XGTJjimz7pq"
+        """
+
         if self._cryptocurrency.SYMBOL in ["ETH", "ETHTEST"]:
             keccak_256 = sha3.keccak_256()
             keccak_256.update(self._verified_key.to_string())
             address = keccak_256.hexdigest()[24:]
-            return checksum_encode(address)
+            return checksum_encode(address, crypto="eth")
+        elif self._cryptocurrency.SYMBOL in ["XDC", "XDCTEST"]:
+            keccak_256 = sha3.keccak_256()
+            keccak_256.update(self._verified_key.to_string())
+            address = keccak_256.hexdigest()[24:]
+            return checksum_encode(address, crypto="xdc")
 
         compressed_public_key = unhexlify(self.compressed())
         public_key_hash = hashlib.new('ripemd160', sha256(compressed_public_key).digest()).digest()
-        network_hash160_bytes = self._cryptocurrency.PUBLIC_KEY_ADDRESS + public_key_hash
+        network_hash160_bytes = _unhexlify(self._cryptocurrency.PUBLIC_KEY_ADDRESS) + public_key_hash
+        return ensure_string(base58.b58encode_check(network_hash160_bytes))
+
+    def p2sh_address(self) -> str:
+        """
+        Get Pay to Script Hash (P2SH) address.
+
+        :returns: str -- P2SH address.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.p2sh_address()
+        "3Jp6ad4ErhibQmhSRfavbPRiUyg2xTTT4j"
+        """
+
+        compressed_public_key = unhexlify(self.compressed())
+        public_key_hash = hashlib.new('ripemd160', sha256(compressed_public_key).digest()).hexdigest()
+        public_key_hash_script = unhexlify("76a914" + public_key_hash + "88ac")
+        script_hash = hashlib.new('ripemd160', sha256(public_key_hash_script).digest()).digest()
+        network_hash160_bytes = _unhexlify(self._cryptocurrency.SCRIPT_ADDRESS) + script_hash
+        return ensure_string(base58.b58encode_check(network_hash160_bytes))
+
+    def p2wpkh_address(self) -> Optional[str]:
+        """
+        Get Pay to Witness Public Key Hash (P2WPKH) address.
+
+        :returns: str -- P2WPKH address.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.p2wpkh_address()
+        "bc1qfky82ek5pr07t65qjretw9hevw2j8j5fdrn5hc"
+        """
+
+        compressed_public_key = unhexlify(self.compressed())
+        public_key_hash = hashlib.new('ripemd160', sha256(compressed_public_key).digest()).digest()
+        if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
+            return None
+        return ensure_string(encode(self._cryptocurrency.SEGWIT_ADDRESS.HRP, 0, public_key_hash))
+
+    def p2wpkh_in_p2sh_address(self) -> Optional[str]:
+        """
+        Get P2WPKH nested in P2SH address.
+
+        :returns: str -- P2WPKH nested in P2SH address.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.p2wpkh_in_p2sh_address()
+        "3CCrxPrHNa6ePbnB7qjh7S3vaPx9qiLc3e"
+        """
+
+        compressed_public_key = unhexlify(self.compressed())
+        public_key_hash = hashlib.new('ripemd160', sha256(compressed_public_key).digest()).hexdigest()
+        script_hash = hashlib.new('ripemd160', sha256(unhexlify("0014" + public_key_hash)).digest()).digest()
+        network_hash160_bytes = _unhexlify(self._cryptocurrency.SCRIPT_ADDRESS) + script_hash
+        if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
+            return None
+        return ensure_string(base58.b58encode_check(network_hash160_bytes))
+
+    def p2wsh_address(self) -> Optional[str]:
+        """
+        Get Pay to Witness Script Hash (P2WSH) address.
+
+        :returns: str -- P2WSH address.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.p2wsh_address()
+        "bc1qaj2xa9j6eegcxls3y8p6erw6vdgdxynasrd4hl3xuctht5edu3msdeshgf"
+        """
+
+        compressed_public_key = unhexlify("5121" + self.compressed() + "51ae")
+        script_hash = sha256(compressed_public_key).digest()
+        if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
+            return None
+        return ensure_string(encode(self._cryptocurrency.SEGWIT_ADDRESS.HRP, 0, script_hash))
+
+    def p2wsh_in_p2sh_address(self) -> Optional[str]:
+        """
+        Get P2WSH nested in P2SH address.
+
+        :returns: str -- P2WSH nested in P2SH address.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.p2wsh_in_p2sh_address()
+        "38YMonfh2yLFRViLrM2kdvZx8ctcp1vbbV"
+        """
+
+        compressed_public_key = unhexlify("5121" + self.compressed() + "51ae")
+        script_hash = unhexlify("0020" + sha256(compressed_public_key).hexdigest())
+        script_hash = hashlib.new('ripemd160', sha256(script_hash).digest()).digest()
+        network_hash160_bytes = _unhexlify(self._cryptocurrency.SCRIPT_ADDRESS) + script_hash
+        if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
+            return None
         return ensure_string(base58.b58encode_check(network_hash160_bytes))
 
     def wif(self) -> str:
-        raw = self._cryptocurrency.WIF_SECRET_KEY + self._key.to_string() + b"\x01"
+        """
+        Get Wallet Important Format.
+
+        :returns: str -- Wallet Important Format.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.wif()
+        "KzsHWUJsrTWUUhBGPfMMxLLydiH7NhEn6z7mKHXD5qNkUWaC4TEn"
+        """
+
+        raw = _unhexlify(self._cryptocurrency.WIF_SECRET_KEY) + self._key.to_string() + b"\x01"
         return check_encode(raw)
 
     def dumps(self) -> dict:
+        """
+        Get All HDWallet imformations.
+
+        :returns: dict -- All HDWallet imformations.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> hdwallet.from_path(path="m/44'/0'/0'/0/0")
+        >>> hdwallet.dumps()
+        {'cryptocurrency': 'Bitcoin', 'symbol': 'BTC', 'network': 'mainnet', 'strength': 160, 'entropy': 'f24afe7fc1418815ee7fd256beb55518e7c34ecd', 'mnemonic': 'venture fitness paper little blush april rigid where find volcano fetch crack label polar dash', 'language': 'english', 'passphrase': None, 'seed': '8d5f4fe5b81a6a6a18b08603b6b3f59df9f4bbb25d10c55d23e0cbdc5ee385e5fddad9d7e6114f11afdec45928328081f9a598151a7613dc5f5a0c16a4612aa4', 'root_xprivate_key': 'xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF', 'root_xpublic_key': 'xpub661MyMwAqRbcGSTjb2Mp3Sb4STUDhD2x986ubXKjQa2QsFTCVqzdA98qeZjcncHT1AaZcMSjiP1HJ16jH97q72RwyFfiNhmG8zQ6KBB5PaQ', 'xprivate_key': 'xprvA3BYGWQ9FmhyaNRRXB2f1LphNPnaY9T6gngw4BaTbkFtscSH4RCuJhgWUSKs9S6ciGioHd4TX4UeyUg53MkfN9Xh38xkS1j2Wb9YKsYpJHQ', 'xpublic_key': 'xpub6GAtg1w369GGnrVtdCZfNUmRvRd4wcAx41cXrZz5A5nskQmRbxX9rVzzKiRU4JruirBrfm4KQXNSU7GfqL1tzZWpZYe9Zo4xKGJYohWoQe7', 'uncompressed': 'f93f58b97c3bb616645c3dda256ec946d87c45baf531984c022dd0fd1503b0a875f63285a539213ac241fc4a88e7137ba1c8d897b1c1e5efb81bfc6b45a22d40', 'compressed': '02f93f58b97c3bb616645c3dda256ec946d87c45baf531984c022dd0fd1503b0a8', 'chain_code': 'ed45793b944d1f22522f2d6f48c487029fae2cfcd999ed23087a148bcdda6314', 'private_key': '6cd78b0d69eab1a47bfa53a52b9d8c4331e858b5d7a599270a95d9735fdb0b94', 'public_key': '02f93f58b97c3bb616645c3dda256ec946d87c45baf531984c022dd0fd1503b0a8', 'wif': 'KzsHWUJsrTWUUhBGPfMMxLLydiH7NhEn6z7mKHXD5qNkUWaC4TEn', 'identifier': '4d887566d408dfe5ea8090f2b716f9639523ca89', 'finger_print': '4d887566', 'path': "m/44'/0'/0'/0/0", 'addresses': {'p2pkh': '184xW5gWDnhS7LriL2JAZs1XGTJjimz7pq', 'p2sh': '3Jp6ad4ErhibQmhSRfavbPRiUyg2xTTT4j', 'p2wpkh': 'bc1qfky82ek5pr07t65qjretw9hevw2j8j5fdrn5hc', 'p2wpkh_in_p2sh': '3CCrxPrHNa6ePbnB7qjh7S3vaPx9qiLc3e', 'p2wsh': 'bc1qaj2xa9j6eegcxls3y8p6erw6vdgdxynasrd4hl3xuctht5edu3msdeshgf', 'p2wsh_in_p2sh': '38YMonfh2yLFRViLrM2kdvZx8ctcp1vbbV'}}
+        """
+
         return dict(
             cryptocurrency=self.cryptocurrency(),
             symbol=self.symbol(),
@@ -407,17 +1099,310 @@ class HDWallet:
             passphrase=self.passphrase(),
             seed=self.seed(),
             root_xprivate_key=self.root_xprivate_key(),
+            # root_xprivate_key_hex=self.root_xprivate_key(encoded=False),
             root_xpublic_key=self.root_xpublic_key(),
+            # root_xpublic_key_hex=self.root_xpublic_key(encoded=False),
             xprivate_key=self.xprivate_key(),
+            # xprivate_key_hex=self.xprivate_key(encoded=False),
             xpublic_key=self.xpublic_key(),
+            # xpublic_key_hex=self.xpublic_key(encoded=False),
             uncompressed=self.uncompressed(),
             compressed=self.compressed(),
             chain_code=self.chain_code(),
             private_key=self.private_key(),
             public_key=self.public_key(),
             wif=self.wif(),
-            identifier=self.identifier(),
             finger_print=self.finger_print(),
+            semantic=self.semantic(),
             path=self.path(),
-            address=self.address(),
+            hash=self.hash(),
+            addresses=dict(
+                p2pkh=self.p2pkh_address(),
+                p2sh=self.p2sh_address(),
+                p2wpkh=self.p2wpkh_address(),
+                p2wpkh_in_p2sh=self.p2wpkh_in_p2sh_address(),
+                p2wsh=self.p2wsh_address(),
+                p2wsh_in_p2sh=self.p2wsh_in_p2sh_address()
+            )
         )
+
+
+class BIP32HDWallet(HDWallet):
+    """
+    BIP32 Hierarchical Deterministic Wallet
+
+    :param symbol: Cryptocurrency symbol, defaults to ``BTC``.
+    :type symbol: str
+    :param cryptocurrency: Cryptocurrency instance, default to ``None``.
+    :type cryptocurrency: Cryptocurrency
+    :param purpose: Purpose index, default to ``0``.
+    :type purpose: int, tuple
+    :param coin_type: Coin type, default to ``0``.
+    :type coin_type: int, tuple
+    :param account: Account index, default to ``0``.
+    :type account: int, tuple
+    :param change: Change addresses, default to ``False``.
+    :type change: bool
+    :param address: Address index, default to ``0``.
+    :type address: int, tuple
+
+    :returns: BIP32HDWallet -- BIP32 Hierarchical Deterministic Wallet instance.
+
+    >>> from hdwallet import BIP32HDWallet
+    >>> from hdwallet.cryptocurrencies import QtumMainnet
+    >>> bip32_hdwallet: BIP32HDWallet = BIP32HDWallet(cryptocurrency=QtumMainnet, purpose=0, coin_type=0, account=0, change=False, address=0)
+    <hdwallet.hdwallet.BIP32HDWallet object at 0x000001EBC58E9F70>
+    """
+
+    def __init__(self, symbol: str = "BTC", cryptocurrency: Any = None,
+                 purpose: Union[int, Tuple[int, bool]] = 0,
+                 coin_type: Union[int, Tuple[int, bool]] = 0,
+                 account: Union[int, Tuple[int, bool]] = 0,
+                 change: bool = False,
+                 address: Union[int, Tuple[int, bool]] = 0):
+        super(BIP32HDWallet, self).__init__(
+            symbol=symbol, cryptocurrency=cryptocurrency, semantic="p2pkh"
+        )
+
+        self._from_class = True
+        self._path_class = BIP32Derivation(
+            cryptocurrency=self._cryptocurrency,
+            purpose=purpose, coin_type=coin_type,
+            account=account, change=change, address=address
+        )
+
+    def address(self) -> str:
+        """
+        Get Pay to Public Key Hash (P2PKH) address.
+
+        :returns: str -- P2PKH address.
+
+        >>> from hdwallet import BIP32HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> bip32_hdwallet: BIP32HDWallet = BIP32HDWallet(symbol=BTC, purpose=44, coin_type=0, account=0, change=False, address=0)
+        >>> bip32_hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> bip32_hdwallet.address()
+        "184xW5gWDnhS7LriL2JAZs1XGTJjimz7pq"
+        """
+
+        return self.p2pkh_address()
+
+
+class BIP44HDWallet(HDWallet):
+    """
+    BIP44 Hierarchical Deterministic Wallet
+
+    :param symbol: Cryptocurrency symbol, defaults to ``BTC``.
+    :type symbol: str
+    :param cryptocurrency: Cryptocurrency instance, default to ``None``.
+    :type cryptocurrency: Cryptocurrency
+    :param account: Account index, default to ``0``.
+    :type account: int, tuple
+    :param change: Change addresses, default to ``False``.
+    :type change: bool
+    :param address: Address index, default to ``0``.
+    :type address: int, tuple
+
+    :returns: BIP44HDWallet -- BIP44 Hierarchical Deterministic Wallet instance.
+
+    >>> from hdwallet import BIP44HDWallet
+    >>> from hdwallet.cryptocurrencies import QtumMainnet
+    >>> bip44_hdwallet: BIP44HDWallet = BIP44HDWallet(cryptocurrency=QtumMainnet, account=0, change=False, address=0)
+    <hdwallet.hdwallet.BIP44HDWallet object at 0x000001EBC58E9F70>
+    """
+
+    def __init__(self, symbol: str = "BTC", cryptocurrency: Any = None,
+                 account: Union[int, Tuple[int, bool]] = 0,
+                 change: bool = False,
+                 address: Union[int, Tuple[int, bool]] = 0):
+        super(BIP44HDWallet, self).__init__(
+            symbol=symbol, cryptocurrency=cryptocurrency, semantic="p2pkh"
+        )
+
+        self._from_class = True
+        self._path_class = BIP44Derivation(
+            cryptocurrency=self._cryptocurrency, account=account, change=change, address=address
+        )
+
+    def address(self) -> str:
+        """
+        Get Pay to Public Key Hash (P2PKH) address.
+
+        :returns: str -- P2PKH address.
+
+        >>> from hdwallet import BIP44HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> bip44_hdwallet: BIP44HDWallet = BIP44HDWallet(symbol=BTC, account=0, change=False, address=0)
+        >>> bip44_hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> bip44_hdwallet.address()
+        "184xW5gWDnhS7LriL2JAZs1XGTJjimz7pq"
+        """
+
+        return self.p2pkh_address()
+
+
+class BIP49HDWallet(HDWallet):
+    """
+    BIP49 Hierarchical Deterministic Wallet
+
+    :param symbol: Cryptocurrency symbol, defaults to ``BTC``.
+    :type symbol: str
+    :param cryptocurrency: Cryptocurrency instance, default to ``None``.
+    :type cryptocurrency: Cryptocurrency
+    :param account: Account index, default to ``0``.
+    :type account: int, tuple
+    :param change: Change addresses, default to ``False``.
+    :type change: bool
+    :param address: Address index, default to ``0``.
+    :type address: int, tuple
+
+    :returns: BIP49HDWallet -- BIP49 Hierarchical Deterministic Wallet instance.
+
+    >>> from hdwallet import BIP49HDWallet
+    >>> from hdwallet.cryptocurrencies import QtumMainnet
+    >>> bip49_hdwallet: BIP49HDWallet = BIP49HDWallet(cryptocurrency=QtumMainnet, account=0, change=False, address=0)
+    <hdwallet.hdwallet.BIP49HDWallet object at 0x000001EBC58E9F70>
+    """
+
+    def __init__(self, symbol: str = "BTC", cryptocurrency: Any = None,
+                 account: Union[int, Tuple[int, bool]] = 0,
+                 change: bool = False,
+                 address: Union[int, Tuple[int, bool]] = 0):
+        super(BIP49HDWallet, self).__init__(
+            symbol=symbol, cryptocurrency=cryptocurrency, semantic="p2wpkh_in_p2sh"
+        )
+
+        self._from_class = True
+        self._path_class = BIP49Derivation(
+            cryptocurrency=self._cryptocurrency, account=account, change=change, address=address
+        )
+
+    def address(self) -> str:
+        """
+        Get P2WPKH nested in P2SH address.
+
+        :returns: str -- P2PKH In P2SH address.
+
+        >>> from hdwallet import BIP49HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> bip49_hdwallet: BIP49HDWallet = BIP49HDWallet(symbol=BTC, account=0, change=False, address=0)
+        >>> bip49_hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> bip49_hdwallet.address()
+        "3HtjZPoiUh9DA3kzQL9XZ29aFdCzouWB6T"
+        """
+
+        return self.p2wpkh_in_p2sh_address()
+
+
+class BIP84HDWallet(HDWallet):
+    """
+    BIP84 Hierarchical Deterministic Wallet
+
+    :param symbol: Cryptocurrency symbol, defaults to ``BTC``.
+    :type symbol: str
+    :param cryptocurrency: Cryptocurrency instance, default to ``None``.
+    :type cryptocurrency: Cryptocurrency
+    :param account: Account index, default to ``0``.
+    :type account: int, tuple
+    :param change: Change addresses, default to ``False``.
+    :type change: bool
+    :param address: Address index, default to ``0``.
+    :type address: int, tuple
+
+    :returns: BIP84HDWallet -- BIP84 Hierarchical Deterministic Wallet instance.
+
+    >>> from hdwallet import BIP84HDWallet
+    >>> from hdwallet.cryptocurrencies import QtumMainnet
+    >>> bip84_hdwallet: BIP84HDWallet = BIP84HDWallet(cryptocurrency=QtumMainnet, account=0, change=False, address=0)
+    <hdwallet.hdwallet.BIP84HDWallet object at 0x000001EBC58E9F70>
+    """
+
+    def __init__(self, symbol: str = "BTC", cryptocurrency: Any = None,
+                 account: Union[int, Tuple[int, bool]] = 0,
+                 change: bool = False,
+                 address: Union[int, Tuple[int, bool]] = 0):
+        super(BIP84HDWallet, self).__init__(
+            symbol=symbol, cryptocurrency=cryptocurrency, semantic="p2wpkh"
+        )
+
+        self._from_class = True
+        self._path_class = BIP84Derivation(
+            cryptocurrency=self._cryptocurrency, account=account, change=change, address=address
+        )
+
+    def address(self) -> str:
+        """
+        Get Pay to Witness Public Key Hash (P2WPKH) address.
+
+        :returns: str -- Pay to Witness Public Key Hash (P2WPKH) address.
+
+        >>> from hdwallet import BIP84HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> bip84_hdwallet: BIP84HDWallet = BIP84HDWallet(symbol=BTC, account=0, change=False, address=0)
+        >>> bip84_hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> bip84_hdwallet.address()
+        "bc1qs95czhkhawdq958gjscrw4mh6amu2ysx20w86d"
+        """
+
+        return self.p2wpkh_address()
+
+
+class BIP141HDWallet(HDWallet):
+    """
+    BIP141 Hierarchical Deterministic Wallet
+
+    :param symbol: Cryptocurrency symbol, defaults to ``BTC``.
+    :type symbol: str
+    :param cryptocurrency: Cryptocurrency instance, defaults to ``None``.
+    :type cryptocurrency: Cryptocurrency
+    :param path: Derivation path.
+    :type path: str
+    :param semantic: Extended semantic, defaults to ``P2WPKH``.
+    :type semantic: str
+
+    :returns: BIP141HDWallet -- BIP141 Hierarchical Deterministic Wallet instance.
+
+    >>> from hdwallet import BIP141HDWallet
+    >>> from hdwallet.cryptocurrencies import QtumMainnet
+    >>> bip141_hdwallet: BIP141HDWallet = BIP141HDWallet(cryptocurrency=QtumMainnet, path="m/0/0", semantic="p2wpkh")
+    <hdwallet.hdwallet.BIP141HDWallet object at 0x000001EBC58E9F70>
+    """
+
+    def __init__(self, symbol: str = "BTC", cryptocurrency: Any = None,
+                 path: Union[str, Derivation] = None, semantic: str = "p2wpkh"):
+        super(BIP141HDWallet, self).__init__(
+            symbol=symbol, cryptocurrency=cryptocurrency, semantic=semantic
+        )
+
+        self._from_class = True
+        self._path_class = BIP141Derivation(
+            cryptocurrency=self._cryptocurrency, path=path, semantic=semantic
+        )
+
+    def address(self) -> str:
+        """
+        Get P2WPKH, P2WPKH_IN_P2SH, P2WSH or P2WPKH_IN_P2SH addresses by semantic.
+
+        :returns: str -- P2WPKH, P2WPKH_IN_P2SH, P2WSH or P2WPKH_IN_P2SH addresses.
+
+        >>> from hdwallet import BIP141HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> bip141_hdwallet: BIP141HDWallet = BIP141HDWallet(symbol=BTC, path="m/44'/0'/0'/0/0", semantic="p2wsh")
+        >>> bip141_hdwallet.from_mnemonic(mnemonic="venture fitness paper little blush april rigid where find volcano fetch crack label polar dash", passphrase="meherett")
+        >>> bip141_hdwallet.address()
+        "bc1qaj2xa9j6eegcxls3y8p6erw6vdgdxynasrd4hl3xuctht5edu3msdeshgf"
+        """
+
+        if self._path_class.SEMANTIC == "p2wpkh":
+            return self.p2wpkh_address()
+        elif self._path_class.SEMANTIC == "p2wpkh_in_p2sh":
+            return self.p2wpkh_in_p2sh_address()
+        elif self._path_class.SEMANTIC == "p2wsh":
+            return self.p2wsh_address()
+        elif self._path_class.SEMANTIC == "p2wsh_in_p2sh":
+            return self.p2wsh_in_p2sh_address()
+        else:
+            raise SemanticError(
+                "Wrong extended semantic",
+                "choose only the following options 'p2wpkh', 'p2wpkh_in_p2sh', 'p2wsh' or 'p2wsh_in_p2sh' semantics."
+            )

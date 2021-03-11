@@ -14,8 +14,12 @@ BTG = "BTG"
 ETH, ETHTEST = "ETH", "ETHTEST"
 # Dogecoin
 DOGE, DOGETEST = "DOGE", "DOGETEST"
+# XinFin
+XDC, XDCTEST = "XDC", "XDCTEST"
 # Litecoin
 LTC, LTCTEST = "LTC", "LTCTEST"
+# Navcoin
+NAV = "NAV"
 # Omni
 OMNI, OMNITEST = "OMNI", "OMNITEST"
 # Dash
@@ -30,7 +34,9 @@ __all__ = [
     "BTG",
     "ETH", "ETHTEST",
     "DOGE", "DOGETEST",
+    "XDC", "XDCTEST",
     "LTC", "LTCTEST",
+    "NAV",
     "OMNI", "OMNITEST",
     "DASH", "DASHTEST",
     "QTUM", "QTUMTEST"

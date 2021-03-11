@@ -18,8 +18,6 @@ class Derivation:
 
     :param path: Derivation path.
     :type path: str
-    :param cryptocurrency: Cryptocurrency instance, defaults to ``None``.
-    :type cryptocurrency: Cryptocurrency
     :param semantic: Extended semantic, defaults to ``P2PKH``.
     :type semantic: str
 
@@ -30,8 +28,7 @@ class Derivation:
     <hdwallet.derivations.Derivation object at 0x000001EBC58E9F70>
     >>> str(Derivation())
     ""
-    >>> from hdwallet.cryptocurrencies import BitcoinMainnet as Cryptocurrency
-    >>> str(Derivation(path="m/44'/0'/0'/0/0", cryptocurrency=Cryptocurrency, semantic="p2pkh"))
+    >>> str(Derivation(path="m/44'/0'/0'/0/0", semantic="p2pkh"))
     "m/44'/0'/0'/0/0"
 
     .. note::
@@ -39,32 +36,24 @@ class Derivation:
     """
 
     PATH: str = "\0\0\0\0"
-
-    EXTENDED_PRIVATE_KEY: Optional[int] = None
-    EXTENDED_PUBLIC_KEY: Optional[int] = None
     SEMANTIC: str = "p2pkh"
 
     def __str__(self) -> str:
         return self.PATH
 
-    def __init__(self, path: Optional[str] = None, cryptocurrency: Any = None, semantic: str = "p2pkh"):
+    def __init__(self, path: Optional[str] = None, semantic: str = "p2pkh"):
 
-        if cryptocurrency is not None:
-            if not issubclass(cryptocurrency, Cryptocurrency):
-                raise TypeError("Invalid Cryptocurrency type, the sub class must be Cryptocurrency instance.")
-            else:
-                self.EXTENDED_PRIVATE_KEY = cryptocurrency.EXTENDED_PRIVATE_KEY.P2PKH
-                self.EXTENDED_PUBLIC_KEY = cryptocurrency.EXTENDED_PUBLIC_KEY.P2PKH
-                self.SEMANTIC = semantic
         if path:
             if not isinstance(path, str):
                 raise DerivationError("Bad derivation path, Please import only str type!")
-            if path[0:2] != "m/":
+            elif path[0:2] != "m/":
                 raise DerivationError("Bad path, please insert like this str type of \"m/0'/0\" path!")
 
             self.PATH = "m"
             for index in path.lstrip("m/").split("/"):
                 self.PATH += f"/{int(index[:-1])}'" if "'" in index else f"/{int(index)}"
+
+        self.SEMANTIC = semantic
 
     @classmethod
     def from_path(cls, path: str) -> "Derivation":
@@ -161,8 +150,6 @@ class BIP32Derivation(Derivation):
     :type change: bool
     :param address: Address index, default to ``0``.
     :type address: int, tuple
-    :param path: Derivation path, default to ``None``.
-    :type path: str
 
     :returns: BIP32Derivation -- BIP32Derivation instance.
 
@@ -194,12 +181,9 @@ class BIP32Derivation(Derivation):
                  coin_type: Union[int, Tuple[int, bool]] = 0,
                  account: Union[int, Tuple[int, bool]] = 0,
                  change: bool = False,
-                 address: Union[int, Tuple[int, bool]] = 0,
-                 path: Optional[str] = None):
+                 address: Union[int, Tuple[int, bool]] = 0):
 
-        super(BIP32Derivation, self).__init__(
-            path=path, cryptocurrency=cryptocurrency
-        )
+        super(BIP32Derivation, self).__init__()
 
         self.PURPOSE, self.COIN_TYPE, self.ACCOUNT, self.CHANGE, self.ADDRESS = (
             purpose if isinstance(purpose, tuple) else (purpose, True),
@@ -213,8 +197,6 @@ class BIP32Derivation(Derivation):
             address if isinstance(address, tuple) else (address, False)
         )
 
-        self.EXTENDED_PRIVATE_KEY = cryptocurrency.EXTENDED_PRIVATE_KEY.P2PKH if cryptocurrency else None
-        self.EXTENDED_PUBLIC_KEY = cryptocurrency.EXTENDED_PUBLIC_KEY.P2PKH if cryptocurrency else None
         self.SEMANTIC = "p2pkh"
 
     def from_purpose(self, purpose: int, hardened: bool = True) -> "BIP32Derivation":
@@ -431,7 +413,7 @@ class BIP44Derivation(BIP32Derivation):
     """
     Hierarchical Deterministic Wallet BIP44 Derivation
 
-    :param cryptocurrency: Cryptocurrency instance, default to ``None``.
+    :param cryptocurrency: Cryptocurrency instance.
     :type cryptocurrency: Cryptocurrency
     :param account: Account index, default to ``0``.
     :type account: int, tuple
@@ -442,7 +424,7 @@ class BIP44Derivation(BIP32Derivation):
 
     :returns: BIP44Derivation -- BIP44Derivation instance.
 
-    >>> from hdwallet.derivations import BIP32Derivation
+    >>> from hdwallet.derivations import BIP44Derivation
     >>> from hdwallet.cryptocurrencies import BitcoinMainnet
     >>> BIP44Derivation(cryptocurrency=BitcoinMainnet)
     <hdwallet.derivations.Derivation object at 0x000001EBC58E9F70>
@@ -465,8 +447,6 @@ class BIP44Derivation(BIP32Derivation):
             address=address
         )
 
-        self.EXTENDED_PRIVATE_KEY = cryptocurrency.EXTENDED_PRIVATE_KEY.P2PKH
-        self.EXTENDED_PUBLIC_KEY = cryptocurrency.EXTENDED_PUBLIC_KEY.P2PKH
         self.SEMANTIC = "p2pkh"
 
 
@@ -474,7 +454,7 @@ class BIP49Derivation(BIP32Derivation):
     """
     Hierarchical Deterministic Wallet BIP49 Derivation
 
-    :param cryptocurrency: Cryptocurrency instance, default to ``None``.
+    :param cryptocurrency: Cryptocurrency instance.
     :type cryptocurrency: Cryptocurrency
     :param account: Account index, default to ``0``.
     :type account: int, tuple
@@ -499,17 +479,14 @@ class BIP49Derivation(BIP32Derivation):
                  account: Union[int, Tuple[int, bool]] = 0,
                  change: bool = False,
                  address: Union[int, Tuple[int, bool]] = 0):
-        super().__init__(
+        super(BIP49Derivation, self).__init__(
             cryptocurrency=cryptocurrency,
             purpose=self.PURPOSE,
-            coin_type=cryptocurrency.COIN_TYPE,
             account=account,
             change=change,
             address=address
         )
 
-        self.EXTENDED_PRIVATE_KEY = cryptocurrency.EXTENDED_PRIVATE_KEY.P2WPKH_IN_P2SH
-        self.EXTENDED_PUBLIC_KEY = cryptocurrency.EXTENDED_PUBLIC_KEY.P2WPKH_IN_P2SH
         self.SEMANTIC = "p2wpkh_in_p2sh"
 
 
@@ -517,7 +494,7 @@ class BIP84Derivation(BIP32Derivation):
     """
     Hierarchical Deterministic Wallet BIP84 Derivation
 
-    :param cryptocurrency: Cryptocurrency instance, default to ``None``.
+    :param cryptocurrency: Cryptocurrency instance.
     :type cryptocurrency: Cryptocurrency
     :param account: Account index, default to ``0``.
     :type account: int, tuple
@@ -551,8 +528,6 @@ class BIP84Derivation(BIP32Derivation):
             address=address
         )
 
-        self.EXTENDED_PRIVATE_KEY = cryptocurrency.EXTENDED_PRIVATE_KEY.P2WPKH
-        self.EXTENDED_PUBLIC_KEY = cryptocurrency.EXTENDED_PUBLIC_KEY.P2WPKH
         self.SEMANTIC = "p2wpkh"
 
 
@@ -562,8 +537,6 @@ class BIP141Derivation(Derivation):
 
     :param path: Derivation path, default to ``None``.
     :type path: str
-    :param cryptocurrency: Cryptocurrency instance, default to ``None``.
-    :type cryptocurrency: Cryptocurrency
     :param semantic: Extended semantic, defaults to ``P2WPKH``.
     :type semantic: str
 
@@ -577,29 +550,15 @@ class BIP141Derivation(Derivation):
     "m/49'/0'/0'/0/0"
     """
 
-    def __init__(self, path: str, cryptocurrency: Any, semantic: str = "p2wpkh"):
-        super().__init__(
-            path=path, cryptocurrency=cryptocurrency
-        )
+    def __init__(self, cryptocurrency: Any, path: Union[str, Derivation] = None, semantic: str = "p2wpkh"):
 
-        if semantic == "p2wpkh":
-            self.EXTENDED_PRIVATE_KEY = cryptocurrency.EXTENDED_PRIVATE_KEY.P2WPKH
-            self.EXTENDED_PUBLIC_KEY = cryptocurrency.EXTENDED_PUBLIC_KEY.P2WPKH
-            self.SEMANTIC = "p2wpkh"
-        elif semantic == "p2wpkh_in_p2sh":
-            self.EXTENDED_PRIVATE_KEY = cryptocurrency.EXTENDED_PRIVATE_KEY.P2WPKH_IN_P2SH
-            self.EXTENDED_PUBLIC_KEY = cryptocurrency.EXTENDED_PUBLIC_KEY.P2WPKH_IN_P2SH
-            self.SEMANTIC = "p2wpkh_in_p2sh"
-        elif semantic == "p2wsh":
-            self.EXTENDED_PRIVATE_KEY = cryptocurrency.EXTENDED_PRIVATE_KEY.P2WSH
-            self.EXTENDED_PUBLIC_KEY = cryptocurrency.EXTENDED_PUBLIC_KEY.P2WSH
-            self.SEMANTIC = "p2wsh"
-        elif semantic == "p2wsh_in_p2sh":
-            self.EXTENDED_PRIVATE_KEY = cryptocurrency.EXTENDED_PRIVATE_KEY.P2WSH_IN_P2SH
-            self.EXTENDED_PUBLIC_KEY = cryptocurrency.EXTENDED_PUBLIC_KEY.P2WSH_IN_P2SH
-            self.SEMANTIC = "p2wsh_in_p2sh"
-        else:
+        if semantic not in ["p2wpkh", "p2wpkh_in_p2sh", "p2wsh", "p2wsh_in_p2sh"]:
             raise SemanticError(
                 "Wrong extended semantic",
                 "choose only the following options 'p2wpkh', 'p2wpkh_in_p2sh', 'p2wsh' or 'p2wsh_in_p2sh' semantics."
             )
+
+        super(BIP141Derivation, self).__init__(
+            path=(path if path else cryptocurrency.DEFAULT_PATH), semantic=semantic
+        )
+        self.SEMANTIC = semantic
