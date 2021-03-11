@@ -22,7 +22,7 @@ sys.path.insert(1, os.path.abspath("./extensions"))
 # -- Project information -----------------------------------------------------
 
 project = "HDWallet"
-copyright = f"{datetime.datetime.now().year}, Meheret Tesfaye"
+copyright = f"{datetime.datetime.now().year}, Meheret Tesfaye Batu"
 author = "Meheret Tesfaye"
 
 # The full version, including alpha/beta/rc tags

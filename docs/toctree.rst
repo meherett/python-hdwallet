@@ -13,6 +13,6 @@ HDWallet
     :maxdepth: 3
     :caption: API's
 
-    Hierarchical Deterministic Wallet <wallet.rst>
+    Hierarchical Deterministic Wallet <hdwallet.rst>
     derivations.rst
     utils.rst
