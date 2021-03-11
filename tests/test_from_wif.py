@@ -16,16 +16,16 @@ values.close()
 def test_from_wallet_important_format():
 
     hdwallet: HDWallet = HDWallet(
-        symbol=_["litecoin"]["mainnet"]["symbol"]
+        symbol=_["bitcoin"]["mainnet"]["symbol"]
     )
     
     hdwallet.from_wif(
-        wif=_["litecoin"]["mainnet"]["wif"]
+        wif=_["bitcoin"]["mainnet"]["wif"]
     )
 
-    assert hdwallet.cryptocurrency() == _["litecoin"]["mainnet"]["cryptocurrency"]
-    assert hdwallet.symbol() == _["litecoin"]["mainnet"]["symbol"]
-    assert hdwallet.network() == _["litecoin"]["mainnet"]["network"]
+    assert hdwallet.cryptocurrency() == _["bitcoin"]["mainnet"]["cryptocurrency"]
+    assert hdwallet.symbol() == _["bitcoin"]["mainnet"]["symbol"]
+    assert hdwallet.network() == _["bitcoin"]["mainnet"]["network"]
     assert hdwallet.strength() is None
     assert hdwallet.entropy() is None
     assert hdwallet.mnemonic() is None
@@ -40,20 +40,26 @@ def test_from_wallet_important_format():
     assert hdwallet.xprivate_key() is None
     assert hdwallet.xpublic_key(encoded=False) is None
     assert hdwallet.xpublic_key() is None
-    assert hdwallet.uncompressed() == _["litecoin"]["mainnet"]["uncompressed"]
-    assert hdwallet.compressed() == _["litecoin"]["mainnet"]["compressed"]
+    assert hdwallet.uncompressed() == _["bitcoin"]["mainnet"]["uncompressed"]
+    assert hdwallet.compressed() == _["bitcoin"]["mainnet"]["compressed"]
     assert hdwallet.chain_code() is None
-    assert hdwallet.private_key() == _["litecoin"]["mainnet"]["private_key"]
-    assert hdwallet.public_key() == _["litecoin"]["mainnet"]["public_key"]
-    assert hdwallet.wif() == _["litecoin"]["mainnet"]["wif"]
-    assert hdwallet.identifier() == _["litecoin"]["mainnet"]["identifier"]
-    assert hdwallet.finger_print() == _["litecoin"]["mainnet"]["finger_print"]
-    assert hdwallet.path() is None
-    assert hdwallet.address() == _["litecoin"]["mainnet"]["address"]
+    assert hdwallet.private_key() == _["bitcoin"]["mainnet"]["private_key"]
+    assert hdwallet.public_key() == _["bitcoin"]["mainnet"]["public_key"]
+    assert hdwallet.wif() == _["bitcoin"]["mainnet"]["wif"]
+    assert hdwallet.finger_print() == _["bitcoin"]["mainnet"]["finger_print"]
+    assert hdwallet.semantic() == _["bitcoin"]["mainnet"]["semantic"]
+    assert hdwallet.path() == None
+    assert hdwallet.hash() == _["bitcoin"]["mainnet"]["hash"]
+    assert hdwallet.p2pkh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2pkh"]
+    assert hdwallet.p2sh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2sh"]
+    assert hdwallet.p2wpkh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2wpkh"]
+    assert hdwallet.p2wpkh_in_p2sh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2wpkh_in_p2sh"]
+    assert hdwallet.p2wsh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2wsh"]
+    assert hdwallet.p2wsh_in_p2sh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2wsh_in_p2sh"]
 
     assert isinstance(hdwallet.dumps(), dict)
 
-    dumps: dict = _["litecoin"]["mainnet"]
+    dumps: dict = _["bitcoin"]["mainnet"]
 
     dumps["strength"] = None
     dumps["entropy"] = None

@@ -16,46 +16,52 @@ values.close()
 def test_from_root_xprivate_key():
 
     hdwallet: HDWallet = HDWallet(
-        symbol=_["dogecoin"]["mainnet"]["symbol"]
+        symbol=_["bitcoin"]["mainnet"]["symbol"]
     )
-    
     hdwallet.from_root_xprivate_key(
-        root_xprivate_key=_["dogecoin"]["mainnet"]["root_xprivate_key"]
-    ).from_path(
-        path=_["dogecoin"]["mainnet"]["path"]
+        root_xprivate_key=_["bitcoin"]["mainnet"]["root_xprivate_key"]
+    )
+    hdwallet.from_path(
+        path=_["bitcoin"]["mainnet"]["path"]
     )
 
-    assert hdwallet.cryptocurrency() == _["dogecoin"]["mainnet"]["cryptocurrency"]
-    assert hdwallet.symbol() == _["dogecoin"]["mainnet"]["symbol"]
-    assert hdwallet.network() == _["dogecoin"]["mainnet"]["network"]
+    assert hdwallet.cryptocurrency() == _["bitcoin"]["mainnet"]["cryptocurrency"]
+    assert hdwallet.symbol() == _["bitcoin"]["mainnet"]["symbol"]
+    assert hdwallet.network() == _["bitcoin"]["mainnet"]["network"]
     assert hdwallet.strength() is None
     assert hdwallet.entropy() is None
     assert hdwallet.mnemonic() is None
     assert hdwallet.language() is None
     assert hdwallet.passphrase() is None
     assert hdwallet.seed() is None
-    assert hdwallet.root_xprivate_key(encoded=False) == _["dogecoin"]["mainnet"]["root_xprivate_key_hex"]
-    assert hdwallet.root_xprivate_key() == _["dogecoin"]["mainnet"]["root_xprivate_key"]
-    assert hdwallet.root_xpublic_key(encoded=False) == _["dogecoin"]["mainnet"]["root_xpublic_key_hex"]
-    assert hdwallet.root_xpublic_key() == _["dogecoin"]["mainnet"]["root_xpublic_key"]
-    assert hdwallet.xprivate_key(encoded=False) == _["dogecoin"]["mainnet"]["xprivate_key_hex"]
-    assert hdwallet.xprivate_key() == _["dogecoin"]["mainnet"]["xprivate_key"]
-    assert hdwallet.xpublic_key(encoded=False) == _["dogecoin"]["mainnet"]["xpublic_key_hex"]
-    assert hdwallet.xpublic_key() == _["dogecoin"]["mainnet"]["xpublic_key"]
-    assert hdwallet.uncompressed() == _["dogecoin"]["mainnet"]["uncompressed"]
-    assert hdwallet.compressed() == _["dogecoin"]["mainnet"]["compressed"]
-    assert hdwallet.chain_code() == _["dogecoin"]["mainnet"]["chain_code"]
-    assert hdwallet.private_key() == _["dogecoin"]["mainnet"]["private_key"]
-    assert hdwallet.public_key() == _["dogecoin"]["mainnet"]["public_key"]
-    assert hdwallet.wif() == _["dogecoin"]["mainnet"]["wif"]
-    assert hdwallet.identifier() == _["dogecoin"]["mainnet"]["identifier"]
-    assert hdwallet.finger_print() == _["dogecoin"]["mainnet"]["finger_print"]
-    assert hdwallet.path() == _["dogecoin"]["mainnet"]["path"]
-    assert hdwallet.address() == _["dogecoin"]["mainnet"]["address"]
+    assert hdwallet.root_xprivate_key(encoded=False) == _["bitcoin"]["mainnet"]["root_xprivate_key_hex"]
+    assert hdwallet.root_xprivate_key() == _["bitcoin"]["mainnet"]["root_xprivate_key"]
+    assert hdwallet.root_xpublic_key(encoded=False) == _["bitcoin"]["mainnet"]["root_xpublic_key_hex"]
+    assert hdwallet.root_xpublic_key() == _["bitcoin"]["mainnet"]["root_xpublic_key"]
+    assert hdwallet.xprivate_key(encoded=False) == _["bitcoin"]["mainnet"]["xprivate_key_hex"]
+    assert hdwallet.xprivate_key() == _["bitcoin"]["mainnet"]["xprivate_key"]
+    assert hdwallet.xpublic_key(encoded=False) == _["bitcoin"]["mainnet"]["xpublic_key_hex"]
+    assert hdwallet.xpublic_key() == _["bitcoin"]["mainnet"]["xpublic_key"]
+    assert hdwallet.uncompressed() == _["bitcoin"]["mainnet"]["uncompressed"]
+    assert hdwallet.compressed() == _["bitcoin"]["mainnet"]["compressed"]
+    assert hdwallet.chain_code() == _["bitcoin"]["mainnet"]["chain_code"]
+    assert hdwallet.private_key() == _["bitcoin"]["mainnet"]["private_key"]
+    assert hdwallet.public_key() == _["bitcoin"]["mainnet"]["public_key"]
+    assert hdwallet.wif() == _["bitcoin"]["mainnet"]["wif"]
+    assert hdwallet.finger_print() == _["bitcoin"]["mainnet"]["finger_print"]
+    assert hdwallet.semantic() == _["bitcoin"]["mainnet"]["semantic"]
+    assert hdwallet.path() == _["bitcoin"]["mainnet"]["path"]
+    assert hdwallet.hash() == _["bitcoin"]["mainnet"]["hash"]
+    assert hdwallet.p2pkh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2pkh"]
+    assert hdwallet.p2sh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2sh"]
+    assert hdwallet.p2wpkh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2wpkh"]
+    assert hdwallet.p2wpkh_in_p2sh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2wpkh_in_p2sh"]
+    assert hdwallet.p2wsh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2wsh"]
+    assert hdwallet.p2wsh_in_p2sh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2wsh_in_p2sh"]
 
     assert isinstance(hdwallet.dumps(), dict)
 
-    dumps: dict = _["dogecoin"]["mainnet"]
+    dumps: dict = _["bitcoin"]["mainnet"]
 
     dumps["strength"] = None
     dumps["entropy"] = None

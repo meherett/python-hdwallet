@@ -23,8 +23,8 @@ def test_utils():
     assert isinstance(get_bytes(string=b"meherett"), bytes)
 
     assert is_root_xprivate_key(
-        xprivate_key=_["litecoin"]["mainnet"]["root_xprivate_key"],
-        symbol=_["litecoin"]["mainnet"]["symbol"]
+        xprivate_key=_["bitcoin"]["mainnet"]["root_xprivate_key"],
+        symbol=_["bitcoin"]["mainnet"]["symbol"]
     )
     assert not is_root_xprivate_key(
         xprivate_key=_["bitcoin"]["mainnet"]["xprivate_key"],
@@ -32,12 +32,12 @@ def test_utils():
     )
 
     assert is_root_xpublic_key(
-        xpublic_key=_["qtum"]["mainnet"]["root_xpublic_key"],
-        symbol=_["qtum"]["mainnet"]["symbol"]
+        xpublic_key=_["bitcoin"]["mainnet"]["root_xpublic_key"],
+        symbol=_["bitcoin"]["mainnet"]["symbol"]
     )
     assert not is_root_xpublic_key(
-        xpublic_key=_["dogecoin"]["mainnet"]["xpublic_key"],
-        symbol=_["dogecoin"]["mainnet"]["symbol"]
+        xpublic_key=_["bitcoin"]["mainnet"]["xpublic_key"],
+        symbol=_["bitcoin"]["mainnet"]["symbol"]
     )
 
 
@@ -66,7 +66,7 @@ def test_utils_mnemonic():
 
     for mnemonic in _["utils"]["mnemonic"]:
 
-        assert len(unicodedata.normalize("NFKC", mnemonic["mnemonic"]).split(" ")) == mnemonic["words"]
+        assert len(unicodedata.normalize("NFKD", mnemonic["mnemonic"]).split(" ")) == mnemonic["words"]
         assert get_mnemonic_strength(mnemonic["mnemonic"]) == mnemonic["strength"]
         assert is_mnemonic(mnemonic["mnemonic"])
         if mnemonic["language"] == "english":

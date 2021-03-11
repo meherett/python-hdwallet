@@ -46,10 +46,16 @@ def test_from_private_key():
     assert hdwallet.private_key() == _["bitcoin"]["mainnet"]["private_key"]
     assert hdwallet.public_key() == _["bitcoin"]["mainnet"]["public_key"]
     assert hdwallet.wif() == _["bitcoin"]["mainnet"]["wif"]
-    assert hdwallet.identifier() == _["bitcoin"]["mainnet"]["identifier"]
     assert hdwallet.finger_print() == _["bitcoin"]["mainnet"]["finger_print"]
-    assert hdwallet.path() is None
-    assert hdwallet.address() == _["bitcoin"]["mainnet"]["address"]
+    assert hdwallet.semantic() == _["bitcoin"]["mainnet"]["semantic"]
+    assert hdwallet.path() == None
+    assert hdwallet.hash() == _["bitcoin"]["mainnet"]["hash"]
+    assert hdwallet.p2pkh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2pkh"]
+    assert hdwallet.p2sh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2sh"]
+    assert hdwallet.p2wpkh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2wpkh"]
+    assert hdwallet.p2wpkh_in_p2sh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2wpkh_in_p2sh"]
+    assert hdwallet.p2wsh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2wsh"]
+    assert hdwallet.p2wsh_in_p2sh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2wsh_in_p2sh"]
 
     assert isinstance(hdwallet.dumps(), dict)
 
