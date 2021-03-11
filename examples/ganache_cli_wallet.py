@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-from hdwallet import HDWallet
+from hdwallet import BIP44HDWallet
 from hdwallet.cryptocurrencies import EthereumMainnet  # Alias EthereumTestnet
+from hdwallet.derivations import BIP44Derivation
 from hdwallet.utils import generate_mnemonic
 from typing import Optional
 
@@ -10,25 +11,27 @@ MNEMONIC: str = generate_mnemonic(language="english", strength=128)
 # Secret passphrase/password for mnemonic
 PASSPHRASE: Optional[str] = None  # str("meherett")
 
-# Initialize Ethereum mainnet HDWallet
-hdwallet: HDWallet = HDWallet(cryptocurrency=EthereumMainnet)
-# Get Ethereum HDWallet from mnemonic
-hdwallet.from_mnemonic(
+# Initialize Ethereum mainnet BIP44HDWallet
+bip44_hdwallet: BIP44HDWallet = BIP44HDWallet(cryptocurrency=EthereumMainnet)
+# Get Ethereum BIP44HDWallet from mnemonic
+bip44_hdwallet.from_mnemonic(
     mnemonic=MNEMONIC, passphrase=PASSPHRASE
 )
+# Clean default BIP44 derivation indexes/paths
+bip44_hdwallet.clean_derivation()
 
-print("Mnemonic:", hdwallet.mnemonic())
+print("Mnemonic:", bip44_hdwallet.mnemonic())
 print("Base HD Path:  m/44'/60'/0'/0/{address_index}", "\n")
 
-# Get Ethereum HDWallet information's from address index
+# Get Ethereum BIP44HDWallet information's from address index
 for address_index in range(10):
-    # Derivation from Ethereum BIP44 path
-    hdwallet.from_path(
-        path=EthereumMainnet.BIP44_PATH.format(
-            account=0, change=0, address=address_index
-        )
+    # Derivation from Ethereum BIP44 derivation path
+    bip44_derivation: BIP44Derivation = BIP44Derivation(
+        cryptocurrency=EthereumMainnet, account=0, change=False, address=address_index
     )
+    # Drive Ethereum HDWallet
+    bip44_hdwallet.from_path(path=bip44_derivation)
     # Print address_index, path, address and private_key
-    print(f"({address_index}) {hdwallet.path()} {hdwallet.address()} 0x{hdwallet.private_key()}")
-    # Clean derivation indexes/path
-    hdwallet.clean_derivation()
+    print(f"({address_index}) {bip44_hdwallet.path()} {bip44_hdwallet.address()} 0x{bip44_hdwallet.private_key()}")
+    # Clean derivation indexes/paths
+    bip44_hdwallet.clean_derivation()

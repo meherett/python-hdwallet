@@ -11,7 +11,7 @@ ROOT_XPRIVATE_KEY: str = "xprv9s21ZrQH143K24t96gCaezzt1QQmnqiEGm8m6TP8yb8e3TmGfk
                          "kufMW9R4KH27pD1kyyEfJkYz1eiPwjhFzB4gtabH3PzMSmXSM"
 
 # Check root xprivate key
-assert is_root_xprivate_key(xprivate_key=ROOT_XPRIVATE_KEY, symbol=BTC)
+assert is_root_xprivate_key(xprivate_key=ROOT_XPRIVATE_KEY, symbol=BTC, semantic="p2pkh")
 
 # Initialize Bitcoin mainnet HDWallet
 hdwallet: HDWallet = HDWallet(symbol=BTC)
@@ -21,9 +21,9 @@ hdwallet.from_root_xprivate_key(root_xprivate_key=ROOT_XPRIVATE_KEY)
 # Derivation from path
 # hdwallet.from_path("m/44'/0'/0'/0/0")
 # Or derivation from index
-hdwallet.from_index(44, harden=True)
-hdwallet.from_index(0, harden=True)
-hdwallet.from_index(0, harden=True)
+hdwallet.from_index(44, hardened=True)
+hdwallet.from_index(0, hardened=True)
+hdwallet.from_index(0, hardened=True)
 hdwallet.from_index(0)
 hdwallet.from_index(0)
 
@@ -44,5 +44,12 @@ print("Private Key:", hdwallet.private_key())
 print("Public Key:", hdwallet.public_key())
 print("Wallet Important Format:", hdwallet.wif())
 print("Finger Print:", hdwallet.finger_print())
+print("Semantic:", hdwallet.semantic())
 print("Path:", hdwallet.path())
-print("Address:", hdwallet.address())
+print("Hash:", hdwallet.hash())
+print("P2PKH Address:", hdwallet.p2pkh_address())
+print("P2SH Address:", hdwallet.p2sh_address())
+print("P2WPKH Address:", hdwallet.p2wpkh_address())
+print("P2WPKH In P2SH Address:", hdwallet.p2wpkh_in_p2sh_address())
+print("P2WSH Address:", hdwallet.p2wsh_address())
+print("P2WSH In P2SH Address:", hdwallet.p2wsh_in_p2sh_address())
