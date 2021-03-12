@@ -1,27 +1,32 @@
-# HDWallet
+# Hierarchical Deterministic Wallet
 
 [![Build Status](https://travis-ci.org/meherett/python-hdwallet.svg?branch=master)](https://travis-ci.org/meherett/python-hdwallet?branch=master)
 [![PyPI Version](https://img.shields.io/pypi/v/hdwallet.svg?color=blue)](https://pypi.org/project/hdwallet)
+[![Documentation Status](https://readthedocs.org/projects/hdwallet/badge/?version=latest)](https://hdwallet.readthedocs.io/en/latest/?badge=latest)
 [![PyPI Python Version](https://img.shields.io/pypi/pyversions/hdwallet.svg)](https://pypi.org/project/hdwallet)
 [![Coverage Status](https://coveralls.io/repos/github/meherett/python-hdwallet/badge.svg?branch=master)](https://coveralls.io/github/meherett/python-hdwallet?branch=master)
 
-Python-based library for the implementation of a [Hierarchical Deterministic (HD)](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) wallet generator for Cryptocurrencies.
+Python-based library for the implementation of a hierarchical deterministic wallet generator for multiple cryptocurrencies.
 
 ## Available Cryptocurrencies
 
 This library simplifies the process of creating a new HDWallet's for:
 
-| Cryptocurrencies                                                  | Symbols             | Mainnet | Testnet | Coin Type | Default Paths       |
-| :---------------------------------------------------------------- | :-----------------: | :-----: | :-----: | :-------: | :-----------------: |
-| [Bitcoin](https://github.com/bitcoin/bitcoin)                     |  `BTC`, `BTCTEST`   | Yes     | Yes     | 0         | `m/44'/0'/0'/0/0`   |
-| [Bitcoin Cash](https://github.com/bitcoincashorg/bitcoincash.org) |  `BCH`              | Yes     | No      | 145       | `m/44'/145'/0'/0/0` |
-| [Bitcoin Gold](https://github.com/BTCGPU/BTCGPU)                  |  `BTG`              | Yes     | No      | 156       | `m/44'/156'/0'/0/0` |
-| [Ethereum](https://github.com/ethereum/go-ethereum)               |  `ETH`, `ETHTEST`   | Yes     | Yes     | 60        | `m/44'/60'/0'/0/0`  |
-| [Dogecoin](https://github.com/dogecoin/dogecoin)                  |  `DOGE`, `DOGETEST` | Yes     | Yes     | 3         | `m/44'/3'/0'/0/0`   |
-| [Litecoin](https://github.com/litecoin-project/litecoin)          |  `LTC`, `LTCTEST`   | Yes     | Yes     | 2         | `m/44'/2'/0'/0/0`   |
-| [Omni](https://github.com/omnilayer/omnicore)                     |  `OMNI`, `OMNITEST` | Yes     | Yes     | 200       | `m/44'/200'/0'/0/0` |
-| [Dash](https://github.com/dashpay/dash)                           |  `DASH`, `DASHTEST` | Yes     | Yes     | 5         | `m/44'/5'/0'/0/0`   |
-| [Qtum](https://github.com/qtumproject/qtum)                       |  `QTUM`, `QTUMTEST` | Yes     | Yes     | 88        | `m/44'/88'/0'/0/0`  |
+| Cryptocurrencies                                                  | Symbols             | Mainnet | Testnet | Coin Type | Default Paths        |
+| :---------------------------------------------------------------- | :-----------------: | :-----: | :-----: | :-------: | :------------------: |
+| [Bitcoin](https://github.com/bitcoin/bitcoin)                     |  `BTC`, `BTCTEST`   | Yes     | Yes     | 0         | `m/44'/0'/0'/0/0`    |
+| [Bitcoin Cash](https://github.com/bitcoincashorg/bitcoincash.org) |  `BCH`              | Yes     | No      | 145       | `m/44'/145'/0'/0/0`  |
+| [Bitcoin Gold](https://github.com/BTCGPU/BTCGPU)                  |  `BTG`              | Yes     | No      | 156       | `m/44'/156'/0'/0/0`  |
+| [Ethereum](https://github.com/ethereum/go-ethereum)               |  `ETH`, `ETHTEST`   | Yes     | Yes     | 60        | `m/44'/60'/0'/0/0`   |
+| [Dogecoin](https://github.com/dogecoin/dogecoin)                  |  `DOGE`, `DOGETEST` | Yes     | Yes     | 3         | `m/44'/3'/0'/0/0`    |
+| [XinFin](https://github.com/XinFinOrg/XDPoSChain)                 |  `XDC`, `XDCTEST`   | Yes     | Yes     | 550       | `m/44'/550'/0'/0/0`  |
+| [Litecoin](https://github.com/litecoin-project/litecoin)          |  `LTC`, `LTCTEST`   | Yes     | Yes     | 2         | `m/44'/2'/0'/0/0`    |
+| [Navcoin](https://github.com/navcoin/navcoin-core)                |  `NAV`              | Yes     | No      | 130       | `m/44'/130'/0'/0/0`  |
+| [Shadow Cash](https://github.com/shadowproject/shadow)            |  `SDC`, `SDCTEST`   | Yes     | Yes     | 35        | `m/44'/35'/0'/0/0`   |
+| [Viacoin](https://github.com/viacoin/viacore-viacoin)             |  `VIA`, `VIATEST`   | Yes     | Yes     | 14        | `m/44'/14'/0'/0/0`   |
+| [Omni](https://github.com/omnilayer/omnicore)                     |  `OMNI`, `OMNITEST` | Yes     | Yes     | 200       | `m/44'/200'/0'/0/0`  |
+| [Dash](https://github.com/dashpay/dash)                           |  `DASH`, `DASHTEST` | Yes     | Yes     | 5         | `m/44'/5'/0'/0/0`    |
+| [Qtum](https://github.com/qtumproject/qtum)                       |  `QTUM`, `QTUMTEST` | Yes     | Yes     | 2301      | `m/44'/2301'/0'/0/0` |
 
 > **NOTICE:** All Cryptocurrencies testnet networks default paths are set to **`m/44'/1'/0'/0/0`** value.
 
@@ -82,9 +87,9 @@ hdwallet.from_entropy(
 # Derivation from path
 # hdwallet.from_path("m/44'/0'/0'/0/0")
 # Or derivation from index
-hdwallet.from_index(44, harden=True)
-hdwallet.from_index(0, harden=True)
-hdwallet.from_index(0, harden=True)
+hdwallet.from_index(44, hardened=True)
+hdwallet.from_index(0, hardened=True)
+hdwallet.from_index(0, hardened=True)
 hdwallet.from_index(0)
 hdwallet.from_index(0)
 
@@ -101,25 +106,33 @@ print(json.dumps(hdwallet.dumps(), indent=4, ensure_ascii=False))
     "symbol": "BTC",
     "network": "mainnet",
     "strength": 160,
-    "entropy": "65e26aceca8c94c708728362288dace6100e8022",
-    "mnemonic": "서민 관객 장례 예약 증세 상태 기침 별도 상대 민간 세월 직장 가방 무덤 에어컨",
+    "entropy": "c5b0d0ee698f3f72b6265f1bc591f8f2d7afa6dd",
+    "mnemonic": "주일 액수 명단 천둥 해수욕장 전망 추천 직업 그룹 단위 신체 파란색 시청 천천히 스트레스",
     "language": "korean",
     "passphrase": null,
-    "seed": "a9639475b35ba7b3af339d6da62e552d08e1e8e97ecfbf340cf5e2897449ae166a07300b2fe6272afabfa12880e11e9b2ff432249aa78c3973d4c2e7ef2cceea",
-    "root_xprivate_key": "xprv9s21ZrQH143K2HPXATdaGimWKV2TLKqSxR3w7ZD3u7WxedKQeodczeC8BueKUu2kRREd8gytRJmx7LEjUSyAggdZJG9zG3osqSdotr7pZnv",
-    "root_xpublic_key": "xpub661MyMwAqRbcEmTzGVAadriEsWrwjnZJKdyXuwcfTT3wXReZCLwsYSWc3DBActGNmx6KxNpxGFpETCqZ7KptShu7x1GtkmVoLziNP9kxM1w",
-    "xprivate_key": "xprvA2UGc9Qbxhqkx1YzyVRNGBrHuoCcXgmAi9WKzTg4jZ9vDEEnkc8qNpTE3gdDG5SU3ESBxaixFQusuRmbgo4iNYkUTCUnMezNC2T6JtY9a2a",
-    "xpublic_key": "xpub6FTd1ewVo5Q4AVdU5WxNdKo2Tq36w9V25NRvnr5gHtgu62ZwJ9T5vcmhtwka9yUDys5jzQmosevXGyP8VjUkkpZSjoPExptLw9djCRG1xjM",
-    "uncompressed": "142968a08a5d0a4e02b436407909f8b4c7026d6bf75568632b2e26136baf5c41cae1aededfacd8e4729ba425ee035c638e26ebcd0c01b9f2b5ab82f33942bfe8",
-    "compressed": "02142968a08a5d0a4e02b436407909f8b4c7026d6bf75568632b2e26136baf5c41",
-    "chain_code": "95c132b5ad5d01613ce9385942a5c89d72d063832c56ab36e3585565f2c7f000",
-    "private_key": "0775b991c4eec49e04c5fde700f5937c7460d89e96b1d0bb0fa2a2ab9bfa54d0",
-    "public_key": "02142968a08a5d0a4e02b436407909f8b4c7026d6bf75568632b2e26136baf5c41",
-    "wif": "KwUDF1wf29n9LUga7KxyTvF74ShhjNq9sbVR7wMGkrXMj4RapofF",
-    "identifier": "8495d3ea533d635726a12322b83fbaf0a5d298ab",
-    "finger_print": "8495d3ea",
+    "seed": "5a9b9667ccd07b3c641b1ba95e9119dd1d5a3034fd46cd2f27fc1f160c7dcd824fc0ab4710a9ae90582dffc3b0803bcbc0a8160feeaab4c70511c5035859decf",
+    "root_xprivate_key": "xprv9s21ZrQH143K2qMHU8aghJ4MoQR5g5mowXbeP2vCP937bseZGX929dmJudL7u4xRxtKvh58pxz1PhtCbWW2yUH14jdduKVMV9FkBMpM2Hyw",
+    "root_xpublic_key": "xpub661MyMwAqRbcFKRkaA7h4S16MSFa5YVfJkXFBRKowUa6Ufyhp4TGhS5nkvkLXSmdNjoszzDkU26WW2rg1zBsQBt6Pv3T8oLEAExGHD3hcQs",
+    "xprivate_key": "xprvA2YyMZWyPK2xo4eZgyypp2CzcHnxNzGbruGg7vmgaAVCtBtrjwzuhXJBNM3FrwBh85ajxHErNR6ByN77WJARpC1HDC7kTwa2yr7Mu9Pz5Qq",
+    "xpublic_key": "xpub6FYKm53sDgbG1Yj2o1WqBA9jAKdSnSzTE8CGvKBJ8W2BkzE1HVKAFKcfDcCHKpL5BQRg2HjbNSt55jpFshY7W1KFtp7zjB3DhNAmiFv6kzB",
+    "uncompressed": "081016370b45d7e23bd89b07d6886036f5e4df9a129eee3b488c177ba7881856e24d337b280f9d32539a22445e567543b39b708edf5289442f36dcde958a3433",
+    "compressed": "03081016370b45d7e23bd89b07d6886036f5e4df9a129eee3b488c177ba7881856",
+    "chain_code": "cf9ee427ed8073e009a5743056e8cf19167f67ca5082c2c6635b391e9a4e0b0d",
+    "private_key": "f79495fda777197ce73551bcd8e162ceca19167575760d3cc2bced4bf2a213dc",
+    "public_key": "03081016370b45d7e23bd89b07d6886036f5e4df9a129eee3b488c177ba7881856",
+    "wif": "L5WyVfBu8Sz3iGZtrwJVSP2wDJmu7HThGd1EGekFBnviWgzLXpJd",
+    "finger_print": "ac13e305",
+    "semantic": "p2pkh",
     "path": "m/44'/0'/0'/0/0",
-    "address": "1D63gYH5yjcCPhn2htvMyVh8hvRXxP4BQh"
+    "hash": "ac13e305a88bd9968f1c058fcf5d9a6b1b9ef484",
+    "addresses": {
+        "p2pkh": "1Ggs3kkNrPPWoW17iDFQWgMdw3CD8BzBiv",
+        "p2sh": "3GQVUFePz517Hf61Vsa9H2tHj5jw5y6ngV",
+        "p2wpkh": "bc1q4sf7xpdg30vedrcuqk8u7hv6dvdeaayy3uw5cj",
+        "p2wpkh_in_p2sh": "3JyV5aSgdVYEjQodPWHfvehQ5227EDr3sN",
+        "p2wsh": "bc1qnk0s9q4379n6v9vg0lnhdu5qhjyx99u2xm238pmckmjg9v29q54saddzp9",
+        "p2wsh_in_p2sh": "3MmsEoP7GLHzuLVgkAtcRtyXLTWh8zNAcd"
+    }
 }
 ```
 </details>
@@ -129,61 +142,60 @@ Ethereum cryptocurrency mainnet [Ganache-CLI](https://github.com/trufflesuite/ga
 ```python
 #!/usr/bin/env python3
 
-from hdwallet import HDWallet
-from hdwallet.cryptocurrencies import EthereumMainnet
+from hdwallet import BIP44HDWallet
+from hdwallet.cryptocurrencies import EthereumMainnet  # Alias EthereumTestnet
+from hdwallet.derivations import BIP44Derivation
 from hdwallet.utils import generate_mnemonic
 from typing import Optional
 
-# Choose strength 128, 160, 192, 224 or 256
-STRENGTH: int = 128  # Default is 128
-# Choose language english, french, italian, spanish, chinese_simplified, chinese_traditional, japanese or korean
-LANGUAGE: str = "english"  # Default is english
-# Generate new mnemonic words
-MNEMONIC: str = generate_mnemonic(language=LANGUAGE, strength=STRENGTH)
-# Secret passphrase for mnemonic
-PASSPHRASE: Optional[str] = None  # "meherett"
+# Generate english mnemonic words
+MNEMONIC: str = generate_mnemonic(language="english", strength=128)
+# Secret passphrase/password for mnemonic
+PASSPHRASE: Optional[str] = None  # str("meherett")
 
-# Initialize Ethereum mainnet HDWallet
-hdwallet: HDWallet = HDWallet(cryptocurrency=EthereumMainnet)
-# Get Ethereum HDWallet from mnemonic
-hdwallet.from_mnemonic(
-    mnemonic=MNEMONIC, passphrase=PASSPHRASE, language=LANGUAGE
+# Initialize Ethereum mainnet BIP44HDWallet
+bip44_hdwallet: BIP44HDWallet = BIP44HDWallet(cryptocurrency=EthereumMainnet)
+# Get Ethereum BIP44HDWallet from mnemonic
+bip44_hdwallet.from_mnemonic(
+    mnemonic=MNEMONIC, passphrase=PASSPHRASE
 )
+# Clean default BIP44 derivation indexes/paths
+bip44_hdwallet.clean_derivation()
 
-print("Mnemonic:", hdwallet.mnemonic())
+print("Mnemonic:", bip44_hdwallet.mnemonic())
 print("Base HD Path:  m/44'/60'/0'/0/{address_index}", "\n")
 
-# Get Ethereum HDWallet information's from address indexes
+# Get Ethereum BIP44HDWallet information's from address index
 for address_index in range(10):
-    # Derivation from Ethereum BIP44 path
-    hdwallet.from_path(
-        path=EthereumMainnet.BIP44_PATH.format(
-            account=0, change=0, address=address_index
-        )
+    # Derivation from Ethereum BIP44 derivation path
+    bip44_derivation: BIP44Derivation = BIP44Derivation(
+        cryptocurrency=EthereumMainnet, account=0, change=False, address=address_index
     )
+    # Drive Ethereum BIP44HDWallet
+    bip44_hdwallet.from_path(path=bip44_derivation)
     # Print address_index, path, address and private_key
-    print(f"({address_index}) {hdwallet.path()} {hdwallet.address()} 0x{hdwallet.private_key()}")
-    # Clean derivation indexes/path
-    hdwallet.clean_derivation()
+    print(f"({address_index}) {bip44_hdwallet.path()} {bip44_hdwallet.address()} 0x{bip44_hdwallet.private_key()}")
+    # Clean derivation indexes/paths
+    bip44_hdwallet.clean_derivation()
 ```
 
 <details>
   <summary>Output</summary><br/>
 
 ```shell script
-Mnemonic: laundry screen boy book wreck figure globe accuse minor tired person exile
+Mnemonic: bright demand olive glance crater key head glory quantum leisure intact age
 Base HD Path:  m/44'/60'/0'/0/{address_index} 
 
-(0) m/44'/60'/0'/0/0 0xD6e56e76bDDC557b0Ef92E42F3CFbe3f30a4C295 0xebea344cd7444f9283043fea739ba2763fdc05da663c77e793b6567765285514
-(1) m/44'/60'/0'/0/1 0x88F762b29F3e066F34d683562685FFCCcbc1A666 0x173dc3299b30ae3a4d3c699cd7ab3c1eed1ecf711ca144be3fa1a50cce17de5d
-(2) m/44'/60'/0'/0/2 0x32607A23156036BcDa285CD443fE9645FeDc648e 0x86386357decd59199fec92b36d58b5deffc6b836dc72e52bae5d5f960f0451ae
-(3) m/44'/60'/0'/0/3 0xe0A1887DD307f5751394f02B165c5D47AF713A1E 0xadd3b8bdf73b1025233ec3cadd283563517b4365a790a3b39559b1ef694a3234
-(4) m/44'/60'/0'/0/4 0xCAB507Cd8C10D0575Df32B884f18b67150D6A091 0xa4bf2c21e26a45fc1a21fb39472fdc08d3dff4f34b92e53c7bf4e7a5f3387e31
-(5) m/44'/60'/0'/0/5 0x1E0f296e435CBD56e0FE0F387E5D68f1580c9E89 0xd1388aaf97b679121221f1816ad9e5b96fb82fb36afa3076d1628d05eb963dab
-(6) m/44'/60'/0'/0/6 0x4012109D622Dd11BB2257DBB6Fb78B57358BD9d2 0x87d001a56a56eb572f7a84d21c7eb8eb1cf4d04f4883db28e517c559c6baa260
-(7) m/44'/60'/0'/0/7 0x57eEf550A3F8F81dcaf566438d79a7fD8f980451 0xbfb1ec28ae643c917986306a548898ed981f6b849946c70a868e7e632e184407
-(8) m/44'/60'/0'/0/8 0xfE2fB0091ff9494b30852A268110174a2C97E110 0xb59df0d4175f3d6660447aca955bdd417a28cef3a78efdf97ef8fe423b8b3fdc
-(9) m/44'/60'/0'/0/9 0xD8714F4e98Abb554C84FD65D0F8c346D8b58307C 0xffeedf4dffe90692ef939e7a8a61ee966a73d957923695ffae2a519963895021
+(0) m/44'/60'/0'/0/0 0x3a149f0c5dc5c0F1E29e573215C23710dE9c4f87 0xa45f9af43912fdd5e88c492226be082029f257681d4b3e73b68be535d2fb0526
+(1) m/44'/60'/0'/0/1 0x9e8A4fD9bA74DbB0c7F465EF56b47489793AA102 0x6e5ab2a3ae20c7b3a1c0645b03689e88e8cdff16f6a39d6a420bfebc20e8a941
+(2) m/44'/60'/0'/0/2 0x08Eb0646ddc52E12a03215b94b244B674e9D7a0F 0x938caf07197eda13679bfd88df7e5f6eac3cd9f9248ed445f1a0e084a3e9417c
+(3) m/44'/60'/0'/0/3 0x6dB1Ac10bbbE7bdc6bcB246E2Dd36884c346CbE8 0x304e9bebaeef3f4ae7c4d2ef268f40f503d8f47fd2621a575d8f73f49762cbc0
+(4) m/44'/60'/0'/0/4 0xd528281f804D950c743Ca48FCcC3D76A3d9AcD5C 0x82a0284b443ec73884806ac9450f09110d8dba024120985431b80a520b3f2911
+(5) m/44'/60'/0'/0/5 0xaF24cc02Fd5E0285237677cDDD00ae8E4a9d6E5E 0xb03c61e992f5475222295077a89cf35011984dcdcd1da3666ebffc9ebefe22a9
+(6) m/44'/60'/0'/0/6 0x55A972f207DB3498DCBbD97062472A5c10b3266b 0xc003175828a6f768610fb2396b3fcec7fa1957770de2462b9e6d3a0a23346c76
+(7) m/44'/60'/0'/0/7 0x7e62C187e597Fc544D5769a38A8e026F5529c81B 0x04bfcff46587fd98e682e3b7acff720051b1b0bee3309fb13703338bbde211cd
+(8) m/44'/60'/0'/0/8 0x7aF4A78000032a3FBaF4Ac5a5f64a50FF69f0442 0x1b642b77519cf6e6107827e4773a15975edda6471ff90735e2fc0cf7d8560ac8
+(9) m/44'/60'/0'/0/9 0x379a25BB89043f8b875A73eA61aF4F7b70cD73e5 0x4f9fb333faf8ecf8f22d212a0b1c946e4d4c32fa0b7794326038d464b241d771
 ```
 </details>
 
@@ -199,6 +211,24 @@ $ pytest
 
 Or use `tox` to run the complete suite against the full set of build targets, or pytest to run specific 
 tests against a specific version of Python.
+
+## BIP Implementation's
+
+For more info see the BIP specs.
+
+[**BIP39** spec](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) **·** Mnemonic code for generating deterministic keys
+
+[**BIP85** spec](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki) **·** Deterministic Entropy From BIP32 Keychains
+
+[**BIP32** spec](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) **·**  Hierarchical Deterministic Wallets
+
+[**BIP44** spec](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki) **·**  Multi-Account Hierarchy for Deterministic Wallets
+
+[**BIP49** spec](https://github.com/bitcoin/bips/blob/master/bip-0049.mediawiki) **·**  Derivation scheme for P2WPKH-nested-in-P2SH based accounts
+
+[**BIP84** spec](https://github.com/bitcoin/bips/blob/master/bip-0048.mediawiki) **·**  Derivation scheme for P2WPKH based accounts
+
+[**BIP141** spec](https://github.com/bitcoin/bips/blob/master/bip-0014.mediawiki) **·**  Segregated Witness (Consensus layer)
 
 ## License
 
