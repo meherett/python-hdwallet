@@ -20,6 +20,10 @@ XDC, XDCTEST = "XDC", "XDCTEST"
 LTC, LTCTEST = "LTC", "LTCTEST"
 # Navcoin
 NAV = "NAV"
+# Shadow Cash
+SDC, SDCTEST = "SDC", "SDCTEST"
+# Viacoin
+VIA, VIATEST = "VIA", "VIATEST"
 # Omni
 OMNI, OMNITEST = "OMNI", "OMNITEST"
 # Dash
@@ -37,6 +41,8 @@ __all__ = [
     "XDC", "XDCTEST",
     "LTC", "LTCTEST",
     "NAV",
+    "SDC", "SDCTEST",
+    "VIA", "VIATEST",
     "OMNI", "OMNITEST",
     "DASH", "DASHTEST",
     "QTUM", "QTUMTEST"

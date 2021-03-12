@@ -578,6 +578,162 @@ class NavcoinMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0x96
 
 
+class ShadowCashMainnet(Cryptocurrency):
+
+    NAME = "Shadow Cash"
+    SYMBOL = "SDC"
+    NETWORK = "mainnet"
+    COIN_TYPE = CoinType({
+        "INDEX": 35,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x7d
+    PUBLIC_KEY_ADDRESS = 0x3f
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0xee8031e8,
+        "P2SH": 0xee8031e8,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0xee80286a,
+        "P2SH": 0xee80286a,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xbf
+
+
+class ShadowCashTestnet(Cryptocurrency):
+
+    NAME = "Shadow Cash"
+    SYMBOL = "SDCTEST"
+    NETWORK = "testnet"
+    COIN_TYPE = CoinType({
+        "INDEX": 35,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xc4
+    PUBLIC_KEY_ADDRESS = 0x7f
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x76c1077a,
+        "P2SH": 0x76c1077a,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x76c0fdfb,
+        "P2SH": 0x76c0fdfb,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xff
+
+
+class ViacoinMainnet(Cryptocurrency):
+
+    NAME = "Viacoin"
+    SYMBOL = "VIA"
+    NETWORK = "mainnet"
+    COIN_TYPE = CoinType({
+        "INDEX": 14,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x21
+    PUBLIC_KEY_ADDRESS = 0x47
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": 0x0488ade4,
+        "P2WPKH_IN_P2SH": 0x0488ade4,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": 0x0488b21e,
+        "P2WPKH_IN_P2SH": 0x0488b21e,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Viacoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xc7
+
+
+class ViacoinTestnet(Cryptocurrency):
+
+    NAME = "Viacoin"
+    SYMBOL = "VIATEST"
+    NETWORK = "testnet"
+    COIN_TYPE = CoinType({
+        "INDEX": 14,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xc4
+    PUBLIC_KEY_ADDRESS = 0x7f
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x4358394,
+        "P2SH": 0x4358394,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x43587cf,
+        "P2SH": 0x43587cf,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Viacoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xff
+
+
 class OmniMainnet(Cryptocurrency):
 
     NAME = "Omni"
@@ -840,6 +996,14 @@ def get_cryptocurrency(symbol: str) -> Any:
         return LitecoinTestnet
     elif symbol.upper() == "NAV":
         return NavcoinMainnet
+    elif symbol.upper() == "SDC":
+        return ShadowCashMainnet
+    elif symbol.upper() == "SDCTEST":
+        return ShadowCashTestnet
+    elif symbol.upper() == "VIA":
+        return ViacoinMainnet
+    elif symbol.upper() == "VIATEST":
+        return ViacoinTestnet
     elif symbol.upper() == "OMNI":
         return OmniMainnet
     elif symbol.upper() == "OMNITEST":

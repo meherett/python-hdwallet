@@ -46,12 +46,36 @@ This library simplifies the process of generating a new HDWallet's for:
      - Yes
      - 3
      - m/44'/3'/0'/0/0
+   * - `XinFin <https://github.com/XinFinOrg/XDPoSChain>`_
+     - XDC, XDCTEST
+     - Yes
+     - Yes
+     - 550
+     - m/44'/550'/0'/0/0
    * - `Litecoin <https://github.com/dogecoin/dogecoin>`_
      - LTC, LTCTEST
      - Yes
      - Yes
      - 2
      - m/44'/2'/0'/0/0
+   * - `Navcoin <https://github.com/navcoin/navcoin-core>`_
+     - NAV
+     - Yes
+     - No
+     - 130
+     - m/44'/130'/0'/0/0
+   * - `Shadow Cash <https://github.com/shadowproject/shadow>`_
+     - SDC, SDCTEST
+     - Yes
+     - Yes
+     - 35
+     - m/44'/35'/0'/0/0
+   * - `Viacoin <https://github.com/viacoin/viacore-viacoin>`_
+     - VIA, VIATEST
+     - Yes
+     - Yes
+     - 14
+     - m/44'/14'/0'/0/0
    * - `Omni <https://github.com/omnilayer/omnicore>`_
      - OMNI, OMNITEST
      - Yes
