@@ -1,0 +1,15 @@
+version: 2
+formats: all
+
+sphinx:
+  builder: html
+  configuration: docs/conf.py
+  fail_on_warning: false
+
+python:
+   version: 3.9
+   install:
+      - method: pip
+        path: .
+        extra_requirements:
+            - docs
