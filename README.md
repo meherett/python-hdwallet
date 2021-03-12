@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/meherett/python-hdwallet.svg?branch=master)](https://travis-ci.org/meherett/python-hdwallet?branch=master)
 [![PyPI Version](https://img.shields.io/pypi/v/hdwallet.svg?color=blue)](https://pypi.org/project/hdwallet)
-[![Documentation Status](https://readthedocs.org/projects/hdwallet/badge/?version=latest)](https://hdwallet.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/hdwallet/badge/?version=master)](https://hdwallet.readthedocs.io/en/master/?badge=master)
 [![PyPI Python Version](https://img.shields.io/pypi/pyversions/hdwallet.svg)](https://pypi.org/project/hdwallet)
 [![Coverage Status](https://coveralls.io/repos/github/meherett/python-hdwallet/badge.svg?branch=master)](https://coveralls.io/github/meherett/python-hdwallet?branch=master)
 
