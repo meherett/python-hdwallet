@@ -10,11 +10,11 @@ with open("README.md", "r", encoding="utf-8") as readme:
 
 # requirements.txt
 with open("requirements.txt", "r") as _requirements:
-    requirements: list = [map(str.strip, _requirements.read().split("\n"))]
+    requirements: list = list(map(str.strip, _requirements.read().split("\n")))
 
 setup(
     name="hdwallet",
-    version="1.0.0",
+    version="1.0.1",
     description="Python-based library for the implementation of a "
                 "hierarchical deterministic wallet generator for multiple cryptocurrencies.",
     long_description=long_description,
