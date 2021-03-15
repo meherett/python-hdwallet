@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from hdwallet import BIP44HDWallet
-from hdwallet.cryptocurrencies import EthereumMainnet  # Alias EthereumTestnet
+from hdwallet.cryptocurrencies import EthereumMainnet
 from hdwallet.derivations import BIP44Derivation
 from hdwallet.utils import generate_mnemonic
 from typing import Optional
