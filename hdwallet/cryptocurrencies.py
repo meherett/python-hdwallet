@@ -59,6 +59,7 @@ class Cryptocurrency(NestedNamespace):
     NAME: str
     SYMBOL: str
     NETWORK: str
+    SOURCE_CODE: Optional[str]
     COIN_TYPE: CoinType
 
     SCRIPT_ADDRESS: int
@@ -73,11 +74,52 @@ class Cryptocurrency(NestedNamespace):
     WIF_SECRET_KEY: int
 
 
+class AnonMainnet(Cryptocurrency):
+
+    NAME = "Anon"
+    SYMBOL = "ANON"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 220,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x5389
+    PUBLIC_KEY_ADDRESS = 0x582
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18ANON Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
+
+
 class ArgoneumMainnet(Cryptocurrency):
 
     NAME = "Argoneum"
     SYMBOL = "AGM"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 421,
         "HARDENED": True
@@ -112,11 +154,92 @@ class ArgoneumMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0xbf
 
 
+class ArtaxMainnet(Cryptocurrency):
+
+    NAME = "Artax"
+    SYMBOL = "XAX"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 219,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x1cbd
+    PUBLIC_KEY_ADDRESS = 0x17
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Artax Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x97
+
+
+class AryacoinMainnet(Cryptocurrency):
+
+    NAME = "Aryacoin"
+    SYMBOL = "AYA"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 357,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x6f
+    PUBLIC_KEY_ADDRESS = 0x17
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Aryacoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x97
+
+
 class AsiacoinMainnet(Cryptocurrency):
 
     NAME = "Asiacoin"
     SYMBOL = "AC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 51,
         "HARDENED": True
@@ -156,6 +279,7 @@ class AtomMainnet(Cryptocurrency):
     NAME = "Atom"
     SYMBOL = "ATOM"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 118,
         "HARDENED": True
@@ -195,6 +319,7 @@ class AuroracoinMainnet(Cryptocurrency):
     NAME = "Auroracoin"
     SYMBOL = "AUR"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 85,
         "HARDENED": True
@@ -234,6 +359,7 @@ class AxeMainnet(Cryptocurrency):
     NAME = "Axe"
     SYMBOL = "AXE"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 4242,
         "HARDENED": True
@@ -273,6 +399,7 @@ class BataMainnet(Cryptocurrency):
     NAME = "Bata"
     SYMBOL = "BTA"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 89,
         "HARDENED": True
@@ -312,6 +439,7 @@ class BeetleCoinMainnet(Cryptocurrency):
     NAME = "Beetle Coin"
     SYMBOL = "BEET"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 800,
         "HARDENED": True
@@ -351,6 +479,7 @@ class BelaCoinMainnet(Cryptocurrency):
     NAME = "Bela Coin"
     SYMBOL = "BELA"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 73,
         "HARDENED": True
@@ -390,6 +519,7 @@ class BitCloudMainnet(Cryptocurrency):
     NAME = "Bit Cloud"
     SYMBOL = "BTDX"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 218,
         "HARDENED": True
@@ -429,6 +559,7 @@ class BitSendMainnet(Cryptocurrency):
     NAME = "Bit Send"
     SYMBOL = "BSD"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 91,
         "HARDENED": True
@@ -468,6 +599,7 @@ class BitcoinCashMainnet(Cryptocurrency):
     NAME = "Bitcoin Cash"
     SYMBOL = "BCH"
     NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/bitcoincashorg/bitcoincash.org"
     COIN_TYPE = CoinType({
         "INDEX": 145,
         "HARDENED": True
@@ -507,6 +639,7 @@ class BitcoinGoldMainnet(Cryptocurrency):
     NAME = "Bitcoin Gold"
     SYMBOL = "BTG"
     NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/BTCGPU/BTCGPU"
     COIN_TYPE = CoinType({
         "INDEX": 156,
         "HARDENED": True
@@ -546,6 +679,7 @@ class BitcoinMainnet(Cryptocurrency):
     NAME = "Bitcoin"
     SYMBOL = "BTC"
     NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/bitcoin/bitcoin"
     COIN_TYPE = CoinType({
         "INDEX": 0,
         "HARDENED": True
@@ -585,6 +719,7 @@ class BitcoinPlusMainnet(Cryptocurrency):
     NAME = "Bitcoin Plus"
     SYMBOL = "XBC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 65,
         "HARDENED": True
@@ -619,11 +754,52 @@ class BitcoinPlusMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0x99
 
 
+class BitcoinSVMainnet(Cryptocurrency):
+
+    NAME = "Bitcoin SV"
+    SYMBOL = "BSV"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 236,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x5
+    PUBLIC_KEY_ADDRESS = 0x0
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
+
+
 class BitcoinTestnet(Cryptocurrency):
 
     NAME = "Bitcoin"
     SYMBOL = "BTCTEST"
     NETWORK = "testnet"
+    SOURCE_CODE = "https://github.com/bitcoin/bitcoin"
     COIN_TYPE = CoinType({
         "INDEX": 1,
         "HARDENED": True
@@ -658,11 +834,52 @@ class BitcoinTestnet(Cryptocurrency):
     WIF_SECRET_KEY = 0xef
 
 
+class BitcoinZMainnet(Cryptocurrency):
+
+    NAME = "BitcoinZ"
+    SYMBOL = "BTCZ"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 177,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x1cbd
+    PUBLIC_KEY_ADDRESS = 0x1cb8
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18BitcoinZ Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
+
+
 class BitcoreMainnet(Cryptocurrency):
 
     NAME = "Bitcore"
     SYMBOL = "BTX"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 160,
         "HARDENED": True
@@ -702,6 +919,7 @@ class BlackcoinMainnet(Cryptocurrency):
     NAME = "Blackcoin"
     SYMBOL = "BLK"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 10,
         "HARDENED": True
@@ -741,6 +959,7 @@ class BlockStampMainnet(Cryptocurrency):
     NAME = "Block Stamp"
     SYMBOL = "BST"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 254,
         "HARDENED": True
@@ -775,11 +994,92 @@ class BlockStampMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0x80
 
 
+class BlocknodeMainnet(Cryptocurrency):
+
+    NAME = "Blocknode"
+    SYMBOL = "BND"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 2941,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x3f
+    PUBLIC_KEY_ADDRESS = 0x19
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Blocknode Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x4b
+
+
+class BlocknodeTestnet(Cryptocurrency):
+
+    NAME = "Blocknode"
+    SYMBOL = "BNDTEST"
+    NETWORK = "testnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 1,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x7d
+    PUBLIC_KEY_ADDRESS = 0x55
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x4358394,
+        "P2SH": 0x4358394,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x43587cf,
+        "P2SH": 0x43587cf,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Blocknode Testnet Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x89
+
+
 class BolivarcoinMainnet(Cryptocurrency):
 
     NAME = "Bolivarcoin"
     SYMBOL = "BOLI"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 278,
         "HARDENED": True
@@ -819,6 +1119,7 @@ class BritCoinMainnet(Cryptocurrency):
     NAME = "Brit Coin"
     SYMBOL = "BRIT"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 70,
         "HARDENED": True
@@ -858,6 +1159,7 @@ class CPUChainMainnet(Cryptocurrency):
     NAME = "CPU Chain"
     SYMBOL = "CPU"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 363,
         "HARDENED": True
@@ -897,6 +1199,7 @@ class CanadaECoinMainnet(Cryptocurrency):
     NAME = "Canada eCoin"
     SYMBOL = "CDN"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 34,
         "HARDENED": True
@@ -936,6 +1239,7 @@ class CannacoinMainnet(Cryptocurrency):
     NAME = "Cannacoin"
     SYMBOL = "CCN"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 19,
         "HARDENED": True
@@ -975,6 +1279,7 @@ class ClamsMainnet(Cryptocurrency):
     NAME = "Clams"
     SYMBOL = "CLAM"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 23,
         "HARDENED": True
@@ -1014,6 +1319,7 @@ class ClubCoinMainnet(Cryptocurrency):
     NAME = "Club Coin"
     SYMBOL = "CLUB"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 79,
         "HARDENED": True
@@ -1053,6 +1359,7 @@ class CompcoinMainnet(Cryptocurrency):
     NAME = "Compcoin"
     SYMBOL = "CMP"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 71,
         "HARDENED": True
@@ -1092,6 +1399,7 @@ class CranePayMainnet(Cryptocurrency):
     NAME = "Crane Pay"
     SYMBOL = "CRP"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 2304,
         "HARDENED": True
@@ -1131,6 +1439,7 @@ class CraveMainnet(Cryptocurrency):
     NAME = "Crave"
     SYMBOL = "CRAVE"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 186,
         "HARDENED": True
@@ -1170,6 +1479,7 @@ class DashMainnet(Cryptocurrency):
     NAME = "Dash"
     SYMBOL = "DASH"
     NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/dashpay/dash"
     COIN_TYPE = CoinType({
         "INDEX": 5,
         "HARDENED": True
@@ -1209,6 +1519,7 @@ class DashTestnet(Cryptocurrency):
     NAME = "Dash"
     SYMBOL = "DASHTEST"
     NETWORK = "testnet"
+    SOURCE_CODE = "https://github.com/dashpay/dash"
     COIN_TYPE = CoinType({
         "INDEX": 1,
         "HARDENED": True
@@ -1248,6 +1559,7 @@ class DeepOnionMainnet(Cryptocurrency):
     NAME = "Deep Onion"
     SYMBOL = "ONION"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 305,
         "HARDENED": True
@@ -1287,6 +1599,7 @@ class DefcoinMainnet(Cryptocurrency):
     NAME = "Defcoin"
     SYMBOL = "DFC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 1337,
         "HARDENED": True
@@ -1326,6 +1639,7 @@ class DenariusMainnet(Cryptocurrency):
     NAME = "Denarius"
     SYMBOL = "DNR"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 116,
         "HARDENED": True
@@ -1365,6 +1679,7 @@ class DiamondMainnet(Cryptocurrency):
     NAME = "Diamond"
     SYMBOL = "DMD"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 152,
         "HARDENED": True
@@ -1404,6 +1719,7 @@ class DigiByteMainnet(Cryptocurrency):
     NAME = "Digi Byte"
     SYMBOL = "DGB"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 20,
         "HARDENED": True
@@ -1443,6 +1759,7 @@ class DigitalcoinMainnet(Cryptocurrency):
     NAME = "Digitalcoin"
     SYMBOL = "DGC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 18,
         "HARDENED": True
@@ -1482,6 +1799,7 @@ class DogecoinMainnet(Cryptocurrency):
     NAME = "Dogecoin"
     SYMBOL = "DOGE"
     NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/dogecoin/dogecoin"
     COIN_TYPE = CoinType({
         "INDEX": 3,
         "HARDENED": True
@@ -1521,6 +1839,7 @@ class DogecoinTestnet(Cryptocurrency):
     NAME = "Dogecoin"
     SYMBOL = "DOGETEST"
     NETWORK = "testnet"
+    SOURCE_CODE = "https://github.com/dogecoin/dogecoin"
     COIN_TYPE = CoinType({
         "INDEX": 3,
         "HARDENED": True
@@ -1560,6 +1879,7 @@ class EDRCoinMainnet(Cryptocurrency):
     NAME = "EDR Coin"
     SYMBOL = "EDRC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 56,
         "HARDENED": True
@@ -1599,6 +1919,7 @@ class EcoinMainnet(Cryptocurrency):
     NAME = "Ecoin"
     SYMBOL = "ECN"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 115,
         "HARDENED": True
@@ -1638,6 +1959,7 @@ class EinsteiniumMainnet(Cryptocurrency):
     NAME = "Einsteinium"
     SYMBOL = "EMC2"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 41,
         "HARDENED": True
@@ -1672,12 +1994,92 @@ class EinsteiniumMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0xa1
 
 
+class ElastosMainnet(Cryptocurrency):
+
+    NAME = "Elastos"
+    SYMBOL = "ELA"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 2305,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xc4
+    PUBLIC_KEY_ADDRESS = 0x21
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xef
+
+
+class EnergiMainnet(Cryptocurrency):
+
+    NAME = "Energi"
+    SYMBOL = "NRG"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 9797,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x35
+    PUBLIC_KEY_ADDRESS = 0x21
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0xd7dc6e9f,
+        "P2SH": 0xd7dc6e9f,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x3b8c856,
+        "P2SH": 0x3b8c856,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "DarkCoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x6a
+
+
 class EthereumMainnet(Cryptocurrency):
 
     NAME = "Ethereum"
     SYMBOL = "ETH"
     NETWORK = "mainnet"
-
+    SOURCE_CODE = "https://github.com/ethereum/go-ethereum"
     COIN_TYPE = CoinType({
         "INDEX": 60,
         "HARDENED": True
@@ -1717,6 +2119,7 @@ class EuropeCoinMainnet(Cryptocurrency):
     NAME = "Europe Coin"
     SYMBOL = "ERC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 151,
         "HARDENED": True
@@ -1756,6 +2159,7 @@ class ExclusiveCoinMainnet(Cryptocurrency):
     NAME = "Exclusive Coin"
     SYMBOL = "EXCL"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 190,
         "HARDENED": True
@@ -1795,6 +2199,7 @@ class FIXMainnet(Cryptocurrency):
     NAME = "FIX"
     SYMBOL = "FIX"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 336,
         "HARDENED": True
@@ -1834,6 +2239,7 @@ class FIXTestnet(Cryptocurrency):
     NAME = "FIX"
     SYMBOL = "FIXTEST"
     NETWORK = "testnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 1,
         "HARDENED": True
@@ -1873,6 +2279,7 @@ class FeathercoinMainnet(Cryptocurrency):
     NAME = "Feathercoin"
     SYMBOL = "FTC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 8,
         "HARDENED": True
@@ -1912,6 +2319,7 @@ class FirstcoinMainnet(Cryptocurrency):
     NAME = "Firstcoin"
     SYMBOL = "FRST"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 167,
         "HARDENED": True
@@ -1951,6 +2359,7 @@ class FlashcoinMainnet(Cryptocurrency):
     NAME = "Flashcoin"
     SYMBOL = "FLASH"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 120,
         "HARDENED": True
@@ -1990,6 +2399,7 @@ class FujiCoinMainnet(Cryptocurrency):
     NAME = "Fuji Coin"
     SYMBOL = "FJC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 75,
         "HARDENED": True
@@ -2029,6 +2439,7 @@ class GCRCoinMainnet(Cryptocurrency):
     NAME = "GCR Coin"  # Global Currency Reserve Coin
     SYMBOL = "GCR"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 49,
         "HARDENED": True
@@ -2068,6 +2479,7 @@ class GameCreditsMainnet(Cryptocurrency):
     NAME = "Game Credits"
     SYMBOL = "GAME"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 101,
         "HARDENED": True
@@ -2107,6 +2519,7 @@ class GoByteMainnet(Cryptocurrency):
     NAME = "Go Byte"
     SYMBOL = "GBX"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 176,
         "HARDENED": True
@@ -2146,6 +2559,7 @@ class GridcoinMainnet(Cryptocurrency):
     NAME = "Gridcoin"
     SYMBOL = "GRC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 84,
         "HARDENED": True
@@ -2185,6 +2599,7 @@ class GroestlCoinMainnet(Cryptocurrency):
     NAME = "Groestl Coin"
     SYMBOL = "GRS"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 17,
         "HARDENED": True
@@ -2224,6 +2639,7 @@ class GroestlCoinTestnet(Cryptocurrency):
     NAME = "Groestl Coin"
     SYMBOL = "GRSTEST"
     NETWORK = "testnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 1,
         "HARDENED": True
@@ -2263,6 +2679,7 @@ class GuldenMainnet(Cryptocurrency):
     NAME = "Gulden"
     SYMBOL = "NLG"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 87,
         "HARDENED": True
@@ -2297,11 +2714,52 @@ class GuldenMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0x62
 
 
+class HushMainnet(Cryptocurrency):
+
+    NAME = "Hush"
+    SYMBOL = "HUSH"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 197,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x1cbd
+    PUBLIC_KEY_ADDRESS = 0x1cb8
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Hush Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
+
+
 class HelleniccoinMainnet(Cryptocurrency):
 
     NAME = "Helleniccoin"
     SYMBOL = "HNC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 168,
         "HARDENED": True
@@ -2341,6 +2799,7 @@ class HempcoinMainnet(Cryptocurrency):
     NAME = "Hempcoin"
     SYMBOL = "THC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 113,
         "HARDENED": True
@@ -2380,6 +2839,7 @@ class IXCoinMainnet(Cryptocurrency):
     NAME = "IX Coin"
     SYMBOL = "IXC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 86,
         "HARDENED": True
@@ -2419,6 +2879,7 @@ class InsaneCoinMainnet(Cryptocurrency):
     NAME = "Insane Coin"
     SYMBOL = "INSN"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 68,
         "HARDENED": True
@@ -2458,6 +2919,7 @@ class InternetOfPeopleMainnet(Cryptocurrency):
     NAME = "Internet Of People"
     SYMBOL = "IOP"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 66,
         "HARDENED": True
@@ -2497,6 +2959,7 @@ class JumbucksMainnet(Cryptocurrency):
     NAME = "Jumbucks"
     SYMBOL = "JBS"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 26,
         "HARDENED": True
@@ -2536,6 +2999,7 @@ class KobocoinMainnet(Cryptocurrency):
     NAME = "Kobocoin"
     SYMBOL = "KOBO"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 196,
         "HARDENED": True
@@ -2575,6 +3039,7 @@ class KomodoMainnet(Cryptocurrency):
     NAME = "Komodo"
     SYMBOL = "KMD"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 141,
         "HARDENED": True
@@ -2614,6 +3079,7 @@ class LBRYCreditsMainnet(Cryptocurrency):
     NAME = "LBRY Credits"
     SYMBOL = "LBC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 140,
         "HARDENED": True
@@ -2653,6 +3119,7 @@ class LinxMainnet(Cryptocurrency):
     NAME = "Linx"
     SYMBOL = "LINX"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 114,
         "HARDENED": True
@@ -2687,11 +3154,52 @@ class LinxMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0xcb
 
 
+class LitecoinCashMainnet(Cryptocurrency):
+
+    NAME = "Litecoin Cash"
+    SYMBOL = "LCC"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 192,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x5
+    PUBLIC_KEY_ADDRESS = 0x1c
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Litecoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xb0
+
+
 class LitecoinMainnet(Cryptocurrency):
 
     NAME = "Litecoin"
     SYMBOL = "LTC"
     NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/litecoin-project/litecoin"
     COIN_TYPE = CoinType({
         "INDEX": 2,
         "HARDENED": True
@@ -2731,6 +3239,7 @@ class LitecoinTestnet(Cryptocurrency):
     NAME = "Litecoin"
     SYMBOL = "LTCTEST"
     NETWORK = "testnet"
+    SOURCE_CODE = "https://github.com/litecoin-project/litecoin"
     COIN_TYPE = CoinType({
         "INDEX": 1,
         "HARDENED": True
@@ -2765,11 +3274,52 @@ class LitecoinTestnet(Cryptocurrency):
     WIF_SECRET_KEY = 0xb0
 
 
+class LitecoinZMainnet(Cryptocurrency):
+
+    NAME = "LitecoinZ"
+    SYMBOL = "LTZ"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 221,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xab8
+    PUBLIC_KEY_ADDRESS = 0xab3
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade3,
+        "P2SH": 0x488ade3,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18LitecoinZ Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
+
+
 class LkrcoinMainnet(Cryptocurrency):
 
     NAME = "Lkrcoin"
     SYMBOL = "LKR"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 557,
         "HARDENED": True
@@ -2804,11 +3354,52 @@ class LkrcoinMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0xb0
 
 
+class LynxMainnet(Cryptocurrency):
+
+    NAME = "Lynx"
+    SYMBOL = "LYNX"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 191,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x32
+    PUBLIC_KEY_ADDRESS = 0x2d
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Lynx Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xad
+
+
 class MazacoinMainnet(Cryptocurrency):
 
     NAME = "Mazacoin"
     SYMBOL = "MZC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 13,
         "HARDENED": True
@@ -2843,11 +3434,92 @@ class MazacoinMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0xe0
 
 
+class MegacoinMainnet(Cryptocurrency):
+
+    NAME = "Megacoin"
+    SYMBOL = "MEC"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 217,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x5
+    PUBLIC_KEY_ADDRESS = 0x32
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Megacoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xb2
+
+
+class MinexcoinMainnet(Cryptocurrency):
+
+    NAME = "Minexcoin"
+    SYMBOL = "MNX"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 182,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x5
+    PUBLIC_KEY_ADDRESS = 0x4b
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
+
+
 class MonacoinMainnet(Cryptocurrency):
 
     NAME = "Monacoin"
     SYMBOL = "MONA"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 22,
         "HARDENED": True
@@ -2887,6 +3559,7 @@ class MonkeyProjectMainnet(Cryptocurrency):
     NAME = "Monkey Project"
     SYMBOL = "MONK"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 214,
         "HARDENED": True
@@ -2926,6 +3599,7 @@ class MyriadcoinMainnet(Cryptocurrency):
     NAME = "Myriadcoin"
     SYMBOL = "XMY"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 90,
         "HARDENED": True
@@ -2965,6 +3639,7 @@ class NIXMainnet(Cryptocurrency):
     NAME = "NIX"
     SYMBOL = "NIX"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 400,
         "HARDENED": True
@@ -3004,6 +3679,7 @@ class NamecoinMainnet(Cryptocurrency):
     NAME = "Namecoin"
     SYMBOL = "NMC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 7,
         "HARDENED": True
@@ -3043,6 +3719,7 @@ class NavcoinMainnet(Cryptocurrency):
     NAME = "Navcoin"
     SYMBOL = "NAV"
     NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/navcoin/navcoin-core"
     COIN_TYPE = CoinType({
         "INDEX": 130,
         "HARDENED": True
@@ -3082,6 +3759,7 @@ class NeblioMainnet(Cryptocurrency):
     NAME = "Neblio"
     SYMBOL = "NEBL"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 146,
         "HARDENED": True
@@ -3116,11 +3794,172 @@ class NeblioMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0xb5
 
 
+class NeoscoinMainnet(Cryptocurrency):
+
+    NAME = "Neoscoin"
+    SYMBOL = "NEOS"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 25,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x5
+    PUBLIC_KEY_ADDRESS = 0x35
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18NeosCoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xb1
+
+
+class NeurocoinMainnet(Cryptocurrency):
+
+    NAME = "Neurocoin"
+    SYMBOL = "NRO"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 110,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x75
+    PUBLIC_KEY_ADDRESS = 0x35
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18PPCoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xb5
+
+
+class NewYorkCoinMainnet(Cryptocurrency):
+
+    NAME = "New York Coin"
+    SYMBOL = "NYC"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 179,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x16
+    PUBLIC_KEY_ADDRESS = 0x3c
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18newyorkc Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xbc
+
+
+class NovacoinMainnet(Cryptocurrency):
+
+    NAME = "Novacoin"
+    SYMBOL = "NVC"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 50,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x14
+    PUBLIC_KEY_ADDRESS = 0x8
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18NovaCoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x88
+
+
 class NuBitsMainnet(Cryptocurrency):
 
     NAME = "NuBits"
     SYMBOL = "NBT"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 12,
         "HARDENED": True
@@ -3155,11 +3994,92 @@ class NuBitsMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0x96
 
 
+class NuSharesMainnet(Cryptocurrency):
+
+    NAME = "NuShares"
+    SYMBOL = "NSR"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 11,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x40
+    PUBLIC_KEY_ADDRESS = 0x3f
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Nu Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x95
+
+
+class OKCashMainnet(Cryptocurrency):
+
+    NAME = "OK Cash"
+    SYMBOL = "OK"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 69,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x1c
+    PUBLIC_KEY_ADDRESS = 0x37
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x3cc1c73,
+        "P2SH": 0x3cc1c73,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x3cc23d7,
+        "P2SH": 0x3cc23d7,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18OKCash Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x3
+
+
 class OmniMainnet(Cryptocurrency):
 
     NAME = "Omni"
     SYMBOL = "OMNI"
     NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/omnilayer/omnicore"
     COIN_TYPE = CoinType({
         "INDEX": 200,
         "HARDENED": True
@@ -3199,6 +4119,7 @@ class OmniTestnet(Cryptocurrency):
     NAME = "Omni"
     SYMBOL = "OMNITEST"
     NETWORK = "testnet"
+    SOURCE_CODE = "https://github.com/omnilayer/omnicore"
     COIN_TYPE = CoinType({
         "INDEX": 1,
         "HARDENED": True
@@ -3238,6 +4159,7 @@ class OnixCoinMainnet(Cryptocurrency):
     NAME = "Onix Coin"
     SYMBOL = "ONX"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 174,
         "HARDENED": True
@@ -3277,6 +4199,7 @@ class PeercoinMainnet(Cryptocurrency):
     NAME = "Peercoin"
     SYMBOL = "PPC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 6,
         "HARDENED": True
@@ -3311,11 +4234,132 @@ class PeercoinMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0xb7
 
 
+class PesobitMainnet(Cryptocurrency):
+
+    NAME = "Pesobit"
+    SYMBOL = "PSB"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 62,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x55
+    PUBLIC_KEY_ADDRESS = 0x37
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Pesobit Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xb7
+
+
+class PhoreMainnet(Cryptocurrency):
+
+    NAME = "Phore"
+    SYMBOL = "PHR"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 444,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xd
+    PUBLIC_KEY_ADDRESS = 0x37
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x221312b,
+        "P2SH": 0x221312b,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x22d2533,
+        "P2SH": 0x22d2533,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Phore Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xd4
+
+
+class PinkcoinMainnet(Cryptocurrency):
+
+    NAME = "Pinkcoin"
+    SYMBOL = "PINK"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 117,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x1c
+    PUBLIC_KEY_ADDRESS = 0x3
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Pinkcoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x83
+
+
 class PivxMainnet(Cryptocurrency):
 
     NAME = "Pivx"
     SYMBOL = "PIVX"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 119,
         "HARDENED": True
@@ -3355,6 +4399,7 @@ class PivxTestnet(Cryptocurrency):
     NAME = "Pivx"
     SYMBOL = "PIVXTEST"
     NETWORK = "testnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 1,
         "HARDENED": True
@@ -3389,11 +4434,172 @@ class PivxTestnet(Cryptocurrency):
     WIF_SECRET_KEY = 0xef
 
 
+class PoswCoinMainnet(Cryptocurrency):
+
+    NAME = "Posw Coin"
+    SYMBOL = "POSW"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 47,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x55
+    PUBLIC_KEY_ADDRESS = 0x37
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Poswcoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xb7
+
+
+class PotcoinMainnet(Cryptocurrency):
+
+    NAME = "Potcoin"
+    SYMBOL = "POT"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 81,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x5
+    PUBLIC_KEY_ADDRESS = 0x37
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Potcoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xb7
+
+
+class ProjectCoinMainnet(Cryptocurrency):
+
+    NAME = "Project Coin"
+    SYMBOL = "PRJ"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 533,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x8
+    PUBLIC_KEY_ADDRESS = 0x37
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x221312b,
+        "P2SH": 0x221312b,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x22d2533,
+        "P2SH": 0x22d2533,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18ProjectCoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x75
+
+
+class PutincoinMainnet(Cryptocurrency):
+
+    NAME = "Putincoin"
+    SYMBOL = "PUT"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 122,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x14
+    PUBLIC_KEY_ADDRESS = 0x37
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18PutinCoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xb7
+
+
 class QtumMainnet(Cryptocurrency):
 
     NAME = "Qtum"
     SYMBOL = "QTUM"
     NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/qtumproject/qtum"
     COIN_TYPE = CoinType({
         "INDEX": 2301,
         "HARDENED": True
@@ -3433,6 +4639,7 @@ class QtumTestnet(Cryptocurrency):
     NAME = "Qtum"
     SYMBOL = "QTUMTEST"
     NETWORK = "testnet"
+    SOURCE_CODE = "https://github.com/qtumproject/qtum"
     COIN_TYPE = CoinType({
         "INDEX": 1,
         "HARDENED": True
@@ -3467,11 +4674,332 @@ class QtumTestnet(Cryptocurrency):
     WIF_SECRET_KEY = 0xef
 
 
+class RSKMainnet(Cryptocurrency):
+
+    NAME = "RSK"
+    SYMBOL = "RBTC"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 137,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x5
+    PUBLIC_KEY_ADDRESS = 0x0
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18RSK Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
+
+
+class RSKTestnet(Cryptocurrency):
+
+    NAME = "RSK"
+    SYMBOL = "RBTCTEST"
+    NETWORK = "testnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 1,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xc4
+    PUBLIC_KEY_ADDRESS = 0x6f
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x4358394,
+        "P2SH": 0x4358394,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x43587cf,
+        "P2SH": 0x43587cf,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18RSK Testnet Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xef
+
+
+class RapidsMainnet(Cryptocurrency):
+
+    NAME = "Rapids"
+    SYMBOL = "RPD"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 320,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x6
+    PUBLIC_KEY_ADDRESS = 0x3d
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "DarkNet Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x2e
+
+
+class RavencoinMainnet(Cryptocurrency):
+
+    NAME = "Ravencoin"
+    SYMBOL = "RVN"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 175,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x7a
+    PUBLIC_KEY_ADDRESS = 0x3c
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "Raven Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
+
+
+class ReddcoinMainnet(Cryptocurrency):
+
+    NAME = "Reddcoin"
+    SYMBOL = "RDD"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 4,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x5
+    PUBLIC_KEY_ADDRESS = 0x3d
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Reddcoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xbd
+
+
+class RubycoinMainnet(Cryptocurrency):
+
+    NAME = "Rubycoin"
+    SYMBOL = "RBY"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 16,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x55
+    PUBLIC_KEY_ADDRESS = 0x3c
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Rubycoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xbc
+
+
+class SafecoinMainnet(Cryptocurrency):
+
+    NAME = "Safecoin"
+    SYMBOL = "SAFE"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 19165,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x56
+    PUBLIC_KEY_ADDRESS = 0x3d
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Safecoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xbd
+
+
+class SaluscoinMainnet(Cryptocurrency):
+
+    NAME = "Saluscoin"
+    SYMBOL = "SLS"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 572,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xc4
+    PUBLIC_KEY_ADDRESS = 0x3f
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Salus Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xbf
+
+
 class ScribeMainnet(Cryptocurrency):
 
     NAME = "Scribe"
     SYMBOL = "SCRIBE"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 545,
         "HARDENED": True
@@ -3511,6 +5039,7 @@ class ShadowCashMainnet(Cryptocurrency):
     NAME = "Shadow Cash"
     SYMBOL = "SDC"
     NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/shadowproject/shadow"
     COIN_TYPE = CoinType({
         "INDEX": 35,
         "HARDENED": True
@@ -3550,6 +5079,7 @@ class ShadowCashTestnet(Cryptocurrency):
     NAME = "Shadow Cash"
     SYMBOL = "SDCTEST"
     NETWORK = "testnet"
+    SOURCE_CODE = "https://github.com/shadowproject/shadow"
     COIN_TYPE = CoinType({
         "INDEX": 1,
         "HARDENED": True
@@ -3589,6 +5119,7 @@ class SlimcoinMainnet(Cryptocurrency):
     NAME = "Slimcoin"
     SYMBOL = "SLM"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 63,
         "HARDENED": True
@@ -3628,6 +5159,7 @@ class SlimcoinTestnet(Cryptocurrency):
     NAME = "Slimcoin"
     SYMBOL = "SLMTEST"
     NETWORK = "testnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 1,
         "HARDENED": True
@@ -3662,11 +5194,212 @@ class SlimcoinTestnet(Cryptocurrency):
     WIF_SECRET_KEY = 0x57
 
 
+class SmileycoinMainnet(Cryptocurrency):
+
+    NAME = "Smileycoin"
+    SYMBOL = "SMLY"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 59,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x5
+    PUBLIC_KEY_ADDRESS = 0x19
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x1e5631bc,
+        "P2SH": 0x1e5631bc,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x1e562d9a,
+        "P2SH": 0x1e562d9a,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Smileycoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x5
+
+
+class SolarcoinMainnet(Cryptocurrency):
+
+    NAME = "Solarcoin"
+    SYMBOL = "SLR"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 58,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x5
+    PUBLIC_KEY_ADDRESS = 0x12
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18SolarCoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x92
+
+
+class StashMainnet(Cryptocurrency):
+
+    NAME = "Stash"
+    SYMBOL = "STASH"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 49344,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x10
+    PUBLIC_KEY_ADDRESS = 0x4c
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Stash Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xcc
+
+
+class StratisMainnet(Cryptocurrency):
+
+    NAME = "Stratis"
+    SYMBOL = "STRAT"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 105,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x7d
+    PUBLIC_KEY_ADDRESS = 0x3f
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Stratis Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xbf
+
+
+class StratisTestnet(Cryptocurrency):
+
+    NAME = "Stratis"
+    SYMBOL = "STRATTEST"
+    NETWORK = "testnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 1,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x7d
+    PUBLIC_KEY_ADDRESS = 0x41
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Stratis Test Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xbf
+
+
 class SugarchainMainnet(Cryptocurrency):
 
     NAME = "Sugarchain"
     SYMBOL = "SUGAR"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 408,
         "HARDENED": True
@@ -3706,6 +5439,7 @@ class SugarchainTestnet(Cryptocurrency):
     NAME = "Sugarchain"
     SYMBOL = "SUGARTEST"
     NETWORK = "testnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 1,
         "HARDENED": True
@@ -3745,6 +5479,7 @@ class SyscoinMainnet(Cryptocurrency):
     NAME = "Syscoin"
     SYMBOL = "SYS"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 57,
         "HARDENED": True
@@ -3779,11 +5514,372 @@ class SyscoinMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0x80
 
 
+class TOACoinMainnet(Cryptocurrency):
+
+    NAME = "TOA Coin"
+    SYMBOL = "TOA"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 159,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x17
+    PUBLIC_KEY_ADDRESS = 0x41
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18TOA Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xc1
+
+
+class ThoughtAIMainnet(Cryptocurrency):
+
+    NAME = "Thought AI"
+    SYMBOL = "THT"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 502,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x9
+    PUBLIC_KEY_ADDRESS = 0x7
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x5aebd8c6,
+        "P2SH": 0x5aebd8c6,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0xfbc6a00d,
+        "P2SH": 0xfbc6a00d,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x7b
+
+
+class TwinsMainnet(Cryptocurrency):
+
+    NAME = "Twins"
+    SYMBOL = "TWINS"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 970,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x53
+    PUBLIC_KEY_ADDRESS = 0x49
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x221312b,
+        "P2SH": 0x221312b,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x22d2533,
+        "P2SH": 0x22d2533,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x42
+
+
+class TwinsTestnet(Cryptocurrency):
+
+    NAME = "Twins"
+    SYMBOL = "TWINSTEST"
+    NETWORK = "testnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 1,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x89
+    PUBLIC_KEY_ADDRESS = 0x4c
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x3a805837,
+        "P2SH": 0x3a805837,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x3a8061a0,
+        "P2SH": 0x3a8061a0,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xed
+
+
+class UltimateSecureCashMainnet(Cryptocurrency):
+
+    NAME = "Ultimate Secure Cash"
+    SYMBOL = "USC"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 112,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x7d
+    PUBLIC_KEY_ADDRESS = 0x44
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0xee8031e8,
+        "P2SH": 0xee8031e8,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0xee80286a,
+        "P2SH": 0xee80286a,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18UltimateSecureCash Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xbf
+
+
+class UnobtaniumMainnet(Cryptocurrency):
+
+    NAME = "Unobtanium"
+    SYMBOL = "UNO"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 92,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x1e
+    PUBLIC_KEY_ADDRESS = 0x82
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Unobtanium Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xe0
+
+
+class VPNCoinMainnet(Cryptocurrency):
+
+    NAME = "Virtual Cash"
+    SYMBOL = "VASH"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 33,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x5
+    PUBLIC_KEY_ADDRESS = 0x47
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18VpnCoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xc7
+
+
+class VcashMainnet(Cryptocurrency):
+
+    NAME = "Vcash"
+    SYMBOL = "VC"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 127,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x8
+    PUBLIC_KEY_ADDRESS = 0x47
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Vcash Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xc7
+
+
+class VergeCurrencyMainnet(Cryptocurrency):
+
+    NAME = "Verge Currency"
+    SYMBOL = "XVG"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 77,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x21
+    PUBLIC_KEY_ADDRESS = 0x1e
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18VERGE Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x9e
+
+
 class VertcoinMainnet(Cryptocurrency):
 
     NAME = "Vertcoin"
     SYMBOL = "VTC"
     NETWORK = "mainnet"
+    SOURCE_CODE = None
     COIN_TYPE = CoinType({
         "INDEX": 28,
         "HARDENED": True
@@ -3823,6 +5919,7 @@ class ViacoinMainnet(Cryptocurrency):
     NAME = "Viacoin"
     SYMBOL = "VIA"
     NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/viacoin/viacore-viacoin"
     COIN_TYPE = CoinType({
         "INDEX": 14,
         "HARDENED": True
@@ -3862,6 +5959,7 @@ class ViacoinTestnet(Cryptocurrency):
     NAME = "Viacoin"
     SYMBOL = "VIATEST"
     NETWORK = "testnet"
+    SOURCE_CODE = "https://github.com/viacoin/viacore-viacoin"
     COIN_TYPE = CoinType({
         "INDEX": 14,
         "HARDENED": True
@@ -3896,11 +5994,172 @@ class ViacoinTestnet(Cryptocurrency):
     WIF_SECRET_KEY = 0xff
 
 
+class VivoMainnet(Cryptocurrency):
+
+    NAME = "Vivo"
+    SYMBOL = "VIVO"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 166,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xa
+    PUBLIC_KEY_ADDRESS = 0x46
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18DarkCoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xc6
+
+
+class WhitecoinMainnet(Cryptocurrency):
+
+    NAME = "Whitecoin"
+    SYMBOL = "XWC"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 559,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x57
+    PUBLIC_KEY_ADDRESS = 0x49
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x48894ed,
+        "P2SH": 0x48894ed,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x4887f1e,
+        "P2SH": 0x4887f1e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Whitecoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xc9
+
+
+class WincoinMainnet(Cryptocurrency):
+
+    NAME = "Wincoin"
+    SYMBOL = "WC"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 181,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x1c
+    PUBLIC_KEY_ADDRESS = 0x49
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18WinCoin Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xc9
+
+
+class XUEZMainnet(Cryptocurrency):
+
+    NAME = "XUEZ"
+    SYMBOL = "XUEZ"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 225,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x12
+    PUBLIC_KEY_ADDRESS = 0x4b
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x221312b,
+        "P2SH": 0x221312b,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x22d2533,
+        "P2SH": 0x22d2533,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xd4
+
+
 class XinFinMainnet(Cryptocurrency):
 
     NAME = "XinFin"
     SYMBOL = "XDC"
     NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/XinFinOrg/XDPoSChain"
     COIN_TYPE = CoinType({
         "INDEX": 550,
         "HARDENED": True
@@ -3935,6 +6194,126 @@ class XinFinMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0x80
 
 
+class ZClassicMainnet(Cryptocurrency):
+
+    NAME = "ZClassic"
+    SYMBOL = "ZCL"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 147,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x1cbd
+    PUBLIC_KEY_ADDRESS = 0x1cb8
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Zcash Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
+
+
+class ZcashMainnet(Cryptocurrency):
+
+    NAME = "Zcash"
+    SYMBOL = "ZEC"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 133,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x1cbd
+    PUBLIC_KEY_ADDRESS = 0x1cb8
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Zcash Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
+
+
+class ZencashMainnet(Cryptocurrency):
+
+    NAME = "Zencash"
+    SYMBOL = "ZEN"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 121,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x2096
+    PUBLIC_KEY_ADDRESS = 0x2089
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Zcash Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
+
+
 def get_cryptocurrency(symbol: str) -> Any:
 
     for _, cryptocurrency in inspect.getmembers(sys.modules[__name__]):
@@ -3944,4 +6323,3 @@ def get_cryptocurrency(symbol: str) -> Any:
                     return cryptocurrency
 
     raise ValueError(f"Invalid Cryptocurrency '{symbol}' symbol.")
-
