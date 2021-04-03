@@ -234,6 +234,10 @@ class HDWallet:
         self._private_key, self._chain_code = self._i[:32], self._i[32:]
         self._key = ecdsa.SigningKey.from_string(_deserialize_xprivate_key[5], curve=SECP256k1)
         self._verified_key = self._key.get_verifying_key()
+        if self._use_default_path:
+            self.from_path(path=self._cryptocurrency.DEFAULT_PATH)
+        if self._from_class:
+            self.from_path(path=self._path_class)
         self._public_key = self.compressed()
         return self
 
@@ -938,6 +942,7 @@ class HDWallet:
             keccak_256 = sha3.keccak_256()
             keccak_256.update(self._verified_key.to_string())
             address = keccak_256.hexdigest()[24:]
+            print(address)
             return checksum_encode(address, crypto="xdc")
 
         compressed_public_key = unhexlify(self.compressed())
