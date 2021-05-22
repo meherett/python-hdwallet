@@ -27,13 +27,13 @@ For more info see the BIP specs.
 PIP to install `hdwallet` globally, for Linux `sudo` may be required:
 
 ```
-$ pip install hdwallet
+pip install hdwallet
 ```
 
 If you want to run the latest version of the code, you can install from the git:
 
 ```
-$ pip install git+git://github.com/meherett/python-hdwallet.git
+pip install git+git://github.com/meherett/python-hdwallet.git
 ```
 
 For the versions available, see the [tags on this repository](https://github.com/meherett/python-hdwallet/tags).
@@ -81,7 +81,7 @@ hdwallet.from_index(0)
 print(json.dumps(hdwallet.dumps(), indent=4, ensure_ascii=False))
 ```
 
-<details>
+<details open>
   <summary>Output</summary><br/>
 
 ```json5
@@ -135,7 +135,7 @@ from typing import Optional
 # Generate english mnemonic words
 MNEMONIC: str = generate_mnemonic(language="english", strength=128)
 # Secret passphrase/password for mnemonic
-PASSPHRASE: Optional[str] = None  # str("meherett")
+PASSPHRASE: Optional[str] = None  # "meherett"
 
 # Initialize Ethereum mainnet BIP44HDWallet
 bip44_hdwallet: BIP44HDWallet = BIP44HDWallet(cryptocurrency=EthereumMainnet)
@@ -150,15 +150,15 @@ print("Mnemonic:", bip44_hdwallet.mnemonic())
 print("Base HD Path:  m/44'/60'/0'/0/{address_index}", "\n")
 
 # Get Ethereum BIP44HDWallet information's from address index
-for address in range(10):
+for address_index in range(10):
     # Derivation from Ethereum BIP44 derivation path
     bip44_derivation: BIP44Derivation = BIP44Derivation(
-        cryptocurrency=EthereumMainnet, account=0, change=False, address=address
+        cryptocurrency=EthereumMainnet, account=0, change=False, address=address_index
     )
     # Drive Ethereum BIP44HDWallet
     bip44_hdwallet.from_path(path=bip44_derivation)
     # Print address_index, path, address and private_key
-    print(f"({address}) {bip44_hdwallet.path()} {bip44_hdwallet.address()} 0x{bip44_hdwallet.private_key()}")
+    print(f"({address_index}) {bip44_hdwallet.path()} {bip44_hdwallet.address()} 0x{bip44_hdwallet.private_key()}")
     # Clean derivation indexes/paths
     bip44_hdwallet.clean_derivation()
 ```
@@ -339,6 +339,22 @@ This library simplifies the process of creating a new HDWallet's for:
 | ZClassic                                                          | `ZCL`                | Yes     | No      | No     | 147       | `m/44'/147'/0'/0/0`  |
 | Zcash                                                             | `ZEC`                | Yes     | No      | No     | 133       | `m/44'/133'/0'/0/0`  |
 | Zencash                                                           | `ZEN`                | Yes     | No      | No     | 121       | `m/44'/121'/0'/0/0`  |
+
+## Donations
+
+If You found this tool helpful consider making a donation:  
+
+Ethereum (ETH) or Tether (USDT-ERC20) address: 
+
+```text
+0x342798bbe9731a91e0557fa8ab0bce1eae6d6ae3
+```
+
+Bitcoin (BTC) address: 
+
+```text
+3GGNPvgbSpMHShcaZJGDXQn5wUJyTz7uoC
+```
 
 ## License
 
