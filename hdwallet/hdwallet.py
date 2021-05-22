@@ -43,7 +43,7 @@ from .derivations import (
 )
 from .exceptions import SemanticError
 from .utils import (
-    get_bytes, is_entropy, is_mnemonic, get_entropy_strength, _unhexlify,
+    get_bytes, is_entropy, is_mnemonic, get_entropy_strength, _unhexlify, is_root_xpublic_key,
     get_mnemonic_language, is_root_xprivate_key, get_mnemonic_strength
 )
 
@@ -269,6 +269,35 @@ class HDWallet:
         self._public_key = self.compressed()
         return self
 
+    def from_xpublic_key(self, xpublic_key: str) -> "HDWallet":
+        """
+        Master from XPublic Key.
+
+        :param xpublic_key: XPublic key.
+        :type xpublic_key: str
+
+        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_xpublic_key(xprivate_key="xpub661MyMwAqRbcGSTjb2Mp3Sb4STUDhD2x986ubXKjQa2QsFTCVqzdA98qeZjcncHT1AaZcMSjiP1HJ16jH97q72RwyFfiNhmG8zQ6KBB5PaQ")
+        <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
+        """
+
+        _deserialize_xpublic_key = self._deserialize_xpublic_key(xpublic_key=xpublic_key)
+        self._depth, self._parent_fingerprint, self._index = (
+            int.from_bytes(_deserialize_xpublic_key[1], "big"),
+            _deserialize_xpublic_key[2],
+            struct.unpack(">L", _deserialize_xpublic_key[3])[0]
+        )
+        self._chain_code = _deserialize_xpublic_key[4]
+        self._verified_key = ecdsa.VerifyingKey.from_string(
+            _deserialize_xpublic_key[5], curve=SECP256k1
+        )
+        self._public_key = self.compressed()
+        return self
+
     def from_wif(self, wif: str) -> "HDWallet":
         """
         Master from Wallet Important Format (WIF).
@@ -314,6 +343,28 @@ class HDWallet:
         self._private_key = unhexlify(private_key)
         self._key = ecdsa.SigningKey.from_string(self._private_key, curve=SECP256k1)
         self._verified_key = self._key.get_verifying_key()
+        self._public_key = self.compressed()
+        return self
+
+    def from_public_key(self, public_key: str) -> "HDWallet":
+        """
+        Master from Public Key.
+
+        :param public_key: Public key.
+        :type public_key: str
+
+        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
+
+        >>> from hdwallet import HDWallet
+        >>> from hdwallet.symbols import BTC
+        >>> hdwallet = HDWallet(symbol=BTC)
+        >>> hdwallet.from_public_key(public_key="02f93f58b97c3bb616645c3dda256ec946d87c45baf531984c022dd0fd1503b0a8")
+        <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
+        """
+
+        self._verified_key = ecdsa.VerifyingKey.from_string(
+            unhexlify(public_key), curve=SECP256k1
+        )
         self._public_key = self.compressed()
         return self
 
@@ -537,6 +588,8 @@ class HDWallet:
         parent_fingerprint = self._parent_fingerprint
         index = struct.pack(">L", self._index)
         chain_code = self._chain_code
+        if self.private_key() is None:
+            return None
         data = b"\x00" + unhexlify(self.private_key())
         return self._serialize_xkeys(
             _unhexlify(version), depth, parent_fingerprint, index, chain_code, data, encoded
@@ -602,9 +655,12 @@ class HDWallet:
             self._verified_key = self._key.get_verifying_key()
         return self
 
-    def uncompressed(self) -> str:
+    def uncompressed(self, compressed: Optional[str] = None) -> str:
         """
         Get Uncommpresed Public Key.
+
+        :param compressed: Compressed public key, default to ``None``.
+        :type compressed: str
 
         :returns: str -- Uncommpresed public key.
 
@@ -617,11 +673,22 @@ class HDWallet:
         "f93f58b97c3bb616645c3dda256ec946d87c45baf531984c022dd0fd1503b0a875f63285a539213ac241fc4a88e7137ba1c8d897b1c1e5efb81bfc6b45a22d40"
         """
 
-        return hexlify(self._verified_key.to_string()).decode()
+        p = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F
+        public_key = unhexlify(compressed) if compressed else unhexlify(self.compressed())
+        x = int.from_bytes(public_key[1:33], byteorder='big')
+        y_sq = (pow(x, 3, p) + 7) % p
+        y = pow(y_sq, (p + 1) // 4, p)
+        if y % 2 != public_key[0] % 2:
+            y = p - y
+        y = y.to_bytes(32, byteorder='big')
+        return (public_key[1:33] + y).hex()
 
-    def compressed(self) -> str:
+    def compressed(self, uncompressed: Optional[str] = None) -> str:
         """
-        Get Commpresed Public Key.
+        Get Compresed Public Key.
+
+        :param uncompressed: Uncompressed public key, default to ``None``.
+        :type uncompressed: str
 
         :returns: str -- Commpresed public key.
 
@@ -634,9 +701,12 @@ class HDWallet:
         "02f93f58b97c3bb616645c3dda256ec946d87c45baf531984c022dd0fd1503b0a8"
         """
 
+        _verified_key = ecdsa.VerifyingKey.from_string(
+            unhexlify(uncompressed), curve=SECP256k1
+        ) if uncompressed else self._verified_key
         padx = (b"\0" * 32 + int_to_string(
-            self._verified_key.pubkey.point.x()))[-32:]
-        if self._verified_key.pubkey.point.y() & 1:
+            _verified_key.pubkey.point.x()))[-32:]
+        if _verified_key.pubkey.point.y() & 1:
             ck = b"\3" + padx
         else:
             ck = b"\2" + padx
@@ -657,11 +727,16 @@ class HDWallet:
         "6cd78b0d69eab1a47bfa53a52b9d8c4331e858b5d7a599270a95d9735fdb0b94"
         """
 
-        return hexlify(self._key.to_string()).decode()
+        return hexlify(self._key.to_string()).decode() if self._key else None
 
-    def public_key(self, private_key: str = None) -> str:
+    def public_key(self, compressed: bool = True, private_key: Optional[str] = None) -> str:
         """
         Get Public Key.
+
+        :param compressed: Compressed public key, default to ``True``.
+        :type compressed: bool
+        :param private_key: Private key hex string, default to ``None``.
+        :type private_key: str
 
         :returns: str -- Public key.
 
@@ -684,8 +759,8 @@ class HDWallet:
                 ck = b"\3" + padx
             else:
                 ck = b"\2" + padx
-            return hexlify(ck).decode()
-        return self.compressed()
+            return hexlify(ck).decode() if compressed else self.uncompressed(compressed=hexlify(ck).decode())
+        return self.compressed() if compressed else self.uncompressed()
 
     def strength(self) -> Optional[int]:
         """
@@ -942,7 +1017,6 @@ class HDWallet:
             keccak_256 = sha3.keccak_256()
             keccak_256.update(self._verified_key.to_string())
             address = keccak_256.hexdigest()[24:]
-            print(address)
             return checksum_encode(address, crypto="xdc")
 
         compressed_public_key = unhexlify(self.compressed())
@@ -1060,7 +1134,7 @@ class HDWallet:
             return None
         return ensure_string(base58.b58encode_check(network_hash160_bytes))
 
-    def wif(self) -> str:
+    def wif(self) -> Optional[str]:
         """
         Get Wallet Important Format.
 
@@ -1075,8 +1149,7 @@ class HDWallet:
         "KzsHWUJsrTWUUhBGPfMMxLLydiH7NhEn6z7mKHXD5qNkUWaC4TEn"
         """
 
-        raw = _unhexlify(self._cryptocurrency.WIF_SECRET_KEY) + self._key.to_string() + b"\x01"
-        return check_encode(raw)
+        return check_encode(_unhexlify(self._cryptocurrency.WIF_SECRET_KEY) + self._key.to_string() + b"\x01") if self._key else None
 
     def dumps(self) -> dict:
         """
