@@ -185,15 +185,24 @@ Base HD Path:  m/44'/60'/0'/0/{address_index}
 
 [Click this to see more examples :)](https://github.com/meherett/python-hdwallet/blob/master/examples)
 
-## Running test cases
-Install the requirements
-```python
-pip install -e .[tests] -r requirements.txt
+## Development
+
+To get started, just fork this repo, clone it locally, and run:
+
 ```
-Run
-```python
-pytest tests/
+$ pip install -e .[tests,docs] -r requirements.txt
 ```
+
+## Testing
+
+You can run the tests with:
+
+```
+$ pytest
+```
+
+Or use `tox` to run the complete suite against the full set of build targets, or pytest to run specific 
+tests against a specific version of Python.
 
 ## Contributing
 
