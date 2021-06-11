@@ -168,7 +168,7 @@ for address_index in range(10):
 
 ```shell script
 Mnemonic: bright demand olive glance crater key head glory quantum leisure intact age
-Base HD Path:  m/44'/60'/0'/0/{address_index} 
+Base HD Path:  m/44'/60'/0'/0/{address_index}
 
 (0) m/44'/60'/0'/0/0 0x3a149f0c5dc5c0F1E29e573215C23710dE9c4f87 0xa45f9af43912fdd5e88c492226be082029f257681d4b3e73b68be535d2fb0526
 (1) m/44'/60'/0'/0/1 0x9e8A4fD9bA74DbB0c7F465EF56b47489793AA102 0x6e5ab2a3ae20c7b3a1c0645b03689e88e8cdff16f6a39d6a420bfebc20e8a941
@@ -185,11 +185,21 @@ Base HD Path:  m/44'/60'/0'/0/{address_index}
 
 [Click this to see more examples :)](https://github.com/meherett/python-hdwallet/blob/master/examples)
 
+## Running test cases
+Install the requirements
+```python
+pip install -e .[tests] -r requirements.txt
+```
+Run
+```python
+pytest tests/
+```
+
 ## Contributing
 
-Feel free to open an [issue](https://github.com/meherett/hdwallet/issues) if you find a problem, 
-or a pull request if you've solved an issue. And also any help in testing, development, 
-documentation and other tasks is highly appreciated and useful to the project. 
+Feel free to open an [issue](https://github.com/meherett/hdwallet/issues) if you find a problem,
+or a pull request if you've solved an issue. And also any help in testing, development,
+documentation and other tasks is highly appreciated and useful to the project.
 There are tasks for contributors of all experience levels.
 
 For more information, see the [CONTRIBUTING.md](https://github.com/meherett/hdwallet/blob/master/CONTRIBUTING.md) file.
@@ -342,15 +352,15 @@ This library simplifies the process of creating a new HDWallet's for:
 
 ## Donations
 
-If You found this tool helpful consider making a donation:  
+If You found this tool helpful consider making a donation:
 
-Ethereum (ETH) or Tether (USDT-ERC20) address: 
+Ethereum (ETH) or Tether (USDT-ERC20) address:
 
 ```text
 0x342798bbe9731a91e0557fa8ab0bce1eae6d6ae3
 ```
 
-Bitcoin (BTC) address: 
+Bitcoin (BTC) address:
 
 ```text
 3GGNPvgbSpMHShcaZJGDXQn5wUJyTz7uoC

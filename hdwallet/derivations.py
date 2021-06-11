@@ -510,7 +510,7 @@ class BIP84Derivation(BIP32Derivation):
     >>> BIP84Derivation(cryptocurrency=BitcoinMainnet)
     <hdwallet.derivations.Derivation object at 0x000001EBC58E9F70>
     >>> str(BIP84Derivation(cryptocurrency=BitcoinMainnet))
-    "m/49'/0'/0'/0/0"
+    "m/84'/0'/0'/0/0"
     """
 
     PURPOSE: int = 84
@@ -547,7 +547,7 @@ class BIP141Derivation(Derivation):
     >>> BIP141Derivation(cryptocurrency=BitcoinMainnet)
     <hdwallet.derivations.Derivation object at 0x000001EBC58E9F70>
     >>> str(BIP141Derivation(cryptocurrency=BitcoinMainnet))
-    "m/49'/0'/0'/0/0"
+    "m/44'/0'/0'/0/0"
     """
 
     def __init__(self, cryptocurrency: Any, path: Union[str, Derivation] = None, semantic: str = "p2wpkh"):
