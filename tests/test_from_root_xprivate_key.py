@@ -19,7 +19,7 @@ def test_from_root_xprivate_key():
         symbol=_["bitcoin"]["mainnet"]["symbol"]
     )
     hdwallet.from_root_xprivate_key(
-        root_xprivate_key=_["bitcoin"]["mainnet"]["root_xprivate_key"]
+        xprivate_key=_["bitcoin"]["mainnet"]["root_xprivate_key"], strict=True
     )
     hdwallet.from_path(
         path=_["bitcoin"]["mainnet"]["path"]
