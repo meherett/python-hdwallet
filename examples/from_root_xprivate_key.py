@@ -6,17 +6,23 @@ from hdwallet.symbols import BTC
 
 import json
 
+# Strict for root xpublic key
+STRICT: bool = True
 # Bitcoin root xprivate key
-ROOT_XPRIVATE_KEY: str = "xprv9s21ZrQH143K24t96gCaezzt1QQmnqiEGm8m6TP8yb8e3TmGfkCgcLEVss" \
-                         "kufMW9R4KH27pD1kyyEfJkYz1eiPwjhFzB4gtabH3PzMSmXSM"
+XPRIVATE_KEY: str = "xprv9s21ZrQH143K24t96gCaezzt1QQmnqiEGm8m6TP8yb8e3TmGfkCgcLEVss" \
+                    "kufMW9R4KH27pD1kyyEfJkYz1eiPwjhFzB4gtabH3PzMSmXSM"
+# Bitcoin not root xprivate key
+# XPRIVATE_KEY: str = "xprvA3KRgVDh45mbQT1VmWPx73YeAWM4629Q2D9pMuqjFMnjTqDGhKiww6H532rg" \
+#                     "YRNj37fngd4Mvp7GfUD8rKeQzUZjCWeisT92tX8FfjWx3BL"
 
-# Check root xprivate key
-assert is_root_xprivate_key(xprivate_key=ROOT_XPRIVATE_KEY, symbol=BTC, semantic="p2pkh")
+if STRICT:
+    # Check root xprivate key
+    assert is_root_xprivate_key(xprivate_key=XPRIVATE_KEY, symbol=BTC, semantic="p2pkh"), "Invalid root xprivate key."
 
 # Initialize Bitcoin mainnet HDWallet
 hdwallet: HDWallet = HDWallet(symbol=BTC)
 # Get Bitcoin HDWallet from root xprivate key
-hdwallet.from_root_xprivate_key(root_xprivate_key=ROOT_XPRIVATE_KEY)
+hdwallet.from_root_xprivate_key(xprivate_key=XPRIVATE_KEY, strict=STRICT)
 
 # Derivation from path
 # hdwallet.from_path("m/44'/0'/0'/0/0")
