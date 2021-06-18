@@ -719,13 +719,21 @@ class HDWallet:
         None
         """
 
-        if self._i:
+        if self._root_private_key:
             self._path, self._depth, self._parent_fingerprint, self._index = (
                 "m", 0, b"\0\0\0\0", 0
             )
-            self._private_key, self._chain_code = self._i[:32], self._i[32:]
+            self._private_key, self._chain_code = self._root_private_key
             self._key = ecdsa.SigningKey.from_string(self._private_key, curve=SECP256k1)
             self._verified_key = self._key.get_verifying_key()
+        elif self._root_public_key:
+            self._path, self._depth, self._parent_fingerprint, self._index = (
+                "m", 0, b"\0\0\0\0", 0
+            )
+            self._chain_code = self._root_public_key[1]
+            self._verified_key = ecdsa.VerifyingKey.from_string(
+                self._root_public_key[0], curve=SECP256k1
+            )
         return self
 
     def uncompressed(self, compressed: Optional[str] = None) -> str:
