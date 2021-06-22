@@ -67,15 +67,18 @@ def decode(data):
         data = bytes(data, "ascii")
 
     val = 0
-    for (i, c) in enumerate(data[::-1]):
-        val += __base58_alphabet_bytes.find(c) * (__base58_radix ** i)
+    prefix = 0
+    for c in data:
+        val = (val * __base58_radix) + __base58_alphabet_bytes.find(c)
+        if val == 0:
+            prefix += 1
 
     dec = bytearray()
-    while val >= 256:
+    while val > 0:
         val, mod = divmod(val, 256)
         dec.append(mod)
-    if val:
-        dec.append(val)
+
+    dec.extend(bytearray(prefix))
 
     return bytes(dec[::-1])
 

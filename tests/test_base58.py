@@ -7,7 +7,7 @@ from binascii import (
 import pytest
 
 from hdwallet.libs.base58 import (
-    check_encode, check_decode, string_to_int
+    check_encode, check_decode, decode, encode, string_to_int
 )
 
 
@@ -29,3 +29,9 @@ def test_base58():
 
     with pytest.raises(TypeError, match="string argument without an encoding"):
         assert string_to_int(str("meherett"))
+
+
+    assert decode("111233QC4") == b'\x00\x00\x00(\x7f\xb4\xcd'
+
+
+    assert encode(decode("111233QC4")) == "111233QC4"
