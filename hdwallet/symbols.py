@@ -275,7 +275,7 @@ XDC = "XDC"
 # ZClassic
 ZCL = "ZCL"
 # Zcash
-ZEC = "ZEC"
+ZEC, ZECTEST = "ZEC", "ZECTEST"
 # Zencash
 ZEN = "ZEN"
 
@@ -418,6 +418,6 @@ __all__ = [
     "XUEZ",
     "XDC",
     "ZCL",
-    "ZEC",
+    "ZEC", "ZECTEST"
     "ZEN"
 ]

@@ -6274,6 +6274,46 @@ class ZcashMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0x80
 
 
+class ZcashTestnet(Cryptocurrency):
+
+    NAME = "Zcash"
+    SYMBOL = "ZECTEST"
+    NETWORK = "testnet"
+    SOURCE_CODE = "https://github.com/zcash/zcashn"
+    COIN_TYPE = CoinType({
+        "INDEX": 1,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x1cba
+    PUBLIC_KEY_ADDRESS = 0x1d25
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x4358394,
+        "P2SH": 0x4358394,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x43587cf,
+        "P2SH": 0x43587cf,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Zcash Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xef
+
+
 class ZencashMainnet(Cryptocurrency):
 
     NAME = "Zencash"
