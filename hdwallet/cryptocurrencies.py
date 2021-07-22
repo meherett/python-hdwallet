@@ -3213,18 +3213,18 @@ class LitecoinMainnet(Cryptocurrency):
     })
 
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
-        "P2PKH": 0x019d9cfe,
-        "P2SH": 0x019d9cfe,
-        "P2WPKH": 0x04b2430c,
-        "P2WPKH_IN_P2SH": 0x01b26792,
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
         "P2WSH": None,
         "P2WSH_IN_P2SH": None
     })
     EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
-        "P2PKH": 0x019da462,
-        "P2SH": 0x019da462,
-        "P2WPKH": 0x04b24746,
-        "P2WPKH_IN_P2SH": 0x01b26ef6,
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
         "P2WSH": None,
         "P2WSH_IN_P2SH": None
     })
@@ -3245,33 +3245,33 @@ class LitecoinTestnet(Cryptocurrency):
         "HARDENED": True
     })
 
-    SCRIPT_ADDRESS = 0xc4
+    SCRIPT_ADDRESS = 0x3a
     PUBLIC_KEY_ADDRESS = 0x6f
     SEGWIT_ADDRESS = SegwitAddress({
-        "HRP": "litecointestnet",
+        "HRP": "tltc",
         "VERSION": 0x00
     })
 
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
-        "P2PKH": 0x0436ef7d,
-        "P2SH": 0x0436ef7d,
-        "P2WPKH": 0x04358394,
-        "P2WPKH_IN_P2SH": 0x04358394,
+        "P2PKH": 0x04358394,
+        "P2SH": 0x04358394,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
         "P2WSH": None,
         "P2WSH_IN_P2SH": None
     })
     EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
-        "P2PKH": 0x0436f6e1,
-        "P2SH": 0x0436f6e1,
-        "P2WPKH": 0x043587cf,
-        "P2WPKH_IN_P2SH": 0x043587cf,
+        "P2PKH": 0x043587cf,
+        "P2SH": 0x043587cf,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
         "P2WSH": None,
         "P2WSH_IN_P2SH": None
     })
 
     MESSAGE_PREFIX = "\x19Litecoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
-    WIF_SECRET_KEY = 0xb0
+    WIF_SECRET_KEY = 0xef
 
 
 class LitecoinZMainnet(Cryptocurrency):
@@ -6239,7 +6239,7 @@ class ZcashMainnet(Cryptocurrency):
     NAME = "Zcash"
     SYMBOL = "ZEC"
     NETWORK = "mainnet"
-    SOURCE_CODE = None
+    SOURCE_CODE = "https://github.com/zcash/zcash"
     COIN_TYPE = CoinType({
         "INDEX": 133,
         "HARDENED": True
@@ -6279,7 +6279,7 @@ class ZcashTestnet(Cryptocurrency):
     NAME = "Zcash"
     SYMBOL = "ZECTEST"
     NETWORK = "testnet"
-    SOURCE_CODE = "https://github.com/zcash/zcashn"
+    SOURCE_CODE = "https://github.com/zcash/zcash"
     COIN_TYPE = CoinType({
         "INDEX": 1,
         "HARDENED": True

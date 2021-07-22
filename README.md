@@ -356,7 +356,7 @@ This library simplifies the process of creating a new HDWallet's for:
 | XUEZ                                                              | `XUEZ`               | Yes     | No      | No     | 225       | `m/44'/225'/0'/0/0`  |
 | [XinFin](https://github.com/XinFinOrg/XDPoSChain)                 | `XDC`                | Yes     | No      | Yes    | 550       | `m/44'/550'/0'/0/0`  |
 | ZClassic                                                          | `ZCL`                | Yes     | No      | No     | 147       | `m/44'/147'/0'/0/0`  |
-| [Zcash](https://github.com/zcash/zcash)                           | `ZEC`, `ZECTEST`     | Yes     | YES     | No     | 133       | `m/44'/133'/0'/0/0`  |
+| [Zcash](https://github.com/zcash/zcash)                           | `ZEC`, `ZECTEST`     | Yes     | Yes     | No     | 133       | `m/44'/133'/0'/0/0`  |
 | Zencash                                                           | `ZEN`                | Yes     | No      | No     | 121       | `m/44'/121'/0'/0/0`  |
 
 ## Donations
