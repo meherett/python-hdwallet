@@ -363,17 +363,11 @@ This library simplifies the process of creating a new HDWallet's for:
 
 If You found this tool helpful consider making a donation:
 
-Ethereum (ETH) or Tether (USDT-ERC20) address:
-
-```text
-0x342798bbe9731a91e0557fa8ab0bce1eae6d6ae3
-```
-
-Bitcoin (BTC) address:
-
-```text
-3GGNPvgbSpMHShcaZJGDXQn5wUJyTz7uoC
-```
+| Coins                         | Addresses                                  |
+| ----------------------------- | :----------------------------------------: |
+| Bitcoin `BTC`                 | 3GGNPvgbSpMHShcaZJGDXQn5wUJyTz7uoC         |
+| Ethereum `ETH`, Tether `USDT` | 0x342798bbe9731a91e0557fa8ab0bce1eae6d6ae3 |
+| Bytom `BTM`                   | bm1qhpzc42ahrsahmpranv6xddc74tk6wlrvxrw68c |
 
 ## License
 
