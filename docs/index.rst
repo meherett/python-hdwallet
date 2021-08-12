@@ -26,5 +26,5 @@ For more info see the BIP specs.
      - Derivation scheme for P2WPKH-nested-in-P2SH based accounts
    * - `BIP84 <https://github.com/bitcoin/bips/blob/master/bip-0084.mediawiki>`_
      - Derivation scheme for P2WPKH based accounts
-   * - `BIP141 <https://github.com/bitcoin/bips/blob/master/bip-00141.mediawiki>`_
+   * - `BIP141 <https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki>`_
      - Segregated Witness (Consensus layer)
