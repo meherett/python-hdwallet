@@ -8,7 +8,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/meherett/python-hdwallet/badge.svg?branch=master)](https://coveralls.io/github/meherett/python-hdwallet?branch=master)
 
 Python-based library for the implementation of a hierarchical deterministic wallet generator for more than 140+ multiple cryptocurrencies.
-It allows the handling of multiple coins, multiple accounts, external and internal chains per account and millions of addresses per the chain.
+It allows the handling of multiple coins, multiple accounts, external and internal chains per account and millions of addresses per chain.
 
 For more info see the BIP specs.
 
@@ -190,7 +190,7 @@ Base HD Path:  m/44'/60'/0'/0/{address_index}
 To get started, just fork this repo, clone it locally, and run:
 
 ```
-$ pip install -e .[tests,docs] -r requirements.txt
+pip install -e .[tests,docs] -r requirements.txt
 ```
 
 ## Testing
@@ -198,7 +198,7 @@ $ pip install -e .[tests,docs] -r requirements.txt
 You can run the tests with:
 
 ```
-$ pytest
+pytest
 ```
 
 Or use `tox` to run the complete suite against the full set of build targets, or pytest to run specific 
@@ -215,7 +215,7 @@ For more information, see the [CONTRIBUTING.md](https://github.com/meherett/hdwa
 
 ## Available Cryptocurrencies
 
-This library simplifies the process of creating a new HDWallet's for:
+This library simplifies the process of creating a new hierarchical deterministic wallets for:
 
 | Cryptocurrencies                                                  | Symbols              | Mainnet | Testnet | Segwit | Coin Type | Default Paths        |
 | :---------------------------------------------------------------- | :------------------: | :-----: | :-----: | :----: | :-------: | :------------------: |
@@ -367,7 +367,6 @@ If You found this tool helpful consider making a donation:
 | ----------------------------- | :----------------------------------------: |
 | Bitcoin `BTC`                 | 3GGNPvgbSpMHShcaZJGDXQn5wUJyTz7uoC         |
 | Ethereum `ETH`, Tether `USDT` | 0x342798bbe9731a91e0557fa8ab0bce1eae6d6ae3 |
-| Bytom `BTM`                   | bm1qhpzc42ahrsahmpranv6xddc74tk6wlrvxrw68c |
 
 ## License
 
