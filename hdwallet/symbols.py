@@ -418,6 +418,6 @@ __all__ = [
     "XUEZ",
     "XDC",
     "ZCL",
-    "ZEC", "ZECTEST"
+    "ZEC", "ZECTEST",
     "ZEN"
 ]
