@@ -26,7 +26,7 @@ copyright = f"{datetime.datetime.now().year}, Meheret Tesfaye Batu"
 author = "Meheret Tesfaye"
 
 # The full version, including alpha/beta/rc tags
-release = "1.3.1"
+release = "1.3.2"
 
 # The master toctree document.
 master_doc = "toctree"
