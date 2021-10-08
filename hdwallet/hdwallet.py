@@ -484,8 +484,12 @@ class HDWallet:
 
     def _derive_key_by_index(self, index) -> Optional["HDWallet"]:
 
-        if not self._root_private_key and not self._root_public_key:
-            raise PermissionError("You can't drive this master key.")
+        if not self._public_key \
+            and not self._chain_code \
+            and not self._depth \
+            and not self._index \
+            and not self._parent_fingerprint:
+            raise ValueError("You can't drive this master key.")
 
         i_str = struct.pack(">L", index)
         if index & BIP32KEY_HARDEN:
