@@ -4,6 +4,7 @@ import json
 import os
 
 from hdwallet import HDWallet
+from hdwallet.utils import generate_entropy
 
 # Test Values
 base_path: str = os.path.dirname(__file__)
@@ -81,3 +82,11 @@ def test_from_xpublic_key():
     del dumps["xpublic_key_hex"]
 
     assert hdwallet.dumps() == dumps
+
+def test_derivation_from_xpublic_key():
+    hdwallet: HDWallet = HDWallet().from_entropy(generate_entropy())
+    wallet1: HDWallet = hdwallet.from_path("m/1'/2'/3'")
+    xpub: str = wallet1.xpublic_key()
+    wallet2: HDWallet = HDWallet().from_xpublic_key(xpub)
+    assert wallet1.xpublic_key() == wallet2.xpublic_key()
+    assert wallet1.from_path("m/1/2/3").xpublic_key() == wallet2.from_path("m/1/2/3").xpublic_key()
