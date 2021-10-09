@@ -39,8 +39,7 @@ from .cryptocurrencies import (
     Cryptocurrency, get_cryptocurrency, SegwitAddress
 )
 from .derivations import (
-    Derivation, BIP32Derivation, BIP44Derivation,
-    BIP49Derivation, BIP84Derivation, BIP141Derivation
+    Derivation, BIP32Derivation, BIP44Derivation, BIP49Derivation, BIP84Derivation, BIP141Derivation
 )
 from .exceptions import (
     SemanticError, DerivationError
@@ -114,6 +113,10 @@ class HDWallet:
         self._chain_code: Optional[bytes] = None
         self._depth: int = 0
         self._index: int = 0
+
+        self._root_depth: int = 0
+        self._root_parent_fingerprint: bytes = b"\0\0\0\0"
+        self._root_index: int = 0
 
     def from_entropy(self, entropy: str, language: str = "english", passphrase: str = None) -> "HDWallet":
         """
@@ -215,32 +218,46 @@ class HDWallet:
             self.from_path(path=self._path_class)
         return self
 
-    def from_root_xprivate_key(self, xprivate_key: str, strict: bool = True) -> "HDWallet":
+    def from_xprivate_key(self, xprivate_key: str, strict: bool = False, change_to_root: bool = False) -> "HDWallet":
         """
-        Master from Root XPrivate Key.
+        Master from XPrivate Key.
 
-        :param xprivate_key: Root xprivate key.
+        :param xprivate_key: Root or Non-Root XPrivate key.
         :type xprivate_key: str
-        :param strict: Strict for must be root xprivate key, default to ``True``.
+        :param strict: Strict for must be root xprivate key, default to ``False``.
         :type strict: bool
+        :param change_to_root: Non root xprivate key change to root xprivate key, default to ``False``.
+        :type change_to_root: bool
 
         :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
 
         >>> from hdwallet import HDWallet
         >>> from hdwallet.symbols import BTC
         >>> hdwallet = HDWallet(symbol=BTC)
-        >>> hdwallet.from_root_xprivate_key(xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
+        >>> hdwallet.from_xprivate_key(xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
         <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
         """
 
         if not is_root_xprivate_key(xprivate_key=xprivate_key, symbol=self._cryptocurrency.SYMBOL):
             if strict:
                 raise ValueError("Invalid root xprivate key.")
-            else:
-                print("Warning: The xprivate key is not root xprivate key.")
 
         _deserialize_xprivate_key = self._deserialize_xprivate_key(xprivate_key=xprivate_key)
-        self._depth, self._parent_fingerprint, self._index = (0, b"\0\0\0\0", 0)
+        if change_to_root:
+            self._root_depth, self._root_parent_fingerprint, self._root_index = (
+                0, b"\0\0\0\0", 0
+            )
+        else:
+            self._root_depth, self._root_parent_fingerprint, self._root_index = (
+                int.from_bytes(_deserialize_xprivate_key[1], "big"),
+                _deserialize_xprivate_key[2],
+                struct.unpack(">L", _deserialize_xprivate_key[3])[0]
+            )
+        self._depth, self._parent_fingerprint, self._index = (
+            int.from_bytes(_deserialize_xprivate_key[1], "big"),
+            _deserialize_xprivate_key[2],
+            struct.unpack(">L", _deserialize_xprivate_key[3])[0]
+        )
         self._i = _deserialize_xprivate_key[5] + _deserialize_xprivate_key[4]
         self._root_private_key = (_deserialize_xprivate_key[5], _deserialize_xprivate_key[4])
         self._private_key, self._chain_code = self._i[:32], self._i[32:]
@@ -253,21 +270,23 @@ class HDWallet:
         self._public_key = self.compressed()
         return self
 
-    def from_root_xpublic_key(self, xpublic_key: str, strict: bool = True) -> "HDWallet":
+    def from_xpublic_key(self, xpublic_key: str, strict: bool = False, change_to_root: bool = False) -> "HDWallet":
         """
-        Master from Root XPublic Key.
+        Master from XPublic Key.
 
-        :param xpublic_key: Root xpublic key.
+        :param xpublic_key: Root or Non-Root XPublic key.
         :type xpublic_key: str
-        :param strict: Strict for must be root xpublic key, default to ``True``.
+        :param strict: Strict for must be root xpublic key, default to ``False``.
         :type strict: bool
+        :param change_to_root: Non root xprivate key change to root xprivate key, default to ``False``.
+        :type change_to_root: bool
 
         :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
 
         >>> from hdwallet import HDWallet
         >>> from hdwallet.symbols import BTC
         >>> hdwallet = HDWallet(symbol=BTC)
-        >>> hdwallet.from_root_xpublic_key(xpublic_key="xpub661MyMwAqRbcGSTjb2Mp3Sb4STUDhD2x986ubXKjQa2QsFTCVqzdA98qeZjcncHT1AaZcMSjiP1HJ16jH97q72RwyFfiNhmG8zQ6KBB5PaQ")
+        >>> hdwallet.from_xpublic_key(xpublic_key="xpub661MyMwAqRbcGSTjb2Mp3Sb4STUDhD2x986ubXKjQa2QsFTCVqzdA98qeZjcncHT1AaZcMSjiP1HJ16jH97q72RwyFfiNhmG8zQ6KBB5PaQ")
         <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
         """
 
@@ -276,7 +295,21 @@ class HDWallet:
                 raise ValueError("Invalid root xpublic key.")
 
         _deserialize_xpublic_key = self._deserialize_xpublic_key(xpublic_key=xpublic_key)
-        self._depth, self._parent_fingerprint, self._index = (0, b"\0\0\0\0", 0)
+        if change_to_root:
+            self._root_depth, self._root_parent_fingerprint, self._root_index = (
+                0, b"\0\0\0\0", 0
+            )
+        else:
+            self._root_depth, self._root_parent_fingerprint, self._root_index = (
+                int.from_bytes(_deserialize_xpublic_key[1], "big"),
+                _deserialize_xpublic_key[2],
+                struct.unpack(">L", _deserialize_xpublic_key[3])[0]
+            )
+        self._depth, self._parent_fingerprint, self._index = (
+            int.from_bytes(_deserialize_xpublic_key[1], "big"),
+            _deserialize_xpublic_key[2],
+            struct.unpack(">L", _deserialize_xpublic_key[3])[0]
+        )
         self._chain_code = _deserialize_xpublic_key[4]
         self._verified_key = ecdsa.VerifyingKey.from_string(
             _deserialize_xpublic_key[5], curve=SECP256k1
@@ -288,63 +321,6 @@ class HDWallet:
             self.from_path(path=self._cryptocurrency.DEFAULT_PATH)
         if self._from_class:
             self.from_path(path=self._path_class)
-        self._public_key = self.compressed()
-        return self
-
-    def from_xprivate_key(self, xprivate_key: str) -> "HDWallet":
-        """
-        Master from XPrivate Key.
-
-        :param xprivate_key: XPrivate key.
-        :type xprivate_key: str
-
-        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
-
-        >>> from hdwallet import HDWallet
-        >>> from hdwallet.symbols import BTC
-        >>> hdwallet = HDWallet(symbol=BTC)
-        >>> hdwallet.from_xprivate_key(xprivate_key="xprvA3BYGWQ9FmhyaNRRXB2f1LphNPnaY9T6gngw4BaTbkFtscSH4RCuJhgWUSKs9S6ciGioHd4TX4UeyUg53MkfN9Xh38xkS1j2Wb9YKsYpJHQ")
-        <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
-        """
-
-        _deserialize_xprivate_key = self._deserialize_xprivate_key(xprivate_key=xprivate_key)
-        self._depth, self._parent_fingerprint, self._index = (
-            int.from_bytes(_deserialize_xprivate_key[1], "big"),
-            _deserialize_xprivate_key[2],
-            struct.unpack(">L", _deserialize_xprivate_key[3])[0]
-        )
-        self._private_key, self._chain_code = _deserialize_xprivate_key[5], _deserialize_xprivate_key[4]
-        self._key = ecdsa.SigningKey.from_string(_deserialize_xprivate_key[5], curve=SECP256k1)
-        self._verified_key = self._key.get_verifying_key()
-        self._public_key = self.compressed()
-        return self
-
-    def from_xpublic_key(self, xpublic_key: str) -> "HDWallet":
-        """
-        Master from XPublic Key.
-
-        :param xpublic_key: XPublic key.
-        :type xpublic_key: str
-
-        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
-
-        >>> from hdwallet import HDWallet
-        >>> from hdwallet.symbols import BTC
-        >>> hdwallet = HDWallet(symbol=BTC)
-        >>> hdwallet.from_xpublic_key(xprivate_key="xpub661MyMwAqRbcGSTjb2Mp3Sb4STUDhD2x986ubXKjQa2QsFTCVqzdA98qeZjcncHT1AaZcMSjiP1HJ16jH97q72RwyFfiNhmG8zQ6KBB5PaQ")
-        <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
-        """
-
-        _deserialize_xpublic_key = self._deserialize_xpublic_key(xpublic_key=xpublic_key)
-        self._depth, self._parent_fingerprint, self._index = (
-            int.from_bytes(_deserialize_xpublic_key[1], "big"),
-            _deserialize_xpublic_key[2],
-            struct.unpack(">L", _deserialize_xpublic_key[3])[0]
-        )
-        self._chain_code = _deserialize_xpublic_key[4]
-        self._verified_key = ecdsa.VerifyingKey.from_string(
-            _deserialize_xpublic_key[5], curve=SECP256k1
-        )
         self._public_key = self.compressed()
         return self
 
@@ -430,7 +406,7 @@ class HDWallet:
         >>> from hdwallet import HDWallet
         >>> from hdwallet.symbols import BTC
         >>> hdwallet = HDWallet(symbol=BTC)
-        >>> hdwallet.from_root_xprivate_key(root_xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
+        >>> hdwallet.from_xprivate_key(root_xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
         >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
         <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
         """
@@ -463,7 +439,7 @@ class HDWallet:
         >>> from hdwallet import HDWallet
         >>> from hdwallet.symbols import BTC
         >>> hdwallet = HDWallet(symbol=BTC)
-        >>> hdwallet.from_root_xprivate_key(root_xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
+        >>> hdwallet.from_xprivate_key(root_xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
         >>> hdwallet.from_index(index=44, hardened=True)
         >>> hdwallet.from_index(index=0, hardened=True)
         >>> hdwallet.from_index(index=0, hardened=True)
@@ -485,18 +461,18 @@ class HDWallet:
     def _derive_key_by_index(self, index) -> Optional["HDWallet"]:
 
         if not self._root_private_key and not self._root_public_key:
-            raise PermissionError("You can't drive this master key.")
+            raise ValueError("You can't drive this master key.")
 
         i_str = struct.pack(">L", index)
         if index & BIP32KEY_HARDEN:
             if self._key is None:
-                raise DerivationError("Hardened derivation path is invalid with root xpublic key")
+                raise DerivationError("Hardened derivation path is invalid for xpublic key.")
             data = b"\0" + self._key.to_string() + i_str
         else:
             data = unhexlify(self.public_key()) + i_str
 
         if not self._chain_code:
-            raise PermissionError("You can't drive xprivate_key and private_key.")
+            raise ValueError("You can't drive xprivate_key and private_key.")
 
         i = hmac.new(self._chain_code, data, hashlib.sha512).digest()
         il, ir = i[:32], i[32:]
@@ -587,9 +563,9 @@ class HDWallet:
         if not self._i:
             return None
         secret_key, chain_code = self._i[:32], self._i[32:]
-        depth = bytes(bytearray([0]))
-        parent_fingerprint = b"\0\0\0\0"
-        index = struct.pack(">L", 0)
+        depth = bytes(bytearray([self._root_depth]))
+        parent_fingerprint = self._root_parent_fingerprint
+        index = struct.pack(">L", self._root_index)
         data = b"\x00" + secret_key
         return self._serialize_xkeys(
             _unhexlify(version), depth, parent_fingerprint, index, chain_code, data, encoded
@@ -627,9 +603,9 @@ class HDWallet:
         else:
             secret_key, chain_code = self._i[:32], self._i[32:]
             data = unhexlify(self.public_key(private_key=secret_key.hex()))
-        depth = bytes(bytearray([0]))
-        parent_fingerprint = b"\0\0\0\0"
-        index = struct.pack(">L", 0)
+        depth = bytes(bytearray([self._root_depth]))
+        parent_fingerprint = self._root_parent_fingerprint
+        index = struct.pack(">L", self._root_index)
         return self._serialize_xkeys(
             _unhexlify(version), depth, parent_fingerprint, index, chain_code, data, encoded
         )
@@ -709,7 +685,7 @@ class HDWallet:
         >>> from hdwallet import HDWallet
         >>> from hdwallet.symbols import BTC
         >>> hdwallet = HDWallet(symbol=BTC)
-        >>> hdwallet.from_root_xprivate_key(root_xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
+        >>> hdwallet.from_xprivate_key(xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
         >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
         >>> hdwallet.path()
         "m/44'/0'/'0/0/0"
@@ -1103,7 +1079,7 @@ class HDWallet:
             return checksum_encode(address, crypto="xdc")
 
         compressed_public_key = unhexlify(self.compressed())
-        public_key_hash = hashlib.new('ripemd160', sha256(compressed_public_key).digest()).digest()
+        public_key_hash = hashlib.new("ripemd160", sha256(compressed_public_key).digest()).digest()
         network_hash160_bytes = _unhexlify(self._cryptocurrency.PUBLIC_KEY_ADDRESS) + public_key_hash
         return ensure_string(base58.b58encode_check(network_hash160_bytes))
 
@@ -1123,9 +1099,9 @@ class HDWallet:
         """
 
         compressed_public_key = unhexlify(self.compressed())
-        public_key_hash = hashlib.new('ripemd160', sha256(compressed_public_key).digest()).hexdigest()
+        public_key_hash = hashlib.new("ripemd160", sha256(compressed_public_key).digest()).hexdigest()
         public_key_hash_script = unhexlify("76a914" + public_key_hash + "88ac")
-        script_hash = hashlib.new('ripemd160', sha256(public_key_hash_script).digest()).digest()
+        script_hash = hashlib.new("ripemd160", sha256(public_key_hash_script).digest()).digest()
         network_hash160_bytes = _unhexlify(self._cryptocurrency.SCRIPT_ADDRESS) + script_hash
         return ensure_string(base58.b58encode_check(network_hash160_bytes))
 
@@ -1145,7 +1121,7 @@ class HDWallet:
         """
 
         compressed_public_key = unhexlify(self.compressed())
-        public_key_hash = hashlib.new('ripemd160', sha256(compressed_public_key).digest()).digest()
+        public_key_hash = hashlib.new("ripemd160", sha256(compressed_public_key).digest()).digest()
         if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
             return None
         return ensure_string(encode(self._cryptocurrency.SEGWIT_ADDRESS.HRP, 0, public_key_hash))
