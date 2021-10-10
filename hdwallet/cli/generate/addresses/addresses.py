@@ -79,7 +79,7 @@ def generate_hdwallet_addresses(
                     ),
                     coin_type=(
                         cryptocurrency.COIN_TYPE.INDEX,
-                        cryptocurrency.COIN_TYPE.HARDENED
+                        False if xpublic_key else cryptocurrency.COIN_TYPE.HARDENED
                     ),
                     account=(
                         account, False if xpublic_key else True
