@@ -91,8 +91,12 @@ def generate_hdwallet_addresses(
 
             rows: str = ""
             dumps = hdwallet.dumps()
-            for key in [keys.split(":") for keys in show.split(",")]:
-                rows += f" {dumps[key[0]][key[1]] if len(key) == 2 else dumps[key[0]]}"
+            for i, key in enumerate([keys.split(":") for keys in show.split(",")]):
+                rows += (
+                    f"{dumps[key[0]][key[1]] if len(key) == 2 else dumps[key[0]]}"
+                    if i == 0 else
+                    f" {dumps[key[0]][key[1]] if len(key) == 2 else dumps[key[0]]}"
+                )
             click.echo(rows)
 
             hdwallet.clean_derivation()
