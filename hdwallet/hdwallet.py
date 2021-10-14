@@ -406,7 +406,7 @@ class HDWallet:
         >>> from hdwallet import HDWallet
         >>> from hdwallet.symbols import BTC
         >>> hdwallet = HDWallet(symbol=BTC)
-        >>> hdwallet.from_xprivate_key(root_xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
+        >>> hdwallet.from_xprivate_key(xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
         >>> hdwallet.from_path(path="m/44'/0'/'0/0/0")
         <hdwallet.hdwallet.HDWallet object at 0x000001E8BFB98D60>
         """
@@ -439,7 +439,7 @@ class HDWallet:
         >>> from hdwallet import HDWallet
         >>> from hdwallet.symbols import BTC
         >>> hdwallet = HDWallet(symbol=BTC)
-        >>> hdwallet.from_xprivate_key(root_xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
+        >>> hdwallet.from_xprivate_key(xprivate_key="xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF")
         >>> hdwallet.from_index(index=44, hardened=True)
         >>> hdwallet.from_index(index=0, hardened=True)
         >>> hdwallet.from_index(index=0, hardened=True)
