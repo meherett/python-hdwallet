@@ -119,7 +119,10 @@ def is_entropy(entropy: str) -> bool:
     True
     """
 
-    return len(unhexlify(entropy)) in [16, 20, 24, 28, 32]
+    try:
+        return len(unhexlify(entropy)) in [16, 20, 24, 28, 32]
+    except:
+        return False
 
 
 def is_mnemonic(mnemonic: str, language: Optional[str] = None) -> bool:
