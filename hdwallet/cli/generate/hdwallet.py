@@ -38,7 +38,6 @@ def generate_hdwallet(
     semantic: str
 ):
     try:
-
         hdwallet: HDWallet = HDWallet(
             symbol=symbol, semantic=semantic
         )
@@ -80,26 +79,29 @@ def generate_hdwallet(
                 mnemonic=mnemonic, language=language, passphrase=passphrase
             )
 
-        if path:
-            derivation: Derivation = Derivation(path=path)
-            hdwallet.from_path(path=derivation)
+        if wif or private_key or public_key:
+            pass
         else:
-            cryptocurrency: Cryptocurrency = get_cryptocurrency(symbol=symbol)
-            bip32_derivation: BIP32Derivation = BIP32Derivation(
-                purpose=(
-                    44, False if xpublic_key else True
-                ),
-                coin_type=(
-                    cryptocurrency.COIN_TYPE.INDEX,
-                    False if xpublic_key else cryptocurrency.COIN_TYPE.HARDENED
-                ),
-                account=(
-                    account, False if xpublic_key else True
-                ),
-                change=change,
-                address=address
-            )
-            hdwallet.from_path(path=bip32_derivation)
+            if path:
+                derivation: Derivation = Derivation(path=path)
+                hdwallet.from_path(path=derivation)
+            else:
+                cryptocurrency: Cryptocurrency = get_cryptocurrency(symbol=symbol)
+                bip32_derivation: BIP32Derivation = BIP32Derivation(
+                    purpose=(
+                        44, False if xpublic_key else True
+                    ),
+                    coin_type=(
+                        cryptocurrency.COIN_TYPE.INDEX,
+                        False if xpublic_key else cryptocurrency.COIN_TYPE.HARDENED
+                    ),
+                    account=(
+                        account, False if xpublic_key else True
+                    ),
+                    change=change,
+                    address=address
+                )
+                hdwallet.from_path(path=bip32_derivation)
 
         click.echo(json.dumps(hdwallet.dumps(), indent=4, ensure_ascii=False))
 

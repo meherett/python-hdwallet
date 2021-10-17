@@ -15,9 +15,9 @@ from hdwallet.cli import (
 )
 
 
-def generate_hdwallet_addresses(
+def generate_addresses(
     symbol: str,
-    strength: Optional[int],
+    strength: int,
     entropy: Optional[str],
     mnemonic: Optional[str],
     language: Optional[str],
@@ -25,7 +25,7 @@ def generate_hdwallet_addresses(
     seed: Optional[str],
     xprivate_key: Optional[str],
     xpublic_key: Optional[str],
-    strict: Optional[bool],
+    strict: bool,
     account: int,
     change: bool,
     path: Optional[str],
@@ -36,7 +36,6 @@ def generate_hdwallet_addresses(
     show: str
 ):
     try:
-
         hdwallet: HDWallet = HDWallet(
             symbol=symbol, semantic=semantic
         )
