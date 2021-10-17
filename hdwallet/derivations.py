@@ -27,7 +27,7 @@ class Derivation:
     >>> Derivation()
     <hdwallet.derivations.Derivation object at 0x000001EBC58E9F70>
     >>> str(Derivation())
-    ""
+    "\0\0\0\0"
     >>> str(Derivation(path="m/44'/0'/0'/0/0", semantic="p2pkh"))
     "m/44'/0'/0'/0/0"
 
@@ -106,6 +106,8 @@ class Derivation:
         if not isinstance(index, int):
             raise DerivationError("Bad derivation index, Please import only int type!")
 
+        if self.PATH == "\0\0\0\0":
+            self.PATH = ""
         self.PATH += (
             (f"/{index}'" if hardened else f"/{index}")
             if self.PATH.startswith("m/") else
@@ -127,7 +129,7 @@ class Derivation:
         >>> derivation.clean_derivation()
         <hdwallet.wallet.HDWallet object at 0x000001E8BFB98D60>
         >>> str(derivation)
-        ""
+        "\0\0\0\0"
         """
 
         self.PATH = "\0\0\0\0"
