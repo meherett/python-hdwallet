@@ -6,8 +6,8 @@ import os
 
 from hdwallet.utils import (
     get_bytes, generate_mnemonic, generate_entropy, is_entropy, get_mnemonic_strength,
-    get_entropy_strength, is_mnemonic, get_mnemonic_language,
-    is_root_xprivate_key, is_root_xpublic_key
+    get_entropy_strength, is_mnemonic, get_mnemonic_language, entropy_to_mnemonic, mnemonic_to_entropy,
+    is_root_xprivate_key, is_root_xpublic_key, generate_passphrase
 )
 
 # Test Values
@@ -40,6 +40,8 @@ def test_utils():
         symbol=_["bitcoin"]["mainnet"]["symbol"]
     )
 
+    assert len(generate_passphrase(length=19999)) == 19999
+
 
 def test_utils_entropy():
 
@@ -54,6 +56,10 @@ def test_utils_entropy():
         assert len(entropy["entropy"]) == entropy["length"]
         assert get_entropy_strength(entropy["entropy"]) == entropy["strength"]
         assert is_entropy(entropy["entropy"])
+
+    assert mnemonic_to_entropy(
+        mnemonic=_["bitcoin"]["mainnet"]["mnemonic"], language=_["bitcoin"]["mainnet"]["language"]
+    ) == _["bitcoin"]["mainnet"]["entropy"]
 
 
 def test_utils_mnemonic():
@@ -73,3 +79,7 @@ def test_utils_mnemonic():
             assert not is_mnemonic(mnemonic["mnemonic"], "korean")
         assert is_mnemonic(mnemonic["mnemonic"], mnemonic["language"])
         assert get_mnemonic_language(mnemonic["mnemonic"]) == mnemonic["language"]
+
+    assert entropy_to_mnemonic(
+        entropy=_["bitcoin"]["mainnet"]["entropy"], language=_["bitcoin"]["mainnet"]["language"]
+    ) == _["bitcoin"]["mainnet"]["mnemonic"]

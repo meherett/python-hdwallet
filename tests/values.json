@@ -152,6 +152,28 @@
                 "p2wsh": "tb1qlp932cdsy78jfka7gcv9gk50cdku5g6thxjpzstcwn9gnqd5ll9qzhuqvw",
                 "p2wsh_in_p2sh": "2NBzP3SsouDEVe41fYJBbGGPS18tk6mqZSh"
             }
-        }
+        },
+        "addresses": [
+            "m/44'/0'/0'/0/0 16W7JeQXEzmYKX8UMFMrg6FwNSPduVdYHo 02b506c3585ebaaf5553b5e3b767c958c6eec4d0eba8a9b9fe90ff2e512a70c30c L15H89HiXh6m4CNPkMvAg1Wduscw5wuvktACPzrHowDHufwPgR7k",
+            "m/44'/0'/0'/0/1 19rtbaqSprjGpE3pxUovx38t64dYLxJ5H4 023cef50818c538a76eaec937f566acbabb0f2047fc2a082c11a9dad398c15eab4 Ky6pHMChq9sT8EhM42rzCab9SxHbFU4CM7rXhZT7fRakAeS47eob",
+            "m/44'/0'/0'/0/2 1FBUJ5QkwgBbFgHnXR2BWnyjYAh8KDXbTk 0349e0525ee723e4e9db2fb1b01e8fe5a6bc73067c024ff6d3bee7036a14758059 Kxfgz2ZAXiJ3V5Uy4hL7YKssJV3VXf9N3k72DV8XQoF6ndzxYa2U",
+            "m/44'/0'/0'/0/3 1JBW45zCCCHZ58z9AnEdbqCQ4TBnq5hVfk 03028b9e813e4d7bdee5a2930272673decc0736820e4a65676ac2af3fef89b49f1 L2P9gZUoobY1Z9mmUNfParxeMDg5rejvptD7fZYbam8CrgnFJ6CM",
+            "m/44'/0'/0'/0/4 1Dxp9jGJqpZMybuj6RoD4qozUEbYMeJgET 0398e6783af803f5125c0d0eecaffd663d5873c961b65493fa31d29ade7eee2aea L3wFzjZDvf1znTFkfcDk7YRHDpG186o4Wfy6zzRSyerGGjdYqXG3",
+            "m/44'/0'/0'/0/5 17FymopXFtsz3FidDTXVYymEksfRVA8Prr 031900f3d2c249dd54c3c59c506bbdda65e61f614841c0254d309d5f206160b459 KxagjpYP8VGb4M2U1Q4tnZ8vuvt3BnwnzsiGen67kwZprMUeYCBx",
+            "m/44'/0'/0'/0/6 1ABU3xfqxYPMx37tK3ytNFMfF4EJhNCe4F 03c016cdac08271650e39748544ccb16bbcf89a470ca03aaed9cb61cb4eec79122 Kxong4YotFdirnM4eYKSq5Kyq55eKnqUqnyvEsskvb63Lwyk7oay",
+            "m/44'/0'/0'/0/7 178cLTCrTBRs1KD6rvkrGrtGBFibzwcWHS 03857c2f52bf8363566ecdf0c2f1aac249a8a09ad9b442f46782e397cd7ddf3b4f L1WyWVRf3sHMeJs6FRbE2fxq2Ld2PPUwQcqDHMKs7NY76naFjQtP",
+            "m/44'/0'/0'/0/8 1raCHQ7gUGKS8LCxSp18Dw6pWq28Mubc2 0209683884b033ea08fb9ce44c8fc77fdad2c7935ffab765b76976f2404d84a58d L2A1nHGoLGCMBS9BJioAEuHGQH4NYLqxEnSaBKYWrXmhL4xg8h5G",
+            "m/44'/0'/0'/0/9 16rs2as6bHkKxJCKkeFKB4dMra2QMGJifc 03055297a3a7cbbd6ff32958f5d82f0cd4f1a29330fbd83d67038e406c27eb7412 L4nDdMuCKnxM9oqGtse989sS6fwyX2UxgafgZBnc71Z6mhiMudBx",
+            "m/44'/0'/0'/0/10 13TZhvvzcK5WYqT88tpmc7zcirKRMB65Fc 03b2d37804e7c04b12035c9d87cb8f8ba6fdf11744b2b37a52b023073eeee2fe4b L3NHZhyLjvum8nbKeGSYMzyjQritbsbtm8iPMAtH8sVRkqNw8VfR",
+            "m/44'/0'/0'/0/11 1LEkeCdpvD3FRRbCajLqdEDwTnKjxEte4Z 02f88c7d8fc5b83f2f24c3868d3c5aba8ec4b8bef75338e09efe7f19f2653c10fb KxWhP2iqkbkS34MffJU94w1hsy6ixoyhh1xKWeRm1ZqX92khrv88",
+            "m/44'/0'/0'/0/12 1KAcnth9Ebr5bALRmFtWCRnd1vivgyGAnt 022f2f6a8a57c355b057d38c4e263760a50e085ba6b3afa25aa8c13fcb861c882f Kx1JcdaLVPt4EFseRYf6bhP8EwpNWjEkgLMLaNQT6HrU4hnCGe7g",
+            "m/44'/0'/0'/0/13 1AUMAcfiiXVqrthwtAPEJNEMoLQXYkLpx3 02695fd7ac3c09a3b568ec374965331d3146740ec938d1d3166cdf420e23688914 KxdtUhqVGD6HKUsCtaFm1vNXLzDQxWDzpTqhBk9y5RY1ACGj7BtW",
+            "m/44'/0'/0'/0/14 1E8Ywe96WNrGDb3V1zA8LLBbDqir1TBREo 02b2589ecb684684a332ad6753710af251e5455d387b60facbc78ea60998d4704a KxEZKXvR4pW3eVmuog714cHgJwxqm87uUcjrUU8e28uPzhq88qxX",
+            "m/44'/0'/0'/0/15 16oBYcHjoQ721NWPwuojmLuQbTmbFbsnyX 030f4b6d7f4ab090a9a4f912f6dc65d2b221b724fdb29fc06974aa011c3c072c20 Ky2Kpb9ephAmjyP2RsUtLfydwWZmhEWBkszfPfQJJPQFdmu8LyVD",
+            "m/44'/0'/0'/0/16 18dfhagZDyQcpFHN9XXG8WLJemhiYpkPSi 033b25fefbb04de60b7bffe61d0bcedb48916c08fa96f76a80c4e9288b61cb6044 KyAitBv7M7jVqtZXrJxypnZipfg9BdZhEVmUPDWvWRSN4KsB2gcH",
+            "m/44'/0'/0'/0/17 1ACpQPMNLewMbXWvVg78kZZKMf64bu8qtc 026691563d2ee9b7a5ae095b443a1199ff53d612928412d8965e163b78c31b89d6 L5dBkDYHfrTVy2ZKT9Xy8V5m34QTg3J2dbhhXMe8wMmAawLFpPGT",
+            "m/44'/0'/0'/0/18 14xgtqtqxvB8QFgaTihdTAgD9Wxm5tbonU 0306b36921313c59e4495bc1c4d9f6dc9c9303a8740767c7a1844c36c506b5f9e7 KwS6KDcNUA7WQ1FTZv9G3A6uWrPzEcYpiGQW5R8j5CkcjvmFduJh",
+            "m/44'/0'/0'/0/19 1BUauGHKJ69j7UsqcwX4p3NmELZuPbkY2d 03ded79d490a0c59ad79549acae0cbe9c8b102185c254f27a26993a5911f7cd038 L22FD2vSP6c2cxbD3ssyJZSKBvXxzjCGnGqAihdowkb3UADZn6q1"
+        ]
     }
 }

@@ -38,3 +38,49 @@ def test_addresses(cli_tester):
 
     assert hdwallet.exit_code == 0
     assert hdwallet.output == addresses
+
+    hdwallet = cli_tester.invoke(
+        cli_main, [
+            "generate", "addresses",
+            "--symbol", _["bitcoin"]["mainnet"]["symbol"],
+            "--mnemonic", _["bitcoin"]["mainnet"]["mnemonic"],
+            "--passphrase", _["bitcoin"]["mainnet"]["passphrase"],
+            "--language", _["bitcoin"]["mainnet"]["language"]
+        ]
+    )
+
+    assert hdwallet.exit_code == 0
+    assert hdwallet.output == addresses
+
+    hdwallet = cli_tester.invoke(
+        cli_main, [
+            "generate", "addresses",
+            "--symbol", _["bitcoin"]["mainnet"]["symbol"],
+            "--seed", _["bitcoin"]["mainnet"]["seed"]
+        ]
+    )
+
+    assert hdwallet.exit_code == 0
+    assert hdwallet.output == addresses
+
+    hdwallet = cli_tester.invoke(
+        cli_main, [
+            "generate", "addresses",
+            "--symbol", _["bitcoin"]["mainnet"]["symbol"],
+            "--xprivate-key", _["bitcoin"]["mainnet"]["root_xprivate_key"]
+        ]
+    )
+
+    assert hdwallet.exit_code == 0
+    assert hdwallet.output == addresses
+
+    hdwallet = cli_tester.invoke(
+        cli_main, [
+            "generate", "addresses",
+            "--symbol", _["bitcoin"]["mainnet"]["symbol"],
+            "--xpublic-key", _["bitcoin"]["mainnet"]["root_xpublic_key"]
+        ]
+    )
+
+    assert hdwallet.exit_code == 0
+    assert hdwallet.output

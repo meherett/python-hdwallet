@@ -7,7 +7,7 @@ from hdwallet import HDWallet
 
 # Test Values
 base_path: str = os.path.dirname(__file__)
-file_path: str = os.path.abspath(os.path.join(base_path, "values.json"))
+file_path: str = os.path.abspath(os.path.join(base_path, "../values.json"))
 values = open(file_path, "r", encoding="utf-8")
 _: dict = json.loads(values.read())
 values.close()
