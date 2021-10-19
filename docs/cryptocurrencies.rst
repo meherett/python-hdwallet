@@ -977,9 +977,9 @@ This library simplifies the process of generating a new HDWallet's for:
      - 147
      - m/44'/147'/0'/0/0
    * - Zcash
-     - ZEC
+     - ZEC, ZECTEST
      - Yes
-     - No
+     - Yes
      - No
      - 133
      - m/44'/133'/0'/0/0
@@ -991,4 +991,4 @@ This library simplifies the process of generating a new HDWallet's for:
      - 121
      - m/44'/121'/0'/0/0
 
-**NOTICE:** All Cryptocurrencies testnet networks default paths are set to **`m/44'/1'/0'/0/0`** value.
+**NOTICE:** All Cryptocurrencies testnet networks default paths are set to ``m/44'/1'/0'/0/0`` value.

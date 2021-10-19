@@ -7,6 +7,7 @@ HDWallet
 
     Overview <index.rst>
     install.rst
+    cli.rst
     Cryptocurrencies <cryptocurrencies.rst>
 
 .. toctree::

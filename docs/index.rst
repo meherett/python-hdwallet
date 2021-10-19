@@ -5,6 +5,8 @@ Hierarchical Deterministic Wallet
 Python-based library for the implementation of a hierarchical deterministic wallet generator for over 140+ multiple cryptocurrencies.
 It allows the handling of multiple coins, multiple accounts, external and internal chains per account and millions of addresses per the chain.
 
+.. image:: static/gif/hdwallet.gif
+   :alt: HDWallet CLI
 
 For more info see the BIP specs.
 

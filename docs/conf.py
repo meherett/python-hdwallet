@@ -14,6 +14,9 @@ import os
 import sys
 import datetime
 
+from hdwallet import (
+    __version__, __author__
+)
 
 sys.path.insert(0, os.path.abspath("../.."))
 sys.path.insert(1, os.path.abspath("./extensions"))
@@ -22,11 +25,11 @@ sys.path.insert(1, os.path.abspath("./extensions"))
 # -- Project information -----------------------------------------------------
 
 project = "HDWallet"
-copyright = f"{datetime.datetime.now().year}, Meheret Tesfaye Batu"
-author = "Meheret Tesfaye"
+copyright = f"{datetime.datetime.now().year}, {__author__}"
+author = __author__
 
 # The full version, including alpha/beta/rc tags
-release = "1.3.2"
+release = __version__
 
 # The master toctree document.
 master_doc = "toctree"
@@ -37,7 +40,8 @@ master_doc = "toctree"
 # extensions coming with Sphinx (named "sphinx.ext.*") or your custom
 # ones.
 extensions = [
-    "sphinx.ext.autodoc"
+    "sphinx.ext.autodoc",
+    "sphinx_click.ext"
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -76,7 +80,7 @@ html_theme_options = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ["static", "static/css"]
+html_static_path = ["static", "static/css", "static/gif"]
 
 # Autodoc member order
 autodoc_member_order = "bysource"
