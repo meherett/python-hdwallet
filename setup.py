@@ -4,8 +4,6 @@ from setuptools import (
     setup, find_packages
 )
 
-import hdwallet
-
 # README.md
 with open("README.md", "r", encoding="utf-8") as readme:
     long_description: str = readme.read()
@@ -16,13 +14,14 @@ with open("requirements.txt", "r") as _requirements:
 
 setup(
     name="hdwallet",
-    version=hdwallet.__version__,
-    description=hdwallet.__description__,
+    version="v2.0.0",
+    description="Python-based library for the implementation of a hierarchical deterministic wallet "
+                "generator for more than 140+ multiple cryptocurrencies.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    license=hdwallet.__license__,
-    author=hdwallet.__author__,
-    author_email=hdwallet.__email__,
+    license="ISCL",
+    author="Meheret Tesfaye Batu",
+    author_email="meherett@zoho.com",
     url="https://github.com/meherett/python-hdwallet",
     keywords=[
         "cryptography", "cli", "wallet", "bip32", "bip44", "bip39", "hdwallet", "cryptocurrencies", "bitcoin", "ethereum"
