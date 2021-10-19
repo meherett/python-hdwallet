@@ -4,6 +4,8 @@ from setuptools import (
     setup, find_packages
 )
 
+import hdwallet
+
 # README.md
 with open("README.md", "r", encoding="utf-8") as readme:
     long_description: str = readme.read()
@@ -14,27 +16,32 @@ with open("requirements.txt", "r") as _requirements:
 
 setup(
     name="hdwallet",
-    version="1.3.2",
-    description="Python-based library for the implementation of a "
-                "hierarchical deterministic wallet generator for more than 140+ multiple cryptocurrencies.",
+    version=hdwallet.__version__,
+    description=hdwallet.__description__,
     long_description=long_description,
     long_description_content_type="text/markdown",
-    license="ISCL",
-    author="Meheret Tesfaye",
-    author_email="meherett@zoho.com",
+    license=hdwallet.__license__,
+    author=hdwallet.__author__,
+    author_email=hdwallet.__email__,
     url="https://github.com/meherett/python-hdwallet",
-    keywords=["cryptography", "hd", "bip32", "bitcoin", "bip44", "bip39", "wallet", "hdwallet", "cryptocurrencies"],
+    keywords=[
+        "cryptography", "cli", "wallet", "bip32", "bip44", "bip39", "hdwallet", "cryptocurrencies", "bitcoin", "ethereum"
+    ],
+    entry_points={
+        "console_scripts": ["hdwallet=hdwallet.cli.__main__:main"]
+    },
     python_requires=">=3.6,<4",
     packages=find_packages(),
     install_requires=requirements,
     extras_require={
         "tests": [
-            "pytest>=6.2.2,<7",
-            "pytest-cov>=2.11.1,<3"
+            "pytest>=6.2.5,<7",
+            "pytest-cov>=3.0.0,<4"
         ],
         "docs": [
-            "sphinx>=3.5.1,<4",
-            "sphinx-rtd-theme>=0.5.1,<1"
+            "sphinx>=4.2.0,<5",
+            "sphinx-rtd-theme>=1.0.0,<2",
+            "sphinx-click>=3.0.1,<4"
         ]
     },
     classifiers=[

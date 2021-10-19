@@ -1,4 +1,3 @@
-
 # Hierarchical Deterministic Wallet
 
 [![Build Status](https://travis-ci.org/meherett/python-hdwallet.svg?branch=master)](https://travis-ci.org/meherett/python-hdwallet?branch=master)
@@ -9,6 +8,8 @@
 
 Python-based library for the implementation of a hierarchical deterministic wallet generator for more than 140+ multiple cryptocurrencies.
 It allows the handling of multiple coins, multiple accounts, external and internal chains per account and millions of addresses per chain.
+
+<img src="https://github.com/meherett/python-hdwallet/blob/master/docs/static/gif/hdwallet.gif"/>
 
 For more info see the BIP specs.
 
@@ -40,7 +41,7 @@ For the versions available, see the [tags on this repository](https://github.com
 
 ## Quick Usage
 
-Simple Bitcoin mainnet hierarchical deterministic wallet generator:
+Simple Bitcoin mainnet HDWallet generator:
 
 ```python
 #!/usr/bin/env python3
