@@ -1,5 +1,21 @@
 #!/usr/bin/env python3
 
+"""
+Copyright © 2021, Meheret Tesfaye Batu <meherett@zoho.com>
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+"""
+
 from ecdsa.curves import SECP256k1
 from ecdsa.ellipticcurve import Point
 from ecdsa.keys import (
@@ -218,7 +234,7 @@ class HDWallet:
             self.from_path(path=self._path_class)
         return self
 
-    def from_xprivate_key(self, xprivate_key: str, strict: bool = False, change_to_root: bool = False) -> "HDWallet":
+    def from_xprivate_key(self, xprivate_key: str, strict: bool = False) -> "HDWallet":
         """
         Master from XPrivate Key.
 
@@ -226,8 +242,6 @@ class HDWallet:
         :type xprivate_key: str
         :param strict: Strict for must be root xprivate key, default to ``False``.
         :type strict: bool
-        :param change_to_root: Non root xprivate key change to root xprivate key, default to ``False``.
-        :type change_to_root: bool
 
         :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
 
@@ -243,16 +257,11 @@ class HDWallet:
                 raise ValueError("Invalid root xprivate key.")
 
         _deserialize_xprivate_key = self._deserialize_xprivate_key(xprivate_key=xprivate_key)
-        if change_to_root:
-            self._root_depth, self._root_parent_fingerprint, self._root_index = (
-                0, b"\0\0\0\0", 0
-            )
-        else:
-            self._root_depth, self._root_parent_fingerprint, self._root_index = (
-                int.from_bytes(_deserialize_xprivate_key[1], "big"),
-                _deserialize_xprivate_key[2],
-                struct.unpack(">L", _deserialize_xprivate_key[3])[0]
-            )
+        self._root_depth, self._root_parent_fingerprint, self._root_index = (
+            int.from_bytes(_deserialize_xprivate_key[1], "big"),
+            _deserialize_xprivate_key[2],
+            struct.unpack(">L", _deserialize_xprivate_key[3])[0]
+        )
         self._depth, self._parent_fingerprint, self._index = (
             int.from_bytes(_deserialize_xprivate_key[1], "big"),
             _deserialize_xprivate_key[2],
@@ -270,7 +279,7 @@ class HDWallet:
         self._public_key = self.compressed()
         return self
 
-    def from_xpublic_key(self, xpublic_key: str, strict: bool = False, change_to_root: bool = False) -> "HDWallet":
+    def from_xpublic_key(self, xpublic_key: str, strict: bool = False) -> "HDWallet":
         """
         Master from XPublic Key.
 
@@ -278,8 +287,6 @@ class HDWallet:
         :type xpublic_key: str
         :param strict: Strict for must be root xpublic key, default to ``False``.
         :type strict: bool
-        :param change_to_root: Non root xprivate key change to root xprivate key, default to ``False``.
-        :type change_to_root: bool
 
         :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
 
@@ -295,16 +302,11 @@ class HDWallet:
                 raise ValueError("Invalid root xpublic key.")
 
         _deserialize_xpublic_key = self._deserialize_xpublic_key(xpublic_key=xpublic_key)
-        if change_to_root:
-            self._root_depth, self._root_parent_fingerprint, self._root_index = (
-                0, b"\0\0\0\0", 0
-            )
-        else:
-            self._root_depth, self._root_parent_fingerprint, self._root_index = (
-                int.from_bytes(_deserialize_xpublic_key[1], "big"),
-                _deserialize_xpublic_key[2],
-                struct.unpack(">L", _deserialize_xpublic_key[3])[0]
-            )
+        self._root_depth, self._root_parent_fingerprint, self._root_index = (
+            int.from_bytes(_deserialize_xpublic_key[1], "big"),
+            _deserialize_xpublic_key[2],
+            struct.unpack(">L", _deserialize_xpublic_key[3])[0]
+        )
         self._depth, self._parent_fingerprint, self._index = (
             int.from_bytes(_deserialize_xpublic_key[1], "big"),
             _deserialize_xpublic_key[2],
