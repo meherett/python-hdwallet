@@ -12,7 +12,6 @@ import unicodedata
 import binascii
 
 from hdwallet import cryptocurrencies
-from .exceptions import SemanticError
 from .cryptocurrencies import (
     get_cryptocurrency, Cryptocurrency
 )
@@ -319,39 +318,31 @@ def mnemonic_to_entropy(mnemonic: str, language: Optional[str] = None) -> str:
     return Mnemonic(language=language).to_entropy(mnemonic).hex()
 
 
-def is_root_xprivate_key(xprivate_key: str, symbol: str, semantic: str = "p2pkh") -> bool:
-    if semantic not in ["p2pkh", "p2sh", "p2wpkh", "p2wpkh_in_p2sh", "p2wsh", "p2wsh_in_p2sh"]:
-        raise SemanticError(
-            "Wrong extended semantic",
-            "choose only the following options 'p2pkh', 'p2sh', 'p2wpkh', 'p2wpkh_in_p2sh', 'p2wsh' or 'p2wsh_in_p2sh' semantics."
-        )
-    decoded_xprivate_key = check_decode(xprivate_key).hex()
-    if len(decoded_xprivate_key) != 156:  # 78
+def is_root_xprivate_key(xprivate_key: str, symbol: str) -> bool:
+    decoded_xprivate_key = check_decode(xprivate_key)
+    if len(decoded_xprivate_key) != 78:  # 78, 156
         raise ValueError("Invalid xprivate key.")
     cryptocurrency = get_cryptocurrency(symbol=symbol)
+    semantic = get_semantic(_cryptocurrency=cryptocurrency, version=decoded_xprivate_key[:4], key_type="private_key")
     version = cryptocurrency.EXTENDED_PRIVATE_KEY.__getattribute__(
         semantic.upper()
     )
     if version is None:
         raise NotImplementedError(semantic)
     raw = f"{_unhexlify(version).hex()}000000000000000000"
-    return decoded_xprivate_key.startswith(raw)
+    return decoded_xprivate_key.hex().startswith(raw)
 
 
-def is_root_xpublic_key(xpublic_key: str, symbol: str, semantic: str = "p2pkh") -> bool:
-    if semantic not in ["p2pkh", "p2sh", "p2wpkh", "p2wpkh_in_p2sh", "p2wsh", "p2wsh_in_p2sh"]:
-        raise SemanticError(
-            "Wrong extended semantic",
-            "choose only the following options 'p2pkh', 'p2sh', 'p2wpkh', 'p2wpkh_in_p2sh', 'p2wsh' or 'p2wsh_in_p2sh' semantics."
-        )
-    decoded_xpublic_key = check_decode(xpublic_key).hex()
-    if len(decoded_xpublic_key) != 156:  # 78
+def is_root_xpublic_key(xpublic_key: str, symbol: str) -> bool:
+    decoded_xpublic_key = check_decode(xpublic_key)
+    if len(decoded_xpublic_key) != 78:  # 78, 156
         raise ValueError("Invalid xpublic key.")
     cryptocurrency = get_cryptocurrency(symbol=symbol)
+    semantic = get_semantic(_cryptocurrency=cryptocurrency, version=decoded_xpublic_key[:4], key_type="public_key")
     version = cryptocurrency.EXTENDED_PUBLIC_KEY.__getattribute__(
         semantic.upper()
     )
     if version is None:
         raise NotImplementedError(semantic)
     raw = f"{_unhexlify(version).hex()}000000000000000000"
-    return decoded_xpublic_key.startswith(raw)
+    return decoded_xpublic_key.hex().startswith(raw)
