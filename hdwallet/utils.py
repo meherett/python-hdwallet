@@ -7,11 +7,15 @@ from typing import AnyStr, Optional
 
 import string
 import os
+import inspect
 import unicodedata
 import binascii
 
+from hdwallet import cryptocurrencies
 from .exceptions import SemanticError
-from .cryptocurrencies import get_cryptocurrency
+from .cryptocurrencies import (
+    get_cryptocurrency, Cryptocurrency
+)
 from .libs.base58 import check_decode
 
 # Alphabet and digits.
@@ -23,6 +27,20 @@ def _unhexlify(integer: int):
         return unhexlify("0%x" % integer)
     except binascii.Error:
         return unhexlify("%x" % integer)
+
+
+def get_semantic(_cryptocurrency: Cryptocurrency, version: bytes, key_type: str) -> str:
+    for name, cryptocurrency in inspect.getmembers(cryptocurrencies):
+        if inspect.isclass(cryptocurrency):
+            if issubclass(cryptocurrency, cryptocurrencies.Cryptocurrency) and cryptocurrency == _cryptocurrency:
+                if key_type == "private_key":
+                    for key, value in inspect.getmembers(cryptocurrency.EXTENDED_PRIVATE_KEY):
+                        if value == int(version.hex(), 16):
+                            return key.lower()
+                elif key_type == "public_key":
+                    for key, value in inspect.getmembers(cryptocurrency.EXTENDED_PUBLIC_KEY):
+                        if value == int(version.hex(), 16):
+                            return key.lower()
 
 
 def get_bytes(string: AnyStr) -> bytes:
