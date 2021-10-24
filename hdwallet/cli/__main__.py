@@ -34,7 +34,7 @@ def main():
 
 @main.group("generate", aliases=["g"], cls=ClickAliasedGroup, options_metavar="[OPTIONS]",
             short_help="Select Generate for HDWallet.", invoke_without_command=True)
-@click.option("-s", "--symbol", type=str, required=True,
+@click.option("-s", "--symbol", type=str, default="BTC",
               help="Set Cryptocurrency ticker symbol.")
 @click.option("-sg", "--strength", type=int, default=128,
               help="Set Strength for entropy, choose strength 128, 160, 192, 224 or 256 only.", show_default=True)
@@ -118,7 +118,7 @@ def generate(
 
 @generate.command("addresses", aliases=["a"], options_metavar="[OPTIONS]",
                   short_help="Select Addresses for generation HDWallet addresses.")
-@click.option("-s", "--symbol", type=str, required=True,
+@click.option("-s", "--symbol", type=str, default="BTC",
               help="Set Cryptocurrency ticker symbol.")
 @click.option("-sg", "--strength", type=int, default=128,
               help="Set Strength for entropy, choose strength 128, 160, 192, 224 or 256 only.", show_default=True)
