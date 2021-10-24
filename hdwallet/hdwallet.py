@@ -62,7 +62,7 @@ from .exceptions import (
 )
 from .utils import (
     get_bytes, is_entropy, is_mnemonic, get_entropy_strength, _unhexlify, is_root_xpublic_key,
-    get_mnemonic_language, is_root_xprivate_key, get_mnemonic_strength
+    get_mnemonic_language, is_root_xprivate_key, get_mnemonic_strength, get_semantic
 )
 
 MIN_ENTROPY_LEN: int = 128
@@ -94,7 +94,7 @@ class HDWallet:
     """
 
     def __init__(self, symbol: str = "BTC", cryptocurrency: Any = None,
-                 semantic: str = "p2pkh", use_default_path: bool = False):
+                 semantic: Optional[str] = None, use_default_path: bool = False):
         self._cryptocurrency: Any = None
         if cryptocurrency:
             if not issubclass(cryptocurrency, Cryptocurrency):
@@ -167,6 +167,8 @@ class HDWallet:
         mnemonic = Mnemonic(language=self._language).to_mnemonic(data=self._entropy)
         self._mnemonic = unicodedata.normalize("NFKD", mnemonic)
         self._seed = Mnemonic.to_seed(mnemonic=self._mnemonic, passphrase=self._passphrase)
+        if self._semantic is None:
+            self._semantic = "p2pkh"
         return self.from_seed(seed=hexlify(self._seed).decode())
 
     def from_mnemonic(self, mnemonic: str, language: str = None, passphrase: str = None) -> "HDWallet":
@@ -198,6 +200,8 @@ class HDWallet:
         self._entropy = Mnemonic(language=self._language).to_entropy(self._mnemonic)
         self._passphrase = str(passphrase) if passphrase else str()
         self._seed = Mnemonic.to_seed(mnemonic=self._mnemonic, passphrase=self._passphrase)
+        if self._semantic is None:
+            self._semantic = "p2pkh"
         return self.from_seed(seed=hexlify(self._seed).decode())
 
     def from_seed(self, seed: str) -> "HDWallet":
@@ -232,6 +236,8 @@ class HDWallet:
         self._public_key = self.compressed()
         if self._from_class:
             self.from_path(path=self._path_class)
+        if self._semantic is None:
+            self._semantic = "p2pkh"
         return self
 
     def from_xprivate_key(self, xprivate_key: str, strict: bool = False) -> "HDWallet":
@@ -277,6 +283,11 @@ class HDWallet:
         if self._from_class:
             self.from_path(path=self._path_class)
         self._public_key = self.compressed()
+        self._semantic = get_semantic(
+            _cryptocurrency=self._cryptocurrency,
+            version=_deserialize_xprivate_key[0],
+            key_type="private_key"
+        )
         return self
 
     def from_xpublic_key(self, xpublic_key: str, strict: bool = False) -> "HDWallet":
@@ -324,6 +335,11 @@ class HDWallet:
         if self._from_class:
             self.from_path(path=self._path_class)
         self._public_key = self.compressed()
+        self._semantic = get_semantic(
+            _cryptocurrency=self._cryptocurrency,
+            version=_deserialize_xpublic_key[0],
+            key_type="public_key"
+        )
         return self
 
     def from_wif(self, wif: str) -> "HDWallet":
@@ -557,11 +573,15 @@ class HDWallet:
         "xprv9s21ZrQH143K3xPGUzpogJeKtRdjHkK6muBJo8v7rEVRzT83xJgNcLpMoJXUf9wJFKfuHR4SGvfgdShh4t9VmjjrE9usBunK3LfNna31LGF"
         """
 
+        if self._semantic is None:
+            return None
         version = self._cryptocurrency.EXTENDED_PRIVATE_KEY.__getattribute__(
             self._semantic.upper()
         )
         if version is None:
-            raise NotImplementedError(self)
+            raise NotImplementedError(
+                f"{self.__class__.__name__} is not implemented for {self._cryptocurrency.NAME} {self._cryptocurrency.NETWORK} cryptocurrency."
+            )
         if not self._i:
             return None
         secret_key, chain_code = self._i[:32], self._i[32:]
@@ -591,11 +611,15 @@ class HDWallet:
         "xpub661MyMwAqRbcGSTjb2Mp3Sb4STUDhD2x986ubXKjQa2QsFTCVqzdA98qeZjcncHT1AaZcMSjiP1HJ16jH97q72RwyFfiNhmG8zQ6KBB5PaQ"
         """
 
+        if self._semantic is None:
+            return None
         version = self._cryptocurrency.EXTENDED_PUBLIC_KEY.__getattribute__(
             self._semantic.upper()
         )
         if version is None:
-            raise NotImplementedError(self)
+            raise NotImplementedError(
+                f"{self.__class__.__name__} is not implemented for {self._cryptocurrency.NAME} {self._cryptocurrency.NETWORK} cryptocurrency."
+            )
         if self._root_public_key:
             data, chain_code = (
                 self._root_public_key[0], self._root_public_key[1]
@@ -630,11 +654,15 @@ class HDWallet:
         "xprvA3BYGWQ9FmhyaNRRXB2f1LphNPnaY9T6gngw4BaTbkFtscSH4RCuJhgWUSKs9S6ciGioHd4TX4UeyUg53MkfN9Xh38xkS1j2Wb9YKsYpJHQ"
         """
 
+        if self._semantic is None:
+            return None
         version = self._cryptocurrency.EXTENDED_PRIVATE_KEY.__getattribute__(
             self._semantic.upper()
         )
         if version is None:
-            raise NotImplementedError(self)
+            raise NotImplementedError(
+                f"{self.__class__.__name__} is not implemented for {self._cryptocurrency.NAME} {self._cryptocurrency.NETWORK} cryptocurrency."
+            )
         depth = bytes(bytearray([self._depth]))
         parent_fingerprint = self._parent_fingerprint
         index = struct.pack(">L", self._index)
@@ -664,11 +692,15 @@ class HDWallet:
         "xpub6GAtg1w369GGnrVtdCZfNUmRvRd4wcAx41cXrZz5A5nskQmRbxX9rVzzKiRU4JruirBrfm4KQXNSU7GfqL1tzZWpZYe9Zo4xKGJYohWoQe7"
         """
 
+        if self._semantic is None:
+            return None
         version = self._cryptocurrency.EXTENDED_PUBLIC_KEY.__getattribute__(
             self._semantic.upper()
         )
         if version is None:
-            raise NotImplementedError(self)
+            raise NotImplementedError(
+                f"{self.__class__.__name__} is not implemented for {self._cryptocurrency.NAME} {self._cryptocurrency.NETWORK} cryptocurrency."
+            )
         depth = bytes(bytearray([self._depth]))
         parent_fingerprint = self._parent_fingerprint
         index = struct.pack(">L", self._index)
