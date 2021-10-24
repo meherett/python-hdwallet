@@ -12,12 +12,12 @@ STRICT: bool = True
 XPUBLIC_KEY: str = "xpub661MyMwAqRbcEqD3v24ZWHGDMqqAfbDbmnUFJXfbpxGZaAshq7evA7fB75CHFbNHSot" \
                    "LadDZw6M6ic4ZkdN6jQ2KMGR66Z2EybgdLFjNrpf"
 # Bitcoin non-root xpublic key
-# XPUBLIC_KEY: str = "xpub6FbWJtnc3eJHBwfTqhaE9yQNkmi56UDy9Rm1pbhvuSSigr6xKihuFpnnf4jz8G9ba2m3wFaF" \
-#                    "Gj7eH7FE451Jo5hPJhbaCdmxoBwWbFzk1Sn"
+# XPUBLIC_KEY: str = "zpub6uxKjJ8pnanQKU2betFrDPVmcVUvVgyAhgWS74iaN7yUE8RADoRRnztyVEQtnzi9Fh1Vp" \
+#                    "6iJ8RT6mMqjGnS6AxGjud3P2DLzpMHUw2zT1n2"
 
 if STRICT:
     # Check root xpublic key
-    assert is_root_xpublic_key(xpublic_key=XPUBLIC_KEY, symbol=BTC, semantic="p2pkh"), "Invalid root xpublic key."
+    assert is_root_xpublic_key(xpublic_key=XPUBLIC_KEY, symbol=BTC), "Invalid Root XPublic Key."
 
 # Initialize Bitcoin mainnet HDWallet
 hdwallet: HDWallet = HDWallet(symbol=BTC)

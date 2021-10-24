@@ -12,12 +12,12 @@ STRICT: bool = True
 XPRIVATE_KEY: str = "xprv9s21ZrQH143K24t96gCaezzt1QQmnqiEGm8m6TP8yb8e3TmGfkCgcLEVss" \
                     "kufMW9R4KH27pD1kyyEfJkYz1eiPwjhFzB4gtabH3PzMSmXSM"
 # Bitcoin non-root xprivate key
-# XPRIVATE_KEY: str = "xprvA3KRgVDh45mbQT1VmWPx73YeAWM4629Q2D9pMuqjFMnjTqDGhKiww6H532rg" \
-#                     "YRNj37fngd4Mvp7GfUD8rKeQzUZjCWeisT92tX8FfjWx3BL"
+# XPRIVATE_KEY: str = "yprvAMZNWbcSVmxMiVoKgQuKmemTpEz8dJs3v8hmgkRVUjncqkXsgoxyqZ8rDb" \
+#                     "eXzMqRQZEsTcB4T5iQQx7WazLyy3KiHZrdcHo6DmGAibeMxQV"
 
 if STRICT:
     # Check root xprivate key
-    assert is_root_xprivate_key(xprivate_key=XPRIVATE_KEY, symbol=BTC, semantic="p2pkh"), "Invalid root xprivate key."
+    assert is_root_xprivate_key(xprivate_key=XPRIVATE_KEY, symbol=BTC), "Invalid Root XPrivate Key."
 
 # Initialize Bitcoin mainnet HDWallet
 hdwallet: HDWallet = HDWallet(symbol=BTC)
