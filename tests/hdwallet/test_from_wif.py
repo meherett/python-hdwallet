@@ -47,7 +47,7 @@ def test_from_wallet_important_format():
     assert hdwallet.public_key() == _["bitcoin"]["mainnet"]["public_key"]
     assert hdwallet.wif() == _["bitcoin"]["mainnet"]["wif"]
     assert hdwallet.finger_print() == _["bitcoin"]["mainnet"]["finger_print"]
-    assert hdwallet.semantic() == _["bitcoin"]["mainnet"]["semantic"]
+    assert hdwallet.semantic() is None
     assert hdwallet.path() == None
     assert hdwallet.hash() == _["bitcoin"]["mainnet"]["hash"]
     assert hdwallet.p2pkh_address() == _["bitcoin"]["mainnet"]["addresses"]["p2pkh"]
@@ -71,6 +71,7 @@ def test_from_wallet_important_format():
     dumps["root_xpublic_key"] = None
     dumps["xprivate_key"] = None
     dumps["xpublic_key"] = None
+    dumps["semantic"] = None
     dumps["chain_code"] = None
     dumps["path"] = None
     del dumps["root_xprivate_key_hex"]

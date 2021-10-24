@@ -50,7 +50,7 @@ def test_from_public_key():
     assert hdwallet.public_key(compressed=False, private_key=_["bitcoin"]["testnet"]["private_key"]) == _["bitcoin"]["testnet"]["uncompressed"]
     assert hdwallet.wif() is None
     assert hdwallet.finger_print() == _["bitcoin"]["testnet"]["finger_print"]
-    assert hdwallet.semantic() == _["bitcoin"]["testnet"]["semantic"]
+    assert hdwallet.semantic() is None
     assert hdwallet.path() == None
     assert hdwallet.hash() == _["bitcoin"]["testnet"]["hash"]
     assert hdwallet.p2pkh_address() == _["bitcoin"]["testnet"]["addresses"]["p2pkh"]
@@ -74,6 +74,7 @@ def test_from_public_key():
     dumps["root_xpublic_key"] = None
     dumps["xprivate_key"] = None
     dumps["xpublic_key"] = None
+    dumps["semantic"] = None
     dumps["chain_code"] = None
     dumps["private_key"] = None
     dumps["wif"] = None
