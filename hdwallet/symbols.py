@@ -246,6 +246,8 @@ SYS = "SYS"
 TOA = "TOA"
 # Thought AI
 THT = "THT"
+# TRX
+TRX = "TRX"
 # Twins
 TWINS, TWINSTEST = "TWINS", "TWINSTEST"
 # Ultimate Secure Cash
@@ -404,6 +406,7 @@ __all__ = [
     "SYS",
     "TOA",
     "THT",
+    "TRX",
     "TWINS", "TWINSTEST",
     "USC",
     "UNO",
