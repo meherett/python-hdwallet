@@ -1111,6 +1111,13 @@ class HDWallet:
             keccak_256.update(unhexlify(self.uncompressed()))
             address = keccak_256.hexdigest()[24:]
             return checksum_encode(address, crypto="xdc")
+        elif self._cryptocurrency.SYMBOL in ["TRX"]:
+            keccak_256 = sha3.keccak_256()
+            # keccak_256.update(unhexlify(self.compressed()))
+            keccak_256.update(unhexlify(self.uncompressed()))
+            address = keccak_256.hexdigest()[24:]
+            network_hash160_bytes = _unhexlify(self._cryptocurrency.PUBLIC_KEY_ADDRESS) + bytearray.fromhex(address)
+            return ensure_string(base58.b58encode_check(network_hash160_bytes))
 
         compressed_public_key = unhexlify(self.compressed())
         public_key_hash = hashlib.new("ripemd160", sha256(compressed_public_key).digest()).digest()
