@@ -143,6 +143,7 @@ def test_symbols():
     assert SYS == "SYS"
     assert TOA == "TOA"
     assert THT == "THT"
+    assert TRX == "TRX"
     assert TWINS == "TWINS"
     assert TWINSTEST == "TWINSTEST"
     assert USC == "USC"
