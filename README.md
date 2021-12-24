@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/meherett/python-hdwallet.svg?branch=master)](https://travis-ci.org/meherett/python-hdwallet?branch=master)
 [![PyPI Version](https://img.shields.io/pypi/v/hdwallet.svg?color=blue)](https://pypi.org/project/hdwallet)
 [![Documentation Status](https://readthedocs.org/projects/hdwallet/badge/?version=master)](https://hdwallet.readthedocs.io/en/master/?badge=master)
+[![PyPI License](https://img.shields.io/pypi/l/hdwallet?color=black)](https://pypi.org/project/hdwallet)
 [![PyPI Python Version](https://img.shields.io/pypi/pyversions/hdwallet.svg)](https://pypi.org/project/hdwallet)
 [![Coverage Status](https://coveralls.io/repos/github/meherett/python-hdwallet/badge.svg?branch=master)](https://coveralls.io/github/meherett/python-hdwallet?branch=master)
 
@@ -48,7 +49,7 @@ Simple Bitcoin mainnet HDWallet generator:
 
 from hdwallet import HDWallet
 from hdwallet.utils import generate_entropy
-from hdwallet.symbols import BTC
+from hdwallet.symbols import BTC as SYMBOL
 from typing import Optional
 
 import json
@@ -63,7 +64,7 @@ ENTROPY: str = generate_entropy(strength=STRENGTH)
 PASSPHRASE: Optional[str] = None  # "meherett"
 
 # Initialize Bitcoin mainnet HDWallet
-hdwallet: HDWallet = HDWallet(symbol=BTC)
+hdwallet: HDWallet = HDWallet(symbol=SYMBOL, use_default_path=False)
 # Get Bitcoin HDWallet from entropy
 hdwallet.from_entropy(
     entropy=ENTROPY, language=LANGUAGE, passphrase=PASSPHRASE
@@ -343,6 +344,7 @@ This library simplifies the process of creating a new hierarchical deterministic
 | Syscoin                                                           | `SYS`                | Yes     | No      | Yes    | 57        | `m/44'/57'/0'/0/0`   |
 | TOA Coin                                                          | `TOA`                | Yes     | No      | No     | 159       | `m/44'/159'/0'/0/0`  |
 | Thought AI                                                        | `THT`                | Yes     | No      | No     | 502       | `m/44'/502'/0'/0/0`  |
+| [Tron](https://github.com/tronprotocol/java-tron)                 | `TRX`                | Yes     | No      | No     | 195       | `m/44'/195'/0'/0/0`  |
 | Twins                                                             | `TWINS`, `TWINSTEST` | Yes     | Yes     | No     | 970       | `m/44'/970'/0'/0/0`  |
 | Ultimate Secure Cash                                              | `USC`                | Yes     | No      | No     | 112       | `m/44'/112'/0'/0/0`  |
 | Unobtanium                                                        | `UNO`                | Yes     | No      | No     | 92        | `m/44'/92'/0'/0/0`   |

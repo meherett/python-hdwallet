@@ -878,6 +878,13 @@ This library simplifies the process of generating a new HDWallet's for:
      - No
      - 502
      - m/44'/502'/0'/0/0
+   * - `Tron <https://github.com/tronprotocol/java-tron>`_
+     - TRX
+     - Yes
+     - No
+     - No
+     - 195
+     - m/44'/195'/0'/0/0
    * - Twins
      - TWINS, TWINSTEST
      - Yes
