@@ -62,6 +62,17 @@ def test_derivations():
     assert bip32_derivation.address() == "0"
     assert bip32_derivation.SEMANTIC == "p2pkh"
 
+    bip32_derivation: BIP32Derivation = BIP32Derivation(
+        purpose=(44, True), coin_type=(0, True), account=(0, True), change=False, address=(0, False)
+    )
+    assert str(bip32_derivation) == "m/44'/0'/0'/0/0"
+    assert bip32_derivation.purpose() == "44'"
+    assert bip32_derivation.coin_type() == "0'"
+    assert bip32_derivation.account() == "0'"
+    assert bip32_derivation.change() == 0
+    assert bip32_derivation.address() == "0"
+    assert bip32_derivation.SEMANTIC == "p2pkh"
+
     bip44_derivation: BIP44Derivation = BIP44Derivation(
         cryptocurrency=BitcoinMainnet
     ).from_account(
@@ -70,6 +81,17 @@ def test_derivations():
         change=False
     ).from_address(
         address=0, hardened=False
+    )
+    assert str(bip44_derivation) == "m/44'/0'/0'/0/0"
+    assert bip44_derivation.purpose() == "44'"
+    assert bip44_derivation.coin_type() == "0'"
+    assert bip44_derivation.account() == "0'"
+    assert bip44_derivation.change() == 0
+    assert bip44_derivation.address() == "0"
+    assert bip44_derivation.SEMANTIC == "p2pkh"
+
+    bip44_derivation: BIP44Derivation = BIP44Derivation(
+        cryptocurrency=BitcoinMainnet, account=(0, True), change=False, address=(0, False)
     )
     assert str(bip44_derivation) == "m/44'/0'/0'/0/0"
     assert bip44_derivation.purpose() == "44'"
@@ -96,6 +118,17 @@ def test_derivations():
     assert bip49_derivation.address() == "0"
     assert bip49_derivation.SEMANTIC == "p2wpkh_in_p2sh"
 
+    bip49_derivation: BIP49Derivation = BIP49Derivation(
+        cryptocurrency=BitcoinMainnet, account=(0, True), change=False, address=(0, False)
+    )
+    assert str(bip49_derivation) == "m/49'/0'/0'/0/0"
+    assert bip49_derivation.purpose() == "49'"
+    assert bip49_derivation.coin_type() == "0'"
+    assert bip49_derivation.account() == "0'"
+    assert bip49_derivation.change() == 0
+    assert bip49_derivation.address() == "0"
+    assert bip49_derivation.SEMANTIC == "p2wpkh_in_p2sh"
+
     bip84_derivation: BIP84Derivation = BIP84Derivation(
         cryptocurrency=BitcoinMainnet
     ).from_account(
@@ -104,6 +137,17 @@ def test_derivations():
         change=False
     ).from_address(
         address=0, hardened=False
+    )
+    assert str(bip84_derivation) == "m/84'/0'/0'/0/0"
+    assert bip84_derivation.purpose() == "84'"
+    assert bip84_derivation.coin_type() == "0'"
+    assert bip84_derivation.account() == "0'"
+    assert bip84_derivation.change() == 0
+    assert bip84_derivation.address() == "0"
+    assert bip84_derivation.SEMANTIC == "p2wpkh"
+
+    bip84_derivation: BIP84Derivation = BIP84Derivation(
+        cryptocurrency=BitcoinMainnet, account=(0, True), change=False, address=(0, False)
     )
     assert str(bip84_derivation) == "m/84'/0'/0'/0/0"
     assert bip84_derivation.purpose() == "84'"
