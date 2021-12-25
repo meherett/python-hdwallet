@@ -333,7 +333,7 @@ class HDWallet:
         if self._use_default_path:
             self.from_path(path=self._cryptocurrency.DEFAULT_PATH)
         if self._from_class:
-            self.from_path(path=self._path_class)
+            self.from_path(path=str(self._path_class).replace("'", ""))
         self._public_key = self.compressed()
         self._semantic = get_semantic(
             _cryptocurrency=self._cryptocurrency,
@@ -730,15 +730,15 @@ class HDWallet:
         """
 
         if self._root_private_key:
-            self._path, self._depth, self._parent_fingerprint, self._index = (
-                "m", 0, b"\0\0\0\0", 0
+            self._path, self._path_class, self._depth, self._parent_fingerprint, self._index = (
+                "m", "m", 0, b"\0\0\0\0", 0
             )
             self._private_key, self._chain_code = self._root_private_key
             self._key = ecdsa.SigningKey.from_string(self._private_key, curve=SECP256k1)
             self._verified_key = self._key.get_verifying_key()
         elif self._root_public_key:
-            self._path, self._depth, self._parent_fingerprint, self._index = (
-                "m", 0, b"\0\0\0\0", 0
+            self._path, self._path_class, self._depth, self._parent_fingerprint, self._index = (
+                "m", "m", 0, b"\0\0\0\0", 0
             )
             self._chain_code = self._root_public_key[1]
             self._verified_key = ecdsa.VerifyingKey.from_string(
@@ -1101,19 +1101,16 @@ class HDWallet:
 
         if self._cryptocurrency.SYMBOL in ["ETH", "ETHTEST"]:
             keccak_256 = sha3.keccak_256()
-            # keccak_256.update(unhexlify(self.compressed()))
             keccak_256.update(unhexlify(self.uncompressed()))
             address = keccak_256.hexdigest()[24:]
             return checksum_encode(address, crypto="eth")
         elif self._cryptocurrency.SYMBOL in ["XDC", "XDCTEST"]:
             keccak_256 = sha3.keccak_256()
-            # keccak_256.update(unhexlify(self.compressed()))
             keccak_256.update(unhexlify(self.uncompressed()))
             address = keccak_256.hexdigest()[24:]
             return checksum_encode(address, crypto="xdc")
         elif self._cryptocurrency.SYMBOL in ["TRX"]:
             keccak_256 = sha3.keccak_256()
-            # keccak_256.update(unhexlify(self.compressed()))
             keccak_256.update(unhexlify(self.uncompressed()))
             address = keccak_256.hexdigest()[24:]
             network_hash160_bytes = _unhexlify(self._cryptocurrency.PUBLIC_KEY_ADDRESS) + bytearray.fromhex(address)
