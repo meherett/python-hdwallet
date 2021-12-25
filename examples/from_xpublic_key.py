@@ -2,7 +2,7 @@
 
 from hdwallet import HDWallet as HDWallet
 from hdwallet.utils import is_root_xpublic_key
-from hdwallet.symbols import BTC
+from hdwallet.symbols import BTC as SYMBOL
 
 import json
 
@@ -17,10 +17,10 @@ XPUBLIC_KEY: str = "xpub661MyMwAqRbcEqD3v24ZWHGDMqqAfbDbmnUFJXfbpxGZaAshq7evA7fB
 
 if STRICT:
     # Check root xpublic key
-    assert is_root_xpublic_key(xpublic_key=XPUBLIC_KEY, symbol=BTC), "Invalid Root XPublic Key."
+    assert is_root_xpublic_key(xpublic_key=XPUBLIC_KEY, symbol=SYMBOL), "Invalid Root XPublic Key."
 
 # Initialize Bitcoin mainnet HDWallet
-hdwallet: HDWallet = HDWallet(symbol=BTC)
+hdwallet: HDWallet = HDWallet(symbol=SYMBOL)
 # Get Bitcoin HDWallet from xpublic key
 hdwallet.from_xpublic_key(xpublic_key=XPUBLIC_KEY, strict=STRICT)
 

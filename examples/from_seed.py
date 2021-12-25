@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from hdwallet import HDWallet
-from hdwallet.symbols import DOGE
+from hdwallet.symbols import DOGE as SYMBOL
 
 import json
 
@@ -10,7 +10,7 @@ SEED: str = "b3337a2fe409afbb257b504e4c09d36b57c32c452b71a0ed413298a5172f727a06b
             "8723bc545a4bd51f5cd29a3e8bd1433bd1d26e6bf866ff53d1493f"
 
 # Initialize Dogecoin mainnet HDWallet
-hdwallet: HDWallet = HDWallet(symbol=DOGE)
+hdwallet: HDWallet = HDWallet(symbol=SYMBOL)
 # Get Dogecoin HDWallet from seed
 hdwallet.from_seed(seed=SEED)
 

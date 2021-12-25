@@ -2,7 +2,7 @@
 
 from hdwallet import HDWallet as HDWallet
 from hdwallet.utils import is_root_xprivate_key
-from hdwallet.symbols import BTC
+from hdwallet.symbols import BTC as SYMBOL
 
 import json
 
@@ -20,7 +20,7 @@ if STRICT:
     assert is_root_xprivate_key(xprivate_key=XPRIVATE_KEY, symbol=BTC), "Invalid Root XPrivate Key."
 
 # Initialize Bitcoin mainnet HDWallet
-hdwallet: HDWallet = HDWallet(symbol=BTC)
+hdwallet: HDWallet = HDWallet(symbol=SYMBOL)
 # Get Bitcoin HDWallet from xprivate key
 hdwallet.from_xprivate_key(xprivate_key=XPRIVATE_KEY, strict=STRICT)
 

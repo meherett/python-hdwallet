@@ -2,7 +2,7 @@
 
 from hdwallet import HDWallet
 from hdwallet.utils import generate_entropy
-from hdwallet.symbols import BTC
+from hdwallet.symbols import TRX as SYMBOL
 from typing import Optional
 
 import json
@@ -17,7 +17,7 @@ ENTROPY: str = generate_entropy(strength=STRENGTH)
 PASSPHRASE: Optional[str] = None  # "meherett"
 
 # Initialize Bitcoin mainnet HDWallet
-hdwallet: HDWallet = HDWallet(symbol=BTC)
+hdwallet: HDWallet = HDWallet(symbol=SYMBOL)
 # Get Bitcoin HDWallet from entropy
 hdwallet.from_entropy(
     entropy=ENTROPY, language=LANGUAGE, passphrase=PASSPHRASE

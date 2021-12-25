@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from hdwallet import HDWallet
-from hdwallet.symbols import ETH
+from hdwallet.symbols import ETH as SYMBOL
 
 import json
 
@@ -9,7 +9,7 @@ import json
 PUBLIC_KEY = "034f6922d19e8134de23eb98396921c02cdcf67e8c0ff23dfd955839cd557afd10"
 
 # Initialize Ethereum mainnet HDWallet
-hdwallet: HDWallet = HDWallet(symbol=ETH)
+hdwallet: HDWallet = HDWallet(symbol=SYMBOL)
 # Get Ethereum HDWallet from public key
 hdwallet.from_public_key(public_key=PUBLIC_KEY)
 

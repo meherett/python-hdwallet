@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from hdwallet import HDWallet
-from hdwallet.symbols import BTCTEST
+from hdwallet.symbols import BTCTEST as SYMBOL
 
 import json
 
@@ -9,7 +9,7 @@ import json
 WALLET_IMPORTANT_FORMAT: str = "cVpnZ6XRfL5VVggwZDyndAU5KGVdT2TP1j1HB3td6ZKWCbh5wYvf"
 
 # Initialize Bitcoin testnet HDWallet
-hdwallet: HDWallet = HDWallet(symbol=BTCTEST)
+hdwallet: HDWallet = HDWallet(symbol=SYMBOL)
 # Get Bitcoin HDWallet from wallet important format
 hdwallet.from_wif(wif=WALLET_IMPORTANT_FORMAT)
 

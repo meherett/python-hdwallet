@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from hdwallet import HDWallet
-from hdwallet.symbols import QTUM
+from hdwallet.symbols import QTUM as SYMBOL
 
 import json
 
@@ -9,7 +9,7 @@ import json
 PRIVATE_KEY: str = "f86d5afe2a457c29357485ebf853a1e5ff5f6fcf1ba4d7d1412665e01449902e"
 
 # Initialize Qtum mainnet HDWallet
-hdwallet: HDWallet = HDWallet(symbol=QTUM)
+hdwallet: HDWallet = HDWallet(symbol=SYMBOL)
 # Get Qtum HDWallet from private key
 hdwallet.from_private_key(private_key=PRIVATE_KEY)
 
