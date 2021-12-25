@@ -15,6 +15,20 @@ If you want to run the latest version of the code, you can install from git:
 
     $ pip install git+git://github.com/meherett/python-hdwallet.git
 
+After you have installed, type ``hdwallet`` to verify that it worked:
+
+::
+
+    $ hdwallet
+    Usage: hdwallet [OPTIONS] COMMAND [ARGS]...
+
+    Options:
+      -v, --version  Show HDWallet version and exit.
+      -h, --help     Show this message and exit.
+
+    Commands:
+      generate (g)  Select Generate for HDWallet.
+      list (l)      Select List for HDWallet information.
 
 For the versions available, see the `tags on this repository <https://github.com/meherett/python-hdwallet/tags>`_.
 

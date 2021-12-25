@@ -1,10 +1,14 @@
 :orphan:
 
-==========================
-Available Cryptocurrencies
-==========================
+================
+Cryptocurrencies
+================
 
 This library simplifies the process of generating a new HDWallet's for:
+
+.. note::
+
+    All Cryptocurrencies testnet networks default paths are set to ``m/44'/1'/0'/0/0`` value.
 
 .. list-table::
    :widths: 25 25 25 25 15 25 50
@@ -997,5 +1001,3 @@ This library simplifies the process of generating a new HDWallet's for:
      - No
      - 121
      - m/44'/121'/0'/0/0
-
-**NOTICE:** All Cryptocurrencies testnet networks default paths are set to ``m/44'/1'/0'/0/0`` value.

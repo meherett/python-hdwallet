@@ -56,15 +56,15 @@ exclude_patterns = []
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "sphinx_rtd_theme"
+html_theme = "furo"
 # Product logo name
 # html_logo = "static/png/hdwallet.png"
 # Theme options
 html_theme_options = {
     # "canonical_url": "",
     # "analytics_id": "UA-XXXXXXX-1",  #  Provided by Google in your dashboard
-    "logo_only": False,
-    "display_version": True,
+    # "logo_only": False,
+    # "display_version": True,
     # "prev_next_buttons_location": "bottom",
     # "style_external_links": False,
     # "vcs_pageview_mode": "",
@@ -75,6 +75,20 @@ html_theme_options = {
     # "navigation_depth": 4,
     # "includehidden": True,
     # "titles_only": False
+
+    # "light_css_variables": {
+        # "color-brand-primary": "darkblue",
+        # "color-brand-content": "darkblue",
+        # "color-admonition-background": "black",
+    # },
+    # "dark_css_variables": {
+    #     "color-brand-primary": "green",
+    #     "color-brand-content": "green",
+        # "color-admonition-background": "white",
+    # },
+    # "sidebar_hide_name": True,
+    # "navigation_with_keys": True,
+    # "announcement": "<em>Important</em> announcement!",
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
