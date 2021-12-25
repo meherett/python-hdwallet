@@ -4,6 +4,12 @@ from setuptools import (
     setup, find_packages
 )
 
+# Project URLs
+project_urls = {
+    "Tracker": "https://github.com/meherett/python-hdwallet/issues",
+    "Documentation": "https://hdwallet.readthedocs.io"
+}
+
 # README.md
 with open("README.md", "r", encoding="utf-8") as readme:
     long_description: str = readme.read()
@@ -14,7 +20,7 @@ with open("requirements.txt", "r") as _requirements:
 
 setup(
     name="hdwallet",
-    version="v2.0.1",
+    version="v2.1.0",
     description="Python-based library for the implementation of a hierarchical deterministic wallet "
                 "generator for more than 140+ multiple cryptocurrencies.",
     long_description=long_description,
@@ -23,6 +29,7 @@ setup(
     author="Meheret Tesfaye Batu",
     author_email="meherett@zoho.com",
     url="https://github.com/meherett/python-hdwallet",
+    project_urls=project_urls,
     keywords=[
         "cryptography", "cli", "wallet", "bip32", "bip44", "bip39", "hdwallet", "cryptocurrencies", "bitcoin", "ethereum"
     ],
@@ -38,9 +45,9 @@ setup(
             "pytest-cov>=3.0.0,<4"
         ],
         "docs": [
-            "sphinx>=4.2.0,<5",
-            "sphinx-rtd-theme>=1.0.0,<2",
-            "sphinx-click>=3.0.1,<4"
+            "sphinx>=4.3.2,<5",
+            "furo==2021.11.23"
+            "sphinx-click>=3.0.2,<4"
         ]
     },
     classifiers=[
@@ -50,6 +57,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Topic :: Software Development :: Libraries :: Python Modules"
     ]
 )
