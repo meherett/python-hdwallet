@@ -276,6 +276,13 @@ This library simplifies the process of generating a new HDWallet's for:
      - No
      - 116
      - m/44'/116'/0'/0/0
+   * - `DeSo <https://github.com/deso-protocol>`_
+     - DESO, DESOTEST
+     - Yes
+     - Yes
+     - Yes
+     - 0
+     - m/44'/0'/0'/0/0
    * - Diamond
      - DMD
      - Yes

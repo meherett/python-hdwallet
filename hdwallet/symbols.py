@@ -74,6 +74,8 @@ ONION = "ONION"
 DFC = "DFC"
 # Denarius
 DNR = "DNR"
+# DeSo
+DESO, DESOTEST = "DESO", "DESOTEST"
 # Diamond
 DMD = "DMD"
 # Digi Byte
@@ -316,6 +318,7 @@ __all__ = [
     "CRAVE",
     "DASH", "DASHTEST",
     "ONION",
+    "DESO", "DESOTEST",
     "DFC",
     "DNR",
     "DMD",

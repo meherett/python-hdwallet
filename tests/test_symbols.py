@@ -45,6 +45,8 @@ def test_symbols():
     assert ONION == "ONION"
     assert DFC == "DFC"
     assert DNR == "DNR"
+    assert DESO == "DESO"
+    assert DESOTEST == "DESOTEST"
     assert DMD == "DMD"
     assert DGB == "DGB"
     assert DGC == "DGC"

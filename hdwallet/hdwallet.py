@@ -112,6 +112,10 @@ class HDWallet:
         self._private_key: Optional[bytes] = None
         self._public_key: Optional[str] = None
         self._chain_code: Optional[bytes] = None
+
+        self._private_key_base58check: Optional[str] = None
+        self._public_key_base58check: Optional[str] = None
+
         self._depth: int = 0
         self._index: int = 0
 
@@ -211,6 +215,8 @@ class HDWallet:
         if self._use_default_path:
             self.from_path(path=self._cryptocurrency.DEFAULT_PATH)
         self._public_key = self.compressed()
+        self._public_key_base58check = self.public_key_base58check()
+        self._private_key_base58check = self.private_key_base58check()
         if self._from_class:
             self.from_path(path=self._path_class)
         return self
@@ -251,6 +257,8 @@ class HDWallet:
         if self._from_class:
             self.from_path(path=self._path_class)
         self._public_key = self.compressed()
+        self._public_key_base58check = self.public_key_base58check()
+        self._private_key_base58check = self.private_key_base58check()
         return self
 
     def from_root_xpublic_key(self, xpublic_key: str, strict: bool = True) -> "HDWallet":
@@ -289,6 +297,7 @@ class HDWallet:
         if self._from_class:
             self.from_path(path=self._path_class)
         self._public_key = self.compressed()
+        self._public_key_base58check = self.public_key_base58check()
         return self
 
     def from_xprivate_key(self, xprivate_key: str) -> "HDWallet":
@@ -317,6 +326,8 @@ class HDWallet:
         self._key = ecdsa.SigningKey.from_string(_deserialize_xprivate_key[5], curve=SECP256k1)
         self._verified_key = self._key.get_verifying_key()
         self._public_key = self.compressed()
+        self._public_key_base58check = self.public_key_base58check()
+        self._private_key_base58check = self.private_key_base58check()
         return self
 
     def from_xpublic_key(self, xpublic_key: str) -> "HDWallet":
@@ -346,6 +357,7 @@ class HDWallet:
             _deserialize_xpublic_key[5], curve=SECP256k1
         )
         self._public_key = self.compressed()
+        self._public_key_base58check = self.public_key_base58check()
         return self
 
     def from_wif(self, wif: str) -> "HDWallet":
@@ -372,6 +384,8 @@ class HDWallet:
         self._key = ecdsa.SigningKey.from_string(self._private_key, curve=SECP256k1)
         self._verified_key = self._key.get_verifying_key()
         self._public_key = self.compressed()
+        self._public_key_base58check = self.public_key_base58check()
+        self._private_key_base58check = self.private_key_base58check()
         return self
 
     def from_private_key(self, private_key: str) -> "HDWallet":
@@ -394,6 +408,8 @@ class HDWallet:
         self._key = ecdsa.SigningKey.from_string(self._private_key, curve=SECP256k1)
         self._verified_key = self._key.get_verifying_key()
         self._public_key = self.compressed()
+        self._public_key_base58check = self.public_key_base58check()
+        self._private_key_base58check = self.private_key_base58check()
         return self
 
     def from_public_key(self, public_key: str) -> "HDWallet":
@@ -416,6 +432,7 @@ class HDWallet:
             unhexlify(public_key), curve=SECP256k1
         )
         self._public_key = self.compressed()
+        self._public_key_base58check = self.public_key_base58check()
         return self
 
     def from_path(self, path: Union[str, Derivation]) -> "HDWallet":
@@ -521,6 +538,7 @@ class HDWallet:
             )
             self._key = ecdsa.SigningKey.from_string(self._private_key, curve=SECP256k1)
             self._verified_key = self._key.get_verifying_key()
+            self._private_key_base58check = self.private_key_base58check()
         else:
             key_point = S256Point.parse(unhexlify(self.public_key()))
             left_point = il_int * G
@@ -730,6 +748,7 @@ class HDWallet:
             self._private_key, self._chain_code = self._root_private_key
             self._key = ecdsa.SigningKey.from_string(self._private_key, curve=SECP256k1)
             self._verified_key = self._key.get_verifying_key()
+            self._private_key_base58check = self.private_key_base58check()
         elif self._root_public_key:
             self._path, self._depth, self._parent_fingerprint, self._index = (
                 "m", 0, b"\0\0\0\0", 0
@@ -846,6 +865,18 @@ class HDWallet:
                 ck = b"\2" + padx
             return hexlify(ck).decode() if compressed else self.uncompressed(compressed=hexlify(ck).decode())
         return self.compressed() if compressed else self.uncompressed()
+
+    def public_key_base58check(self) -> str:
+        return base58.b58encode_check(
+            _unhexlify(self._cryptocurrency.PUBLIC_KEY_ADDRESS) +
+            unhexlify(self.public_key())
+        )
+
+    def private_key_base58check(self) -> str:
+        return base58.b58encode_check(
+            _unhexlify(self._cryptocurrency.PRIVATE_KEY_ADDRESS) +
+            unhexlify(self.private_key())
+        )
 
     def strength(self) -> Optional[int]:
         """
@@ -1281,6 +1312,8 @@ class HDWallet:
             semantic=self.semantic(),
             path=self.path(),
             hash=self.hash(),
+            public_key_base58check=self.public_key_base58check(),
+            private_key_base58check=self.private_key_base58check(),
             addresses=dict(
                 p2pkh=self.p2pkh_address(),
                 p2sh=self.p2sh_address(),
