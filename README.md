@@ -1,11 +1,11 @@
 # Hierarchical Deterministic Wallet
 
-[![Build Status](https://travis-ci.org/meherett/python-hdwallet.svg?branch=master)](https://travis-ci.org/meherett/python-hdwallet?branch=master)
+[![Build Status](https://app.travis-ci.com/meherett/python-hdwallet.svg?branch=master)](https://app.travis-ci.com/meherett/python-hdwallet)
 [![PyPI Version](https://img.shields.io/pypi/v/hdwallet.svg?color=blue)](https://pypi.org/project/hdwallet)
-[![Documentation Status](https://readthedocs.org/projects/hdwallet/badge/?version=master)](https://hdwallet.readthedocs.io/en/master/?badge=master)
+[![Documentation Status](https://readthedocs.org/projects/hdwallet/badge/?version=master)](https://hdwallet.readthedocs.io)
 [![PyPI License](https://img.shields.io/pypi/l/hdwallet?color=black)](https://pypi.org/project/hdwallet)
 [![PyPI Python Version](https://img.shields.io/pypi/pyversions/hdwallet.svg)](https://pypi.org/project/hdwallet)
-[![Coverage Status](https://coveralls.io/repos/github/meherett/python-hdwallet/badge.svg?branch=master)](https://coveralls.io/github/meherett/python-hdwallet?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/meherett/python-hdwallet/badge.svg?branch=master)](https://coveralls.io/github/meherett/python-hdwallet)
 
 Python-based library for the implementation of a hierarchical deterministic wallet generator for more than 140+ multiple cryptocurrencies.
 It allows the handling of multiple coins, multiple accounts, external and internal chains per account and millions of addresses per chain.
@@ -26,10 +26,16 @@ For more info see the BIP specs.
 
 ## Installation
 
-PIP to install `hdwallet` globally, for Linux `sudo` may be required:
+The easiest way to install `hdwallet` is via pip:
 
 ```
 pip install hdwallet
+```
+
+To install `hdwallet` command line interface globally, for Linux `sudo` may be required:
+
+```
+pip install hdwallet[cli]
 ```
 
 If you want to run the latest version of the code, you can install from the git:
@@ -192,7 +198,7 @@ Base HD Path:  m/44'/60'/0'/0/{address_index}
 To get started, just fork this repo, clone it locally, and run:
 
 ```
-pip install -e .[tests,docs] -r requirements.txt
+pip install -e .[cli,tests,docs] -r requirements.txt
 ```
 
 ## Testing
