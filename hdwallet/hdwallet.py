@@ -67,7 +67,7 @@ class HDWallet:
     :type symbol: str
     :param cryptocurrency: Cryptocurrency instance, defaults to ``None``.
     :type cryptocurrency: Cryptocurrency
-    :param semantic: Extended semantic, defaults to ``P2PKH``.
+    :param semantic: Extended semantic
     :type semantic: str
     :param use_default_path: Use default derivation path, defaults to ``False``.
     :type use_default_path: bool
@@ -79,7 +79,7 @@ class HDWallet:
     """
 
     def __init__(self, symbol: str = "BTC", cryptocurrency: Any = None,
-                 semantic: str = "p2pkh", use_default_path: bool = False):
+                 semantic: str = None, use_default_path: bool = False):
         self._cryptocurrency: Any = None
         if cryptocurrency:
             if not issubclass(cryptocurrency, Cryptocurrency):
@@ -87,6 +87,9 @@ class HDWallet:
             self._cryptocurrency: Any = cryptocurrency
         else:
             self._cryptocurrency: Any = get_cryptocurrency(symbol=symbol)
+
+        if semantic is None:
+            semantic = self._cryptocurrency.DEFAULT_SEMANTIC
 
         self._strength: Optional[int] = None
         self._entropy: Optional[str] = None
@@ -878,6 +881,9 @@ class HDWallet:
             unhexlify(self.private_key())
         ).decode()
 
+    def base58check_address(self) -> str:
+        return self.public_key_base58check()
+
     def strength(self) -> Optional[int]:
         """
         Get Entropy strength.
@@ -1142,7 +1148,7 @@ class HDWallet:
         network_hash160_bytes = _unhexlify(self._cryptocurrency.PUBLIC_KEY_ADDRESS) + public_key_hash
         return ensure_string(base58.b58encode_check(network_hash160_bytes))
 
-    def p2sh_address(self) -> str:
+    def p2sh_address(self) -> Optional[str]:
         """
         Get Pay to Script Hash (P2SH) address.
 
@@ -1156,6 +1162,9 @@ class HDWallet:
         >>> hdwallet.p2sh_address()
         "3Jp6ad4ErhibQmhSRfavbPRiUyg2xTTT4j"
         """
+
+        if self._cryptocurrency.SCRIPT_ADDRESS is None:
+            return None
 
         compressed_public_key = unhexlify(self.compressed())
         public_key_hash = hashlib.new('ripemd160', sha256(compressed_public_key).digest()).hexdigest()
@@ -1181,6 +1190,8 @@ class HDWallet:
 
         compressed_public_key = unhexlify(self.compressed())
         public_key_hash = hashlib.new('ripemd160', sha256(compressed_public_key).digest()).digest()
+        if self._cryptocurrency.SEGWIT_ADDRESS is None:
+            return None
         if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
             return None
         return ensure_string(encode(self._cryptocurrency.SEGWIT_ADDRESS.HRP, 0, public_key_hash))
@@ -1200,10 +1211,15 @@ class HDWallet:
         "3CCrxPrHNa6ePbnB7qjh7S3vaPx9qiLc3e"
         """
 
+        if self._cryptocurrency.SCRIPT_ADDRESS is None:
+            return None
+
         compressed_public_key = unhexlify(self.compressed())
         public_key_hash = hashlib.new('ripemd160', sha256(compressed_public_key).digest()).hexdigest()
         script_hash = hashlib.new('ripemd160', sha256(unhexlify("0014" + public_key_hash)).digest()).digest()
         network_hash160_bytes = _unhexlify(self._cryptocurrency.SCRIPT_ADDRESS) + script_hash
+        if self._cryptocurrency.SEGWIT_ADDRESS is None:
+            return None
         if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
             return None
         return ensure_string(base58.b58encode_check(network_hash160_bytes))
@@ -1225,6 +1241,8 @@ class HDWallet:
 
         compressed_public_key = unhexlify("5121" + self.compressed() + "51ae")
         script_hash = sha256(compressed_public_key).digest()
+        if self._cryptocurrency.SEGWIT_ADDRESS is None:
+            return None
         if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
             return None
         return ensure_string(encode(self._cryptocurrency.SEGWIT_ADDRESS.HRP, 0, script_hash))
@@ -1244,6 +1262,9 @@ class HDWallet:
         "38YMonfh2yLFRViLrM2kdvZx8ctcp1vbbV"
         """
 
+        if self._cryptocurrency.SCRIPT_ADDRESS is None:
+            return None
+
         compressed_public_key = unhexlify("5121" + self.compressed() + "51ae")
         script_hash = unhexlify("0020" + sha256(compressed_public_key).hexdigest())
         script_hash = hashlib.new('ripemd160', sha256(script_hash).digest()).digest()
@@ -1251,6 +1272,11 @@ class HDWallet:
         if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
             return None
         return ensure_string(base58.b58encode_check(network_hash160_bytes))
+
+    def address(self, semantic=None):
+        if semantic == None:
+            semantic = self._cryptocurrency.DEFAULT_SEMANTIC
+        return getattr(self, f"{semantic}_address")()
 
     def wif(self) -> Optional[str]:
         """
@@ -1266,6 +1292,9 @@ class HDWallet:
         >>> hdwallet.wif()
         "KzsHWUJsrTWUUhBGPfMMxLLydiH7NhEn6z7mKHXD5qNkUWaC4TEn"
         """
+
+        if self._cryptocurrency.WIF_SECRET_KEY is None:
+            return
 
         return check_encode(_unhexlify(self._cryptocurrency.WIF_SECRET_KEY) + self._key.to_string() + b"\x01") if self._key else None
 
@@ -1321,7 +1350,8 @@ class HDWallet:
                 p2wpkh_in_p2sh=self.p2wpkh_in_p2sh_address(),
                 p2wsh=self.p2wsh_address(),
                 p2wsh_in_p2sh=self.p2wsh_in_p2sh_address()
-            )
+            ),
+            address=self.address()
         )
 
 

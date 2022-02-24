@@ -62,17 +62,19 @@ class Cryptocurrency(NestedNamespace):
     SOURCE_CODE: Optional[str]
     COIN_TYPE: CoinType
 
-    SCRIPT_ADDRESS: int
+    SCRIPT_ADDRESS: Optional[int] = None
     PUBLIC_KEY_ADDRESS: int = 0
     PRIVATE_KEY_ADDRESS: int = 0
-    SEGWIT_ADDRESS: SegwitAddress
+    SEGWIT_ADDRESS: Optional[SegwitAddress] = None
 
     EXTENDED_PRIVATE_KEY: ExtendedPrivateKey
     EXTENDED_PUBLIC_KEY: ExtendedPublicKey
 
     MESSAGE_PREFIX: Optional[str]
     DEFAULT_PATH: str
-    WIF_SECRET_KEY: int
+    WIF_SECRET_KEY: Optional[int] = None
+
+    DEFAULT_SEMANTIC: str = "p2pkh"
 
 
 class AnonMainnet(Cryptocurrency):
@@ -713,6 +715,7 @@ class BitcoinMainnet(Cryptocurrency):
     MESSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
+    DEFAULT_SEMANTIC = "p2wpkh"
 
 
 class BitcoinPlusMainnet(Cryptocurrency):
@@ -833,6 +836,7 @@ class BitcoinTestnet(Cryptocurrency):
     MESSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xef
+    DEFAULT_SEMANTIC = "p2wpkh"
 
 
 class BitcoinZMainnet(Cryptocurrency):
@@ -1686,34 +1690,18 @@ class DeSoMainnet(Cryptocurrency):
         "HARDENED": True
     })
 
-    SCRIPT_ADDRESS = 0x05
     PUBLIC_KEY_ADDRESS = 0xCD1400
     PRIVATE_KEY_ADDRESS = 0x350000
-    SEGWIT_ADDRESS = SegwitAddress({
-        "HRP": "bc",
-        "VERSION": 0x00
-    })
-
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
-        "P2PKH": 0x0488ade4,
-        "P2SH": 0x0488ade4,
-        "P2WPKH": 0x04b2430c,
-        "P2WPKH_IN_P2SH": 0x049d7878,
-        "P2WSH": 0x02aa7a99,
-        "P2WSH_IN_P2SH": 0x0295b005
+        "BASE58CHECK": 0x0488ade4
     })
     EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
-        "P2PKH": 0x0488b21e,
-        "P2SH": 0x0488b21e,
-        "P2WPKH": 0x04b24746,
-        "P2WPKH_IN_P2SH": 0x049d7cb2,
-        "P2WSH": 0x02aa7ed3,
-        "P2WSH_IN_P2SH": 0x0295b43f
+        "BASE58CHECK": 0x0488b21e
     })
 
     MESSAGE_PREFIX = "\x18DeSo Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
-    WIF_SECRET_KEY = 0x80
+    DEFAULT_SEMANTIC = "base58check"
 
 
 class DeSoTestnet(Cryptocurrency):
@@ -1727,34 +1715,18 @@ class DeSoTestnet(Cryptocurrency):
         "HARDENED": True
     })
 
-    SCRIPT_ADDRESS = 0x05
     PUBLIC_KEY_ADDRESS = 0x11C200
     PRIVATE_KEY_ADDRESS = 0x4F061B
-    SEGWIT_ADDRESS = SegwitAddress({
-        "HRP": "bc",
-        "VERSION": 0x00
-    })
-
     EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
-        "P2PKH": 0x0488ade4,
-        "P2SH": 0x0488ade4,
-        "P2WPKH": 0x04b2430c,
-        "P2WPKH_IN_P2SH": 0x049d7878,
-        "P2WSH": 0x02aa7a99,
-        "P2WSH_IN_P2SH": 0x0295b005
+        "BASE58CHECK": 0x04358394
     })
     EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
-        "P2PKH": 0x0488b21e,
-        "P2SH": 0x0488b21e,
-        "P2WPKH": 0x04b24746,
-        "P2WPKH_IN_P2SH": 0x049d7cb2,
-        "P2WSH": 0x02aa7ed3,
-        "P2WSH_IN_P2SH": 0x0295b43f
+        "BASE58CHECK": 0x043587cf
     })
 
     MESSAGE_PREFIX = "\x18DeSo Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
-    WIF_SECRET_KEY = 0x80
+    DEFAULT_SEMANTIC = "base58check"
 
 
 class DiamondMainnet(Cryptocurrency):
