@@ -159,7 +159,7 @@ class HDWallet:
         if language and language not in ["english", "french", "italian", "japanese",
                                          "chinese_simplified", "chinese_traditional", "korean", "spanish"]:
             raise ValueError("Invalid language, choose only the following options 'english', 'french', 'italian', "
-                             "'spanish', 'chinese_simplified', 'chinese_traditional', 'japanese or 'korean' languages.")
+                             "'spanish', 'chinese_simplified', 'chinese_traditional', 'japanese' or 'korean' languages.")
 
         self._strength = get_entropy_strength(entropy=entropy)
         self._entropy, self._language = unhexlify(entropy), language
