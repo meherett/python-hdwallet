@@ -879,7 +879,7 @@ class HDWallet:
         return base58.b58encode_check(
             _unhexlify(self._cryptocurrency.PRIVATE_KEY_ADDRESS) +
             unhexlify(self.private_key())
-        ).decode()
+        ).decode() if self.private_key() is not None else None
 
     def base58check_address(self) -> str:
         return self.public_key_base58check()
