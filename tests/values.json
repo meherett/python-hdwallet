@@ -93,6 +93,8 @@
             "root_xprivate_key_hex": "0488ade4000000000000000000ad41ef910cdcae932cb4060777b4284ee38f5b29c5fb60fda8416f298a14702c007a286fa06bdb8cc821b1d34d88547b36bf7ab434c632db7ee21fc77b4130a852",
             "root_xpublic_key": "xpub661MyMwAqRbcGGUtsoFw2d6ARvD2ABd7z327zxt2XiBBwMx9GAuNrrE7tbRuWF5MjjZ1BzDsRdaSHc9nVKAgHzQrv6pwYW3Hd7LSzbh8sWS",
             "root_xpublic_key_hex": "0488b21e000000000000000000ad41ef910cdcae932cb4060777b4284ee38f5b29c5fb60fda8416f298a14702c02949b9f64223e124eb9a8383fba0b21b5845fcfbdc84dec7692d21c716410eab0",
+            "account_extended_xprivate_key":"xprv9yo5N7Q158CUL131kN4rVZsa2n1cKWMkt7UgqVGvrY91GEhyuZCbRFboXhDfYUaDFVwXwMzDCTj3LAprcY3HLZLRF8Q59p4LhR62QaR46Mn",
+            "account_extended_xpublic_key":"xpub6CnRmcvtuVkmYV7UrPbrrhpJaor6iy5cFLQHdsgYQsfz9338T6Wqy3vHP1MXCEPMKzq1C8fErhrGnzEYarzsF814HnCzNF6vqo9JiGjjvE2",
             "xprivate_key": "xprvA3nwFVTnTFsvwcFaFJd18aFoAguPwgn3N5eWRx785nSHshmxogPYyCzuHc4mu7rZvPArT4WjjakcwfzmH3oJBH71DmaeEGo4bbNgbq3FsRV",
             "xprivate_key_hex": "0488ade405b9e49a9c00000000732993021308a753144a66f61475a5e52ce5c8a42b6c03fe43d5b30956c3722000730305af76b25e3b5fbc1169e6cb77d34a3fd7851368c11074381a359e287d3a",
             "xpublic_key": "xpub6GnHezzgHdSEA6L3MLA1ViCXiijtM9VtjJa7ELWje7yGkW77MDhoX1KP8sbcbXeaXXtri6kfDWPLiPuntxaw5cjaPbpiv2rm2wdq1uUwERQ",
