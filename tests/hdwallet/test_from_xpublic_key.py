@@ -20,7 +20,7 @@ def test_from_xpublic_key():
     )
     # account_extended_xpublic_key path m/44'/0'/0'
     hdwallet.from_xpublic_key(
-        _["bitcoin"]["mainnet"]["account_extended_xpublic_key"]
+        xpublic_key=_["bitcoin"]["mainnet"]["account_extended_xpublic_key"]
     )
     # the xpublic_key path m/44'/0'/0'/0/0
     hdwallet.from_path(
