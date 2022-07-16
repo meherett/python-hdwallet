@@ -1066,7 +1066,7 @@ class HDWallet:
 
         return hexlify(ripemd160(sha256(unhexlify(self.public_key(
             private_key=private_key if private_key else self.private_key()
-        ))).digest()))
+        ))).digest())).decode("utf-8")
 
     def finger_print(self) -> str:
         """
@@ -1138,7 +1138,7 @@ class HDWallet:
         """
 
         compressed_public_key = unhexlify(self.compressed())
-        public_key_hash = hexlify(ripemd160(sha256(compressed_public_key).digest()))
+        public_key_hash = hexlify(ripemd160(sha256(compressed_public_key).digest())).decode("utf-8")
         public_key_hash_script = unhexlify("76a914" + public_key_hash + "88ac")
         script_hash = ripemd160(sha256(public_key_hash_script).digest())
         network_hash160_bytes = _unhexlify(self._cryptocurrency.SCRIPT_ADDRESS) + script_hash
@@ -1181,7 +1181,7 @@ class HDWallet:
         """
 
         compressed_public_key = unhexlify(self.compressed())
-        public_key_hash = hexlify(ripemd160(sha256(compressed_public_key).digest()))
+        public_key_hash = hexlify(ripemd160(sha256(compressed_public_key).digest())).decode("utf-8")
         script_hash = ripemd160(sha256(unhexlify("0014" + public_key_hash)).digest())
         network_hash160_bytes = _unhexlify(self._cryptocurrency.SCRIPT_ADDRESS) + script_hash
         if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
