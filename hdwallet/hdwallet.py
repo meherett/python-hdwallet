@@ -44,6 +44,7 @@ import unicodedata
 import hashlib
 import base58
 
+from .libs.ripemd160 import ripemd160
 from .libs.ecc import S256Point, N, G
 from .libs.bech32 import (
     bech32_encode, encode, bech32_decode, decode
@@ -1063,9 +1064,9 @@ class HDWallet:
         "4d887566d408dfe5ea8090f2b716f9639523ca89"
         """
 
-        return hashlib.new("ripemd160", sha256(unhexlify(self.public_key(
+        return hexlify(ripemd160(sha256(unhexlify(self.public_key(
             private_key=private_key if private_key else self.private_key()
-        ))).digest()).hexdigest()
+        ))).digest())).decode("utf-8")
 
     def finger_print(self) -> str:
         """
@@ -1117,7 +1118,7 @@ class HDWallet:
             return ensure_string(base58.b58encode_check(network_hash160_bytes))
 
         compressed_public_key = unhexlify(self.compressed())
-        public_key_hash = hashlib.new("ripemd160", sha256(compressed_public_key).digest()).digest()
+        public_key_hash = ripemd160(sha256(compressed_public_key).digest())
         network_hash160_bytes = _unhexlify(self._cryptocurrency.PUBLIC_KEY_ADDRESS) + public_key_hash
         return ensure_string(base58.b58encode_check(network_hash160_bytes))
 
@@ -1137,9 +1138,9 @@ class HDWallet:
         """
 
         compressed_public_key = unhexlify(self.compressed())
-        public_key_hash = hashlib.new("ripemd160", sha256(compressed_public_key).digest()).hexdigest()
+        public_key_hash = hexlify(ripemd160(sha256(compressed_public_key).digest())).decode("utf-8")
         public_key_hash_script = unhexlify("76a914" + public_key_hash + "88ac")
-        script_hash = hashlib.new("ripemd160", sha256(public_key_hash_script).digest()).digest()
+        script_hash = ripemd160(sha256(public_key_hash_script).digest())
         network_hash160_bytes = _unhexlify(self._cryptocurrency.SCRIPT_ADDRESS) + script_hash
         return ensure_string(base58.b58encode_check(network_hash160_bytes))
 
@@ -1159,7 +1160,7 @@ class HDWallet:
         """
 
         compressed_public_key = unhexlify(self.compressed())
-        public_key_hash = hashlib.new("ripemd160", sha256(compressed_public_key).digest()).digest()
+        public_key_hash = ripemd160(sha256(compressed_public_key).digest())
         if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
             return None
         return ensure_string(encode(self._cryptocurrency.SEGWIT_ADDRESS.HRP, 0, public_key_hash))
@@ -1180,8 +1181,8 @@ class HDWallet:
         """
 
         compressed_public_key = unhexlify(self.compressed())
-        public_key_hash = hashlib.new('ripemd160', sha256(compressed_public_key).digest()).hexdigest()
-        script_hash = hashlib.new('ripemd160', sha256(unhexlify("0014" + public_key_hash)).digest()).digest()
+        public_key_hash = hexlify(ripemd160(sha256(compressed_public_key).digest())).decode("utf-8")
+        script_hash = ripemd160(sha256(unhexlify("0014" + public_key_hash)).digest())
         network_hash160_bytes = _unhexlify(self._cryptocurrency.SCRIPT_ADDRESS) + script_hash
         if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
             return None
@@ -1225,7 +1226,7 @@ class HDWallet:
 
         compressed_public_key = unhexlify("5121" + self.compressed() + "51ae")
         script_hash = unhexlify("0020" + sha256(compressed_public_key).hexdigest())
-        script_hash = hashlib.new('ripemd160', sha256(script_hash).digest()).digest()
+        script_hash = ripemd160(sha256(script_hash).digest())
         network_hash160_bytes = _unhexlify(self._cryptocurrency.SCRIPT_ADDRESS) + script_hash
         if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
             return None
