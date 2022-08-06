@@ -6234,6 +6234,45 @@ class XinFinMainnet(Cryptocurrency):
     MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
+    
+class YcashMainnet(Cryptocurrency):
+
+    NAME = "Ycash"
+    SYMBOL = "YEC"
+    NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/ycashfoundation/ycash"
+    COIN_TYPE = CoinType({
+        "INDEX": 133,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x1c2c
+    PUBLIC_KEY_ADDRESS = 0x1c28
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Ycash Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
 
 
 class ZClassicMainnet(Cryptocurrency):
