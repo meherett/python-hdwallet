@@ -10,7 +10,7 @@ from .hdwallet import (
 )
 
 # HDWallet Information's
-__version__: str = "v2.1.1"
+__version__: str = "v2.1.2"
 __license__: str = "ISCL"
 __author__: str = "Meheret Tesfaye Batu"
 __email__: str = "meherett@zoho.com"
