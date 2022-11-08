@@ -39,7 +39,7 @@ from typing import (
 import hmac
 import ecdsa
 import struct
-import sha3
+from Crypto.Hash import keccak
 import unicodedata
 import hashlib
 import base58
@@ -433,7 +433,7 @@ class HDWallet:
         if isinstance(path, Derivation):
             path = str(path)
         elif str(path)[0:2] != "m/":
-            raise ValueError("Bad path, please insert like this type of path \"m/0'/0\"! ")
+            raise ValueError("Bad path, please insert like this type of path \"m/0'/0\"!, not: %r" % ( path ))
 
         for index in path.lstrip("m/").split("/"):
             if "'" in index:
@@ -1101,17 +1101,17 @@ class HDWallet:
         """
 
         if self._cryptocurrency.SYMBOL in ["ETH", "ETHTEST"]:
-            keccak_256 = sha3.keccak_256()
+            keccak_256 = keccak.new(digest_bits=256)
             keccak_256.update(unhexlify(self.uncompressed()))
             address = keccak_256.hexdigest()[24:]
             return checksum_encode(address, crypto="eth")
         elif self._cryptocurrency.SYMBOL in ["XDC", "XDCTEST"]:
-            keccak_256 = sha3.keccak_256()
+            keccak_256 = keccak.new(digest_bits=256)
             keccak_256.update(unhexlify(self.uncompressed()))
             address = keccak_256.hexdigest()[24:]
             return checksum_encode(address, crypto="xdc")
         elif self._cryptocurrency.SYMBOL in ["TRX"]:
-            keccak_256 = sha3.keccak_256()
+            keccak_256 = keccak.new(digest_bits=256)
             keccak_256.update(unhexlify(self.uncompressed()))
             address = keccak_256.hexdigest()[24:]
             network_hash160_bytes = _unhexlify(self._cryptocurrency.PUBLIC_KEY_ADDRESS) + bytearray.fromhex(address)
