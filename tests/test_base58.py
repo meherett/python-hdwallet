@@ -7,7 +7,7 @@ from binascii import (
 import pytest
 
 from hdwallet.libs.base58 import (
-    check_encode, check_decode, decode, encode, string_to_int
+    checksum_encode, check_encode, check_decode, decode, encode, string_to_int
 )
 
 
@@ -35,6 +35,13 @@ def test_base58():
 
 
     assert encode(decode("111233QC4")) == "111233QC4"
+
+    # Ensure ETH address checksums are correct; these are Keccak hash of the lower-case hex address,
+    # with hash results mapped onto the upper/lower case bits of the address.
+    eth = "0xfc2077CA7F403cBECA41B1B0F62D91B5EA631B5E"
+    eth_lower = eth.lower()
+    eth_check = checksum_encode( eth_lower )
+    assert eth_check == eth
 
 
 def test_keccak():

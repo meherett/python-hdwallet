@@ -13,7 +13,7 @@ __base58_radix = len(__base58_alphabet)
 
 def checksum_encode(address, crypto="eth"):
     out = ""
-    keccak_256 = keccak_pycryptodome.new(digest_bits=256)
+    keccak_256 = keccak.new(digest_bits=256)
     addr = address.lower().replace("0x", "") if crypto == "eth" else address.lower().replace("xdc", "")
     keccak_256.update(addr.encode("ascii"))
     hash_addr = keccak_256.hexdigest()
