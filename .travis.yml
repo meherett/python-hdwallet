@@ -16,5 +16,7 @@ matrix:
     python: 3.9
   - name: "3.10"
     python: 3.10
+  - name: "3.11"
+    python: 3.11
 script: tox
-after_success: if [ "${TRAVIS_PYTHON_VERSION}" == "3.10" ]; then coveralls; fi;
+after_success: if [ "${TRAVIS_PYTHON_VERSION}" == "3.11" ]; then coveralls; fi;
