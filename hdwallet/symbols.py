@@ -120,8 +120,6 @@ GRC = "GRC"
 GRS, GRSTEST = "GRS", "GRSTEST"
 # Gulden
 NLG = "NLG"
-# Hash
-HASH = "HASH"
 # Helleniccoin
 HNC = "HNC"
 # Hempcoin
@@ -180,6 +178,8 @@ NEOS = "NEOS"
 NRO = "NRO"
 # New York Coin
 NYC = "NYC"
+# Nhash
+NHASH = "NHASH"
 # Novacoin
 NVC = "NVC"
 # NuBits
@@ -372,6 +372,7 @@ __all__ = [
     "NAV",
     "NEBL",
     "NEOS",
+    "NHASH",
     "NRO",
     "NYC",
     "NVC",
