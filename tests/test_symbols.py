@@ -71,6 +71,7 @@ def test_symbols():
     assert GRS == "GRS"
     assert GRSTEST == "GRSTEST"
     assert NLG == "NLG"
+    assert HASH == "HASH"
     assert HNC == "HNC"
     assert THC == "THC"
     assert HUSH == "HUSH"
