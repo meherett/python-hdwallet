@@ -106,6 +106,8 @@ FTC = "FTC"
 FRST = "FRST"
 # Flashcoin
 FLASH = "FLASH"
+# Flux
+FLUX = "FLUX"
 # Fuji Coin
 FJC = "FJC"
 # GCR Coin
@@ -333,6 +335,7 @@ __all__ = [
     "ERC",
     "EXCL",
     "FIX", "FIXTEST",
+    "FLUX",
     "FTC",
     "FRST",
     "FLASH",
