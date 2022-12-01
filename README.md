@@ -280,6 +280,7 @@ This library simplifies the process of creating a new hierarchical deterministic
 | Feathercoin                                                       | `FTC`                | Yes     | No      | No     | 8         | `m/44'/8'/0'/0/0`    |
 | Firstcoin                                                         | `FRST`               | Yes     | No      | No     | 167       | `m/44'/167'/0'/0/0`  |
 | Flashcoin                                                         | `FLASH`              | Yes     | No      | No     | 120       | `m/44'/120'/0'/0/0`  |
+| [Flux](https://github.com/RunOnFlux/fluxd)                        | `FLUX`               | Yes     | No      | No     | 19167     | `m/44'/19167'/0'/0/0`|
 | Fuji Coin                                                         | `FJC`                | Yes     | No      | Yes    | 75        | `m/44'/75'/0'/0/0`   |
 | GCR Coin                                                          | `GCR`                | Yes     | No      | No     | 49        | `m/44'/49'/0'/0/0`   |
 | Game Credits                                                      | `GAME`               | Yes     | No      | No     | 101       | `m/44'/101'/0'/0/0`  |
