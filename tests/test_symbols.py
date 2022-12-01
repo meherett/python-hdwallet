@@ -63,6 +63,7 @@ def test_symbols():
     assert FTC == "FTC"
     assert FRST == "FRST"
     assert FLASH == "FLASH"
+    assert FLUX == "FLUX"
     assert FJC == "FJC"
     assert GCR == "GCR"
     assert GAME == "GAME"
