@@ -276,6 +276,8 @@ WC = "WC"
 XUEZ = "XUEZ"
 # XinFin
 XDC = "XDC"
+#Ycash
+YEC = "YEC"
 # ZClassic
 ZCL = "ZCL"
 # Zcash
@@ -423,6 +425,7 @@ __all__ = [
     "WC",
     "XUEZ",
     "XDC",
+    "YEC",
     "ZCL",
     "ZEC", "ZECTEST",
     "ZEN"
