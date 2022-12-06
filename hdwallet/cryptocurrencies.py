@@ -6270,7 +6270,7 @@ class YcashMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Ycash Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Ycash Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
