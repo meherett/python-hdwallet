@@ -160,6 +160,7 @@ def test_symbols():
     assert WC == "WC"
     assert XUEZ == "XUEZ"
     assert XDC == "XDC"
+    assert YEC == "YEC"
     assert ZCL == "ZCL"
     assert ZEC == "ZEC"
     assert ZECTEST == "ZECTEST"

@@ -6279,7 +6279,7 @@ class YcashMainnet(Cryptocurrency):
     NETWORK = "mainnet"
     SOURCE_CODE = "https://github.com/ycashfoundation/ycash"
     COIN_TYPE = CoinType({
-        "INDEX": 133,
+        "INDEX": 347,
         "HARDENED": True
     })
 
@@ -6470,6 +6470,7 @@ class ZencashMainnet(Cryptocurrency):
     MESSAGE_PREFIX = "\x18Zcash Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
+
 
 def get_cryptocurrency(symbol: str) -> Any:
 
