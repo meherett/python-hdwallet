@@ -7,9 +7,10 @@ sphinx:
   fail_on_warning: false
 
 python:
-   version: 3.8
+   version: 3.11
    install:
       - method: pip
         path: .
         extra_requirements:
+            - cli
             - docs
