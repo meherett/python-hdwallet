@@ -20,14 +20,14 @@ with open("requirements.txt", "r") as _requirements:
 
 setup(
     name="hdwallet",
-    version="v2.2.0",
+    version="v2.2.1",
     description="Python-based library for the implementation of a hierarchical deterministic wallet "
                 "generator for more than 140+ multiple cryptocurrencies.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    license="ISCL",
+    license="MIT",
     author="Meheret Tesfaye Batu",
-    author_email="meherett@zoho.com",
+    author_email="meherett.batu@gmail.com",
     url="https://github.com/meherett/python-hdwallet",
     project_urls=project_urls,
     keywords=[
