@@ -10,9 +10,7 @@
 Python-based library for the implementation of a hierarchical deterministic wallet generator for more than 140+ multiple cryptocurrencies.
 It allows the handling of multiple coins, multiple accounts, external and internal chains per account and millions of addresses per chain.
 
-<a href="https://raw.githubusercontent.com/meherett/python-hdwallet/master/docs/static/svg/hdwallet-cli.svg">
-  <img src="./docs/static/svg/hdwallet-cli.svg"/>
-</a>
+<img src="./docs/static/svg/hdwallet-cli.svg" href="https://raw.githubusercontent.com/meherett/python-hdwallet/master/docs/static/svg/hdwallet-cli.svg"/>
 
 For more info see the BIP specs.
 
