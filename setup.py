@@ -41,18 +41,19 @@ setup(
     install_requires=requirements,
     extras_require={
         "cli": [
-            "click>=8.0.3,<9",
+            "click>=8.1.3,<9",
             "click-aliases>=1.0.1,<2",
-            "tabulate>=0.8.9,<1"
+            "tabulate>=0.9.0,<1"
         ],
         "tests": [
-            "pytest>=6.2.5,<7",
-            "pytest-cov>=3.0.0,<4"
+            "pytest>=7.2.0,<8",
+            "pytest-cov>=4.0.0,<5",
+            "tox==3.28.0"
         ],
         "docs": [
-            "sphinx>=4.4.0,<5",
-            "furo==2022.2.14.1",
-            "sphinx-click>=3.1.0,<4"
+            "sphinx>=5.3.0,<6",
+            "furo==2022.12.7",
+            "sphinx-click>=4.4.0,<5"
         ]
     },
     classifiers=[
