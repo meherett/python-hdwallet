@@ -365,7 +365,7 @@ This library simplifies the process of creating a new hierarchical deterministic
 | Wincoin                                                           |         `WC`         |   Yes   |   No    |   No   |    181    |  `m/44'/181'/0'/0/0`  |
 | XUEZ                                                              |        `XUEZ`        |   Yes   |   No    |   No   |    225    |  `m/44'/225'/0'/0/0`  |
 | [XinFin](https://github.com/XinFinOrg/XDPoSChain)                 |        `XDC`         |   Yes   |   No    |  Yes   |    550    |  `m/44'/550'/0'/0/0`  |
-| [Ycash](https://github.com/ycashfoundation/ycash)                 |        `YEC`         |   Yes   |   No    |  Yes   |    347    |  `m/44'/347'/0'/0/0`  |
+| [Ycash](https://github.com/ycashfoundation/ycash)                 |        `YEC`         |   Yes   |   No    |   No   |    347    |  `m/44'/347'/0'/0/0`  |
 | ZClassic                                                          |        `ZCL`         |   Yes   |   No    |   No   |    147    |  `m/44'/147'/0'/0/0`  |
 | [Zcash](https://github.com/zcash/zcash)                           |   `ZEC`, `ZECTEST`   |   Yes   |   Yes   |   No   |    133    |  `m/44'/133'/0'/0/0`  |
 | Zencash                                                           |        `ZEN`         |   Yes   |   No    |   No   |    121    |  `m/44'/121'/0'/0/0`  |
