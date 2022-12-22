@@ -47,7 +47,7 @@ def generate_hdwallet(
             )
         elif mnemonic:
             hdwallet.from_mnemonic(
-                mnemonic=mnemonic, language=language, passphrase=passphrase
+                mnemonic=mnemonic, passphrase=passphrase
             )
         elif seed:
             hdwallet.from_seed(
