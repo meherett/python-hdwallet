@@ -10,7 +10,9 @@
 Python-based library for the implementation of a hierarchical deterministic wallet generator for more than 140+ multiple cryptocurrencies.
 It allows the handling of multiple coins, multiple accounts, external and internal chains per account and millions of addresses per chain.
 
-<img src="https://github.com/meherett/python-hdwallet/blob/master/docs/static/gif/hdwallet.gif"/>
+<a href="https://raw.githubusercontent.com/meherett/python-hdwallet/master/docs/static/svg/hdwallet-cli.svg">
+  <img src="./docs/static/svg/hdwallet-cli.svg"/>
+</a>
 
 For more info see the BIP specs.
 
@@ -129,7 +131,7 @@ print(json.dumps(hdwallet.dumps(), indent=4, ensure_ascii=False))
 ```
 </details>
 
-Ethereum mainnet [Ganache-CLI](https://github.com/trufflesuite/ganache-cli) wallet look's like:
+Ethereum mainnet [Ganache](https://github.com/trufflesuite/ganache) wallet look's like:
 
 ```python
 #!/usr/bin/env python3
@@ -381,4 +383,4 @@ If You found this tool helpful consider making a donation:
 
 ## License
 
-Distributed under the [ISC](https://github.com/meherett/python-hdwallet/blob/master/LICENSE) license. See ``LICENSE`` for more information.
+Distributed under the [MIT](https://github.com/meherett/python-hdwallet/blob/master/LICENSE) license. See ``LICENSE`` for more information.
