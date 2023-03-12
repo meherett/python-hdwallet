@@ -21,6 +21,7 @@ from ecdsa.ellipticcurve import Point
 from ecdsa.keys import (
     SigningKey, VerifyingKey
 )
+from ecdsa.util import sigencode_der
 from ecdsa.ecdsa import (
     int_to_string, string_to_int
 )
@@ -35,6 +36,7 @@ from hashlib import sha256
 from typing import (
     Optional, Any, Union
 )
+from functools import partial
 
 import hmac
 import ecdsa
@@ -67,6 +69,7 @@ from .utils import (
 
 MIN_ENTROPY_LEN: int = 128
 BIP32KEY_HARDEN: int = 0x80000000
+highest_s = 0x7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0
 
 CURVE_GEN: Any = ecdsa.ecdsa.generator_secp256k1
 CURVE_ORDER: int = CURVE_GEN.order()
@@ -554,6 +557,24 @@ class HDWallet:
             return check_encode(raw) if encoded else raw.hex()
         except TypeError:
             return None
+
+    def raw_sign(self, data, deterministic=True):
+        # sig_key = SigningKey.from_string(self._private_key, curve=SECP256k1)
+        sig_func = partial(self._key.sign_digest_deterministic, hashfunc=sha256) if deterministic else self._key.sign_digest
+        r, s, order = sig_func(data, sigencode=lambda *x: x)
+        if s < 0x01:
+            raise ValueError('Too low s value for signature: {}'.format(s))
+        # ref: https://github.com/bitcoin/bips/blob/master/bip-0062.mediawiki#Low_S_values_in_signatures
+        if s > highest_s:
+            s = order - s
+        if s.to_bytes(32, 'big')[0] > 0x7f:
+            s = int.from_bytes(b'\x00' + s.to_bytes(32, 'big'), 'big')
+        if r.to_bytes(32, 'big')[0] > 0x7f:
+            r = int.from_bytes(b'\x00' + r.to_bytes(32, 'big'), 'big')
+        return r, s, order
+
+    def sign(self, data, deterministic=True):
+        return sigencode_der(*self.raw_sign(data, deterministic))
 
     def root_xprivate_key(self, encoded: bool = True) -> Optional[str]:
         """
@@ -1115,6 +1136,12 @@ class HDWallet:
             address = keccak_256.hexdigest()[24:]
             network_hash160_bytes = _unhexlify(self._cryptocurrency.PUBLIC_KEY_ADDRESS) + bytearray.fromhex(address)
             return ensure_string(base58.b58encode_check(network_hash160_bytes))
+        elif self._cryptocurrency.SYMBOL in ["XRP"]:
+            XRPL_ALPHABET = b"rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz"
+            compressed_public_key = unhexlify(self.compressed())
+            public_key_hash = hashlib.new("ripemd160", sha256(compressed_public_key).digest()).digest()
+            network_hash160_bytes = _unhexlify(self._cryptocurrency.PUBLIC_KEY_ADDRESS) + public_key_hash
+            return ensure_string(base58.b58encode_check(network_hash160_bytes, alphabet=XRPL_ALPHABET))
 
         compressed_public_key = unhexlify(self.compressed())
         public_key_hash = hashlib.new("ripemd160", sha256(compressed_public_key).digest()).digest()

@@ -784,6 +784,13 @@ This library simplifies the process of generating a new HDWallet's for:
      - No
      - 4
      - m/44'/4'/0'/0/0
+   * - Ripple
+     - XRP
+     - Yes
+     - No
+     - No
+     - 144
+     - m/44'/144'/0'/0/0
    * - Rubycoin
      - RBY
      - Yes

@@ -336,6 +336,7 @@ This library simplifies the process of creating a new hierarchical deterministic
 | Rapids                                                            | `RPD`                | Yes     | No      | No     | 320       | `m/44'/320'/0'/0/0`  |
 | Ravencoin                                                         | `RVN`                | Yes     | No      | No     | 175       | `m/44'/175'/0'/0/0`  |
 | Reddcoin                                                          | `RDD`                | Yes     | No      | No     | 4         | `m/44'/4'/0'/0/0`    |
+| Ripple                                                            | `XRP`                | Yes     | No      | No     | 144       | `m/44'/144'/0'/0/0`  |
 | Rubycoin                                                          | `RBY`                | Yes     | No      | No     | 16        | `m/44'/16'/0'/0/0`   |
 | Safecoin                                                          | `SAFE`               | Yes     | No      | No     | 19165     | `m/44'/19165'/0'/0/0` |
 | Saluscoin                                                         | `SLS`                | Yes     | No      | No     | 572       | `m/44'/572'/0'/0/0`  |
