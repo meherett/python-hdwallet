@@ -106,6 +106,8 @@ FTC = "FTC"
 FRST = "FRST"
 # Flashcoin
 FLASH = "FLASH"
+# Flux
+FLUX = "FLUX"
 # Fuji Coin
 FJC = "FJC"
 # GCR Coin
@@ -274,8 +276,8 @@ WC = "WC"
 XUEZ = "XUEZ"
 # XinFin
 XDC = "XDC"
-# Ripple
-XRP = "XRP"
+#Ycash
+YEC = "YEC"
 # ZClassic
 ZCL = "ZCL"
 # Zcash
@@ -335,6 +337,7 @@ __all__ = [
     "ERC",
     "EXCL",
     "FIX", "FIXTEST",
+    "FLUX",
     "FTC",
     "FRST",
     "FLASH",
@@ -422,7 +425,7 @@ __all__ = [
     "WC",
     "XUEZ",
     "XDC",
-    "XRP",
+    "YEC",
     "ZCL",
     "ZEC", "ZECTEST",
     "ZEN"

@@ -1,19 +1,27 @@
 #!/usr/bin/env python3
 
 """
-Copyright © 2021, Meheret Tesfaye Batu <meherett@zoho.com>
+The MIT License (MIT)
 
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
+Copyright © 2021-2022 by Meheret Tesfaye Batu <meherett.batu@gmail.com>
 
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 """
 
 from ecdsa.curves import SECP256k1
@@ -41,11 +49,12 @@ from functools import partial
 import hmac
 import ecdsa
 import struct
-import sha3
+from Crypto.Hash import keccak
 import unicodedata
 import hashlib
 import base58
 
+from .libs.ripemd160 import ripemd160
 from .libs.ecc import S256Point, N, G
 from .libs.bech32 import (
     bech32_encode, encode, bech32_decode, decode
@@ -162,7 +171,7 @@ class HDWallet:
         if language and language not in ["english", "french", "italian", "japanese",
                                          "chinese_simplified", "chinese_traditional", "korean", "spanish"]:
             raise ValueError("Invalid language, choose only the following options 'english', 'french', 'italian', "
-                             "'spanish', 'chinese_simplified', 'chinese_traditional', 'japanese or 'korean' languages.")
+                             "'spanish', 'chinese_simplified', 'chinese_traditional', 'japanese' or 'korean' languages.")
 
         self._strength = get_entropy_strength(entropy=entropy)
         self._entropy, self._language = unhexlify(entropy), language
@@ -435,7 +444,7 @@ class HDWallet:
         if isinstance(path, Derivation):
             path = str(path)
         elif str(path)[0:2] != "m/":
-            raise ValueError("Bad path, please insert like this type of path \"m/0'/0\"! ")
+            raise ValueError("Bad path, please insert like this type of path \"m/0'/0\"!, not: %r" % ( path ))
 
         for index in path.lstrip("m/").split("/"):
             if "'" in index:
@@ -1084,9 +1093,9 @@ class HDWallet:
         "4d887566d408dfe5ea8090f2b716f9639523ca89"
         """
 
-        return hashlib.new("ripemd160", sha256(unhexlify(self.public_key(
+        return hexlify(ripemd160(sha256(unhexlify(self.public_key(
             private_key=private_key if private_key else self.private_key()
-        ))).digest()).hexdigest()
+        ))).digest())).decode("utf-8")
 
     def finger_print(self) -> str:
         """
@@ -1121,17 +1130,17 @@ class HDWallet:
         """
 
         if self._cryptocurrency.SYMBOL in ["ETH", "ETHTEST"]:
-            keccak_256 = sha3.keccak_256()
+            keccak_256 = keccak.new(digest_bits=256)
             keccak_256.update(unhexlify(self.uncompressed()))
             address = keccak_256.hexdigest()[24:]
             return checksum_encode(address, crypto="eth")
         elif self._cryptocurrency.SYMBOL in ["XDC", "XDCTEST"]:
-            keccak_256 = sha3.keccak_256()
+            keccak_256 = keccak.new(digest_bits=256)
             keccak_256.update(unhexlify(self.uncompressed()))
             address = keccak_256.hexdigest()[24:]
             return checksum_encode(address, crypto="xdc")
         elif self._cryptocurrency.SYMBOL in ["TRX"]:
-            keccak_256 = sha3.keccak_256()
+            keccak_256 = keccak.new(digest_bits=256)
             keccak_256.update(unhexlify(self.uncompressed()))
             address = keccak_256.hexdigest()[24:]
             network_hash160_bytes = _unhexlify(self._cryptocurrency.PUBLIC_KEY_ADDRESS) + bytearray.fromhex(address)
@@ -1144,7 +1153,7 @@ class HDWallet:
             return ensure_string(base58.b58encode_check(network_hash160_bytes, alphabet=XRPL_ALPHABET))
 
         compressed_public_key = unhexlify(self.compressed())
-        public_key_hash = hashlib.new("ripemd160", sha256(compressed_public_key).digest()).digest()
+        public_key_hash = ripemd160(sha256(compressed_public_key).digest())
         network_hash160_bytes = _unhexlify(self._cryptocurrency.PUBLIC_KEY_ADDRESS) + public_key_hash
         return ensure_string(base58.b58encode_check(network_hash160_bytes))
 
@@ -1164,9 +1173,9 @@ class HDWallet:
         """
 
         compressed_public_key = unhexlify(self.compressed())
-        public_key_hash = hashlib.new("ripemd160", sha256(compressed_public_key).digest()).hexdigest()
+        public_key_hash = hexlify(ripemd160(sha256(compressed_public_key).digest())).decode("utf-8")
         public_key_hash_script = unhexlify("76a914" + public_key_hash + "88ac")
-        script_hash = hashlib.new("ripemd160", sha256(public_key_hash_script).digest()).digest()
+        script_hash = ripemd160(sha256(public_key_hash_script).digest())
         network_hash160_bytes = _unhexlify(self._cryptocurrency.SCRIPT_ADDRESS) + script_hash
         return ensure_string(base58.b58encode_check(network_hash160_bytes))
 
@@ -1186,7 +1195,7 @@ class HDWallet:
         """
 
         compressed_public_key = unhexlify(self.compressed())
-        public_key_hash = hashlib.new("ripemd160", sha256(compressed_public_key).digest()).digest()
+        public_key_hash = ripemd160(sha256(compressed_public_key).digest())
         if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
             return None
         return ensure_string(encode(self._cryptocurrency.SEGWIT_ADDRESS.HRP, 0, public_key_hash))
@@ -1207,8 +1216,8 @@ class HDWallet:
         """
 
         compressed_public_key = unhexlify(self.compressed())
-        public_key_hash = hashlib.new('ripemd160', sha256(compressed_public_key).digest()).hexdigest()
-        script_hash = hashlib.new('ripemd160', sha256(unhexlify("0014" + public_key_hash)).digest()).digest()
+        public_key_hash = hexlify(ripemd160(sha256(compressed_public_key).digest())).decode("utf-8")
+        script_hash = ripemd160(sha256(unhexlify("0014" + public_key_hash)).digest())
         network_hash160_bytes = _unhexlify(self._cryptocurrency.SCRIPT_ADDRESS) + script_hash
         if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
             return None
@@ -1252,7 +1261,7 @@ class HDWallet:
 
         compressed_public_key = unhexlify("5121" + self.compressed() + "51ae")
         script_hash = unhexlify("0020" + sha256(compressed_public_key).hexdigest())
-        script_hash = hashlib.new('ripemd160', sha256(script_hash).digest()).digest()
+        script_hash = ripemd160(sha256(script_hash).digest())
         network_hash160_bytes = _unhexlify(self._cryptocurrency.SCRIPT_ADDRESS) + script_hash
         if self._cryptocurrency.SEGWIT_ADDRESS.HRP is None:
             return None

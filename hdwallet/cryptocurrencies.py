@@ -109,7 +109,7 @@ class AnonMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18ANON Signed Message:\n"
+    MESSAGE_PREFIX = "\x18ANON Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -149,7 +149,7 @@ class ArgoneumMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xbf
 
@@ -189,7 +189,7 @@ class ArtaxMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Artax Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Artax Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x97
 
@@ -229,7 +229,7 @@ class AryacoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Aryacoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Aryacoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x97
 
@@ -269,7 +269,7 @@ class AsiacoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18AsiaCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18AsiaCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x97
 
@@ -309,7 +309,7 @@ class AtomMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Bitcoin Atom Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Bitcoin Atom Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -349,7 +349,7 @@ class AuroracoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18AuroraCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18AuroraCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x97
 
@@ -389,7 +389,7 @@ class AxeMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xcc
 
@@ -429,7 +429,7 @@ class BataMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Bata Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Bata Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xa4
 
@@ -469,7 +469,7 @@ class BeetleCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x19Beetlecoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x19Beetlecoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x99
 
@@ -509,7 +509,7 @@ class BelaCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18BelaCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18BelaCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x99
 
@@ -549,7 +549,7 @@ class BitCloudMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18BitCloud Signed Message:\n"
+    MESSAGE_PREFIX = "\x18BitCloud Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x99
 
@@ -589,7 +589,7 @@ class BitSendMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Bitsend Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Bitsend Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xcc
 
@@ -749,7 +749,7 @@ class BitcoinPlusMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18BitcoinPlus Signed Message:\n"
+    MESSAGE_PREFIX = "\x18BitcoinPlus Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x99
 
@@ -789,7 +789,7 @@ class BitcoinSVMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -869,7 +869,7 @@ class BitcoinZMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18BitcoinZ Signed Message:\n"
+    MESSAGE_PREFIX = "\x18BitcoinZ Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -909,7 +909,7 @@ class BitcoreMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18BitCore Signed Message:\n"
+    MESSAGE_PREFIX = "\x18BitCore Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -949,7 +949,7 @@ class BlackcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18BlackCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18BlackCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x99
 
@@ -989,7 +989,7 @@ class BlockStampMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18BlockStamp Signed Message:\n"
+    MESSAGE_PREFIX = "\x18BlockStamp Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -1029,7 +1029,7 @@ class BlocknodeMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Blocknode Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Blocknode Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x4b
 
@@ -1069,7 +1069,7 @@ class BlocknodeTestnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Blocknode Testnet Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Blocknode Testnet Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x89
 
@@ -1109,7 +1109,7 @@ class BolivarcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "Bolivarcoin Signed Message:\n"
+    MESSAGE_PREFIX = "Bolivarcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xd5
 
@@ -1149,7 +1149,7 @@ class BritCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18BritCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18BritCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x99
 
@@ -1189,7 +1189,7 @@ class CPUChainMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x1DCPUchain Signed Message:\n"
+    MESSAGE_PREFIX = "\x1DCPUchain Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -1229,7 +1229,7 @@ class CanadaECoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Canada eCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Canada eCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x9c
 
@@ -1269,7 +1269,7 @@ class CannacoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Cannacoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Cannacoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x9c
 
@@ -1309,7 +1309,7 @@ class ClamsMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x85
 
@@ -1349,7 +1349,7 @@ class ClubCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18ClubCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18ClubCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x99
 
@@ -1389,7 +1389,7 @@ class CompcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18CompCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18CompCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x9c
 
@@ -1429,7 +1429,7 @@ class CranePayMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x7b
 
@@ -1469,7 +1469,7 @@ class CraveMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18DarkNet Signed Message:\n"
+    MESSAGE_PREFIX = "\x18DarkNet Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x99
 
@@ -1589,7 +1589,7 @@ class DeepOnionMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18DeepOnion Signed Message:\n"
+    MESSAGE_PREFIX = "\x18DeepOnion Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x9f
 
@@ -1629,7 +1629,7 @@ class DefcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18defcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18defcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x9e
 
@@ -1669,7 +1669,7 @@ class DenariusMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x19Denarius Signed Message:\n"
+    MESSAGE_PREFIX = "\x19Denarius Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x9e
 
@@ -1709,7 +1709,7 @@ class DiamondMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Diamond Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Diamond Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xda
 
@@ -1749,7 +1749,7 @@ class DigiByteMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x19DigiByte Signed Message:\n"
+    MESSAGE_PREFIX = "\x19DigiByte Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -1789,7 +1789,7 @@ class DigitalcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Digitalcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Digitalcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x9e
 
@@ -1909,7 +1909,7 @@ class EDRCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18EDRcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18EDRcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xdd
 
@@ -1949,7 +1949,7 @@ class EcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18eCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18eCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xdc
 
@@ -1989,7 +1989,7 @@ class EinsteiniumMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Einsteinium Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Einsteinium Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xa1
 
@@ -2029,7 +2029,7 @@ class ElastosMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xef
 
@@ -2069,7 +2069,7 @@ class EnergiMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "DarkCoin Signed Message:\n"
+    MESSAGE_PREFIX = "DarkCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x6a
 
@@ -2149,7 +2149,7 @@ class EuropeCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xa8
 
@@ -2189,7 +2189,7 @@ class ExclusiveCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18ExclusiveCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18ExclusiveCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xa1
 
@@ -2229,7 +2229,7 @@ class FIXMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x3c
 
@@ -2269,7 +2269,7 @@ class FIXTestnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xed
 
@@ -2309,7 +2309,7 @@ class FeathercoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Feathercoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Feathercoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x8e
 
@@ -2349,7 +2349,7 @@ class FirstcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18FirstCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18FirstCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xa3
 
@@ -2389,10 +2389,47 @@ class FlashcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Flashcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Flashcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xc4
 
+class FluxMainnet(Cryptocurrency):
+
+    NAME = "Flux"
+    SYMBOL = "FLUX"
+    NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/RunOnFlux/fluxd"
+    COIN_TYPE = CoinType({
+        "INDEX": 19167,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x1cbd
+    PUBLIC_KEY_ADDRESS = 0x1cb8
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x0488ade4,
+        "P2SH": 0x0488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x0488b21e,
+        "P2SH": 0x0488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    MESSAGE_PREFIX = "\x18Zelcash Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
 
 class FujiCoinMainnet(Cryptocurrency):
 
@@ -2429,7 +2466,7 @@ class FujiCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x19FujiCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x19FujiCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xa4
 
@@ -2469,7 +2506,7 @@ class GCRCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18GCR Signed Message:\n"
+    MESSAGE_PREFIX = "\x18GCR Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x9a
 
@@ -2509,7 +2546,7 @@ class GameCreditsMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xa6
 
@@ -2549,7 +2586,7 @@ class GoByteMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18DarkCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18DarkCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xc6
 
@@ -2589,7 +2626,7 @@ class GridcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Gridcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Gridcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xbe
 
@@ -2629,7 +2666,7 @@ class GroestlCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x19GroestlCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x19GroestlCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -2669,7 +2706,7 @@ class GroestlCoinTestnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x19GroestlCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x19GroestlCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xef
 
@@ -2709,7 +2746,7 @@ class GuldenMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Guldencoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Guldencoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x62
 
@@ -2749,7 +2786,7 @@ class HushMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Hush Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Hush Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -2789,7 +2826,7 @@ class HelleniccoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18helleniccoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18helleniccoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xb0
 
@@ -2829,7 +2866,7 @@ class HempcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Hempcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Hempcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xa8
 
@@ -2869,7 +2906,7 @@ class IXCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Ixcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Ixcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -2909,7 +2946,7 @@ class InsaneCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18INSaNe Signed Message:\n"
+    MESSAGE_PREFIX = "\x18INSaNe Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x37
 
@@ -2949,7 +2986,7 @@ class InternetOfPeopleMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18IoP Signed Message:\n"
+    MESSAGE_PREFIX = "\x18IoP Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x31
 
@@ -2989,7 +3026,7 @@ class JumbucksMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x19Jumbucks Signed Message:\n"
+    MESSAGE_PREFIX = "\x19Jumbucks Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xab
 
@@ -3029,7 +3066,7 @@ class KobocoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Kobocoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Kobocoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xa3
 
@@ -3069,7 +3106,7 @@ class KomodoMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Komodo Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Komodo Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xbc
 
@@ -3109,7 +3146,7 @@ class LBRYCreditsMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18LBRYcrd Signed Message:\n"
+    MESSAGE_PREFIX = "\x18LBRYcrd Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x1c
 
@@ -3149,7 +3186,7 @@ class LinxMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18LinX Signed Message:\n"
+    MESSAGE_PREFIX = "\x18LinX Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xcb
 
@@ -3189,7 +3226,7 @@ class LitecoinCashMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Litecoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Litecoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xb0
 
@@ -3309,7 +3346,7 @@ class LitecoinZMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18LitecoinZ Signed Message:\n"
+    MESSAGE_PREFIX = "\x18LitecoinZ Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -3349,7 +3386,7 @@ class LkrcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18LKRcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18LKRcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xb0
 
@@ -3389,7 +3426,7 @@ class LynxMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Lynx Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Lynx Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xad
 
@@ -3429,7 +3466,7 @@ class MazacoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xe0
 
@@ -3469,7 +3506,7 @@ class MegacoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Megacoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Megacoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xb2
 
@@ -3509,7 +3546,7 @@ class MinexcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Bitcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -3549,7 +3586,7 @@ class MonacoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Monacoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Monacoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xb0
 
@@ -3589,7 +3626,7 @@ class MonkeyProjectMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "Monkey Signed Message:\n"
+    MESSAGE_PREFIX = "Monkey Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x37
 
@@ -3629,7 +3666,7 @@ class MyriadcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xb2
 
@@ -3669,7 +3706,7 @@ class NIXMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Nix Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Nix Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -3709,7 +3746,7 @@ class NamecoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -3789,7 +3826,7 @@ class NeblioMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Neblio Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Neblio Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xb5
 
@@ -3829,7 +3866,7 @@ class NeoscoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18NeosCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18NeosCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xb1
 
@@ -3869,7 +3906,7 @@ class NeurocoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18PPCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18PPCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xb5
 
@@ -3909,7 +3946,7 @@ class NewYorkCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18newyorkc Signed Message:\n"
+    MESSAGE_PREFIX = "\x18newyorkc Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xbc
 
@@ -3949,7 +3986,7 @@ class NovacoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18NovaCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18NovaCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x88
 
@@ -3989,7 +4026,7 @@ class NuBitsMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Nu Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Nu Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x96
 
@@ -4029,7 +4066,7 @@ class NuSharesMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Nu Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Nu Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x95
 
@@ -4069,7 +4106,7 @@ class OKCashMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18OKCash Signed Message:\n"
+    MESSAGE_PREFIX = "\x18OKCash Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x3
 
@@ -4189,7 +4226,7 @@ class OnixCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "ONIX Signed Message:\n"
+    MESSAGE_PREFIX = "ONIX Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xcb
 
@@ -4229,7 +4266,7 @@ class PeercoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xb7
 
@@ -4269,7 +4306,7 @@ class PesobitMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Pesobit Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Pesobit Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xb7
 
@@ -4309,7 +4346,7 @@ class PhoreMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Phore Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Phore Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xd4
 
@@ -4349,7 +4386,7 @@ class PinkcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Pinkcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Pinkcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x83
 
@@ -4389,7 +4426,7 @@ class PivxMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xd4
 
@@ -4429,7 +4466,7 @@ class PivxTestnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xef
 
@@ -4469,7 +4506,7 @@ class PoswCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Poswcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Poswcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xb7
 
@@ -4509,7 +4546,7 @@ class PotcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Potcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Potcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xb7
 
@@ -4549,7 +4586,7 @@ class ProjectCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18ProjectCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18ProjectCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x75
 
@@ -4589,7 +4626,7 @@ class PutincoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18PutinCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18PutinCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xb7
 
@@ -4709,7 +4746,7 @@ class RSKMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18RSK Signed Message:\n"
+    MESSAGE_PREFIX = "\x18RSK Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -4749,7 +4786,7 @@ class RSKTestnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18RSK Testnet Signed Message:\n"
+    MESSAGE_PREFIX = "\x18RSK Testnet Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xef
 
@@ -4789,7 +4826,7 @@ class RapidsMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "DarkNet Signed Message:\n"
+    MESSAGE_PREFIX = "DarkNet Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x2e
 
@@ -4829,7 +4866,7 @@ class RavencoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "Raven Signed Message:\n"
+    MESSAGE_PREFIX = "Raven Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -4869,7 +4906,7 @@ class ReddcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Reddcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Reddcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xbd
 
@@ -4909,7 +4946,7 @@ class RubycoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Rubycoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Rubycoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xbc
 
@@ -4949,7 +4986,7 @@ class SafecoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Safecoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Safecoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xbd
 
@@ -4989,7 +5026,7 @@ class SaluscoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Salus Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Salus Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xbf
 
@@ -5029,7 +5066,7 @@ class ScribeMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x6e
 
@@ -5069,7 +5106,7 @@ class ShadowCashMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xbf
 
@@ -5109,7 +5146,7 @@ class ShadowCashTestnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xff
 
@@ -5149,7 +5186,7 @@ class SlimcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x46
 
@@ -5189,7 +5226,7 @@ class SlimcoinTestnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x57
 
@@ -5229,7 +5266,7 @@ class SmileycoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Smileycoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Smileycoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x5
 
@@ -5269,7 +5306,7 @@ class SolarcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18SolarCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18SolarCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x92
 
@@ -5309,7 +5346,7 @@ class StashMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Stash Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Stash Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xcc
 
@@ -5349,7 +5386,7 @@ class StratisMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Stratis Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Stratis Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xbf
 
@@ -5389,7 +5426,7 @@ class StratisTestnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Stratis Test Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Stratis Test Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xbf
 
@@ -5429,7 +5466,7 @@ class SugarchainMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Sugarchain Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Sugarchain Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -5469,7 +5506,7 @@ class SugarchainTestnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Sugarchain Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Sugarchain Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xef
 
@@ -5509,7 +5546,7 @@ class SyscoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Syscoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Syscoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -5549,7 +5586,7 @@ class TOACoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18TOA Signed Message:\n"
+    MESSAGE_PREFIX = "\x18TOA Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xc1
 
@@ -5589,7 +5626,7 @@ class ThoughtAIMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x7b
 
@@ -5671,7 +5708,7 @@ class TwinsMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x42
 
@@ -5711,7 +5748,7 @@ class TwinsTestnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xed
 
@@ -5751,7 +5788,7 @@ class UltimateSecureCashMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18UltimateSecureCash Signed Message:\n"
+    MESSAGE_PREFIX = "\x18UltimateSecureCash Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xbf
 
@@ -5791,7 +5828,7 @@ class UnobtaniumMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Unobtanium Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Unobtanium Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xe0
 
@@ -5831,7 +5868,7 @@ class VPNCoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18VpnCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18VpnCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xc7
 
@@ -5871,7 +5908,7 @@ class VcashMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Vcash Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Vcash Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xc7
 
@@ -5911,7 +5948,7 @@ class VergeCurrencyMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18VERGE Signed Message:\n"
+    MESSAGE_PREFIX = "\x18VERGE Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x9e
 
@@ -5951,7 +5988,7 @@ class VertcoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Vertcoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Vertcoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -5991,7 +6028,7 @@ class ViacoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Viacoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Viacoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xc7
 
@@ -6031,7 +6068,7 @@ class ViacoinTestnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Viacoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Viacoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xff
 
@@ -6071,7 +6108,7 @@ class VivoMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18DarkCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18DarkCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xc6
 
@@ -6111,7 +6148,7 @@ class WhitecoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Whitecoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Whitecoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xc9
 
@@ -6151,7 +6188,7 @@ class WincoinMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18WinCoin Signed Message:\n"
+    MESSAGE_PREFIX = "\x18WinCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xc9
 
@@ -6231,7 +6268,7 @@ class XUEZMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = None
+    MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xd4
 
@@ -6274,6 +6311,45 @@ class XinFinMainnet(Cryptocurrency):
     MESSAGE_PREFIX = None
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
+    
+class YcashMainnet(Cryptocurrency):
+
+    NAME = "Ycash"
+    SYMBOL = "YEC"
+    NETWORK = "mainnet"
+    SOURCE_CODE = "https://github.com/ycashfoundation/ycash"
+    COIN_TYPE = CoinType({
+        "INDEX": 347,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x1c2c
+    PUBLIC_KEY_ADDRESS = 0x1c28
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MESSAGE_PREFIX = "\x18Ycash Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
 
 
 class ZClassicMainnet(Cryptocurrency):
@@ -6311,7 +6387,7 @@ class ZClassicMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Zcash Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Zcash Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -6351,7 +6427,7 @@ class ZcashMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Zcash Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Zcash Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
@@ -6391,7 +6467,7 @@ class ZcashTestnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Zcash Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Zcash Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xef
 
@@ -6431,7 +6507,7 @@ class ZencashMainnet(Cryptocurrency):
         "P2WSH_IN_P2SH": None
     })
 
-    MASSAGE_PREFIX = "\x18Zcash Signed Message:\n"
+    MESSAGE_PREFIX = "\x18Zcash Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 

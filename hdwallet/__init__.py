@@ -10,10 +10,10 @@ from .hdwallet import (
 )
 
 # HDWallet Information's
-__version__: str = "v2.1.1"
-__license__: str = "ISCL"
+__version__: str = "v2.2.1"
+__license__: str = "MIT"
 __author__: str = "Meheret Tesfaye Batu"
-__email__: str = "meherett@zoho.com"
+__email__: str = "meherett.batu@gmail.com"
 __description__: str = "Python-based library for the implementation of a hierarchical deterministic wallet " \
                        "generator for more than 140+ multiple cryptocurrencies."
 

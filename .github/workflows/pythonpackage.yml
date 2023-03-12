@@ -1,21 +1,25 @@
 # This workflow will install Swap package dependencies, run tests and lint with a variety of Python versions.
 
-name: workflow
+name: hdwallet-workflow
 
 on:
   push:
-    branches: [master]
+    branches: [
+      master
+    ]
   pull_request:
-    branches: [master]
+    branches: [
+      master
+    ]
 
 jobs:
   python:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
-
+        python-version: [
+          "3.7", "3.8", "3.9", "3.10", "3.11"
+        ]
     steps:
     - uses: actions/checkout@master
     - name: Set up Python ${{ matrix.python-version }}

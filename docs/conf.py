@@ -25,7 +25,7 @@ sys.path.insert(1, os.path.abspath("./extensions"))
 # -- Project information -----------------------------------------------------
 
 project = "HDWallet"
-copyright = f"{datetime.datetime.now().year}, {__author__}"
+copyright = f"2021-{datetime.datetime.now().year}, {__author__}"
 author = __author__
 
 # The full version, including alpha/beta/rc tags

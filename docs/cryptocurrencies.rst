@@ -392,6 +392,13 @@ This library simplifies the process of generating a new HDWallet's for:
      - No
      - 120
      - m/44'/120'/0'/0/0
+   * - `Flux <https://github.com/RunOnFlux/fluxd>`_
+     - FLUX
+     - Yes
+     - No
+     - No
+     - 19167
+     - m/44'/19167'/0'/0/0
    * - Fuji Coin
      - FJC
      - Yes
@@ -987,6 +994,13 @@ This library simplifies the process of generating a new HDWallet's for:
      - Yes
      - 550
      - m/44'/550'/0'/0/0
+   * - `Ycash <https://github.com/ycashfoundation/ycash>`_
+     - YEC
+     - Yes
+     - No
+     - No
+     - 347
+     - m/44'/347'/0'/0/0
    * - ZClassic
      - ZCL
      - Yes

@@ -6,8 +6,6 @@ install:
   - pip install -e .[cli,tests,docs] tox-travis coveralls
 matrix:
   include:
-  - name: "3.6"
-    python: 3.6
   - name: "3.7"
     python: 3.7
   - name: "3.8"
@@ -16,5 +14,7 @@ matrix:
     python: 3.9
   - name: "3.10"
     python: 3.10
+  - name: "3.11"
+    python: 3.11
 script: tox
-after_success: if [ "${TRAVIS_PYTHON_VERSION}" == "3.10" ]; then coveralls; fi;
+after_success: if [ "${TRAVIS_PYTHON_VERSION}" == "3.11" ]; then coveralls; fi;
