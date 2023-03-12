@@ -4911,6 +4911,46 @@ class ReddcoinMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0xbd
 
 
+class RippleMainnet(Cryptocurrency):
+
+    NAME = "Ripple"
+    SYMBOL = "XRP"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 144,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x00
+    PUBLIC_KEY_ADDRESS = 0x00
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = None
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
+
+
 class RubycoinMainnet(Cryptocurrency):
 
     NAME = "Rubycoin"
@@ -6191,46 +6231,6 @@ class WincoinMainnet(Cryptocurrency):
     MESSAGE_PREFIX = "\x18WinCoin Signed Message:\n"
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0xc9
-
-
-class RippleMainnet(Cryptocurrency):
-
-    NAME = "Ripple"
-    SYMBOL = "XRP"
-    NETWORK = "mainnet"
-    SOURCE_CODE = None
-    COIN_TYPE = CoinType({
-        "INDEX": 144,
-        "HARDENED": True
-    })
-
-    SCRIPT_ADDRESS = 0x00
-    PUBLIC_KEY_ADDRESS = 0x00
-    SEGWIT_ADDRESS = SegwitAddress({
-        "HRP": None,
-        "VERSION": 0x00
-    })
-
-    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
-        "P2PKH": 0x488ade4,
-        "P2SH": 0x488ade4,
-        "P2WPKH": None,
-        "P2WPKH_IN_P2SH": None,
-        "P2WSH": None,
-        "P2WSH_IN_P2SH": None
-    })
-    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
-        "P2PKH": 0x488b21e,
-        "P2SH": 0x488b21e,
-        "P2WPKH": None,
-        "P2WPKH_IN_P2SH": None,
-        "P2WSH": None,
-        "P2WSH_IN_P2SH": None
-    })
-
-    MASSAGE_PREFIX = None
-    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
-    WIF_SECRET_KEY = 0x80
 
 
 class XUEZMainnet(Cryptocurrency):
