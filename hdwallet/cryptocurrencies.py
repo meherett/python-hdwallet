@@ -1553,6 +1553,47 @@ class DashMainnet(Cryptocurrency):
     WIF_SECRET_KEY = 0xcc
 
 
+class RuxCrypto(Cryptocurrency):
+    # RXC.pubKeyHash = 0x3c; RXC.wif = 0xBC; RXC.scriptHash = 0x3d;
+
+    NAME = "RuxCrypto"
+    SYMBOL = "RXC"
+    NETWORK = "mainnet"
+    SOURCE_CODE = "https://git.toni.software"
+    COIN_TYPE = CoinType({
+        "INDEX": 6969,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0x3d
+    PUBLIC_KEY_ADDRESS = 0x3c
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": None,
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x0488ade4,
+        "P2SH": 0x0488ade4,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x0488b21e,
+        "P2SH": 0x0488b21e,
+        "P2WPKH": None,
+        "P2WPKH_IN_P2SH": None,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MESSAGE_PREFIX = "\x18RXC Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0xBC    
+    
+
 class DashTestnet(Cryptocurrency):
 
     NAME = "Dash"
