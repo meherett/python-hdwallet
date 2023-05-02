@@ -128,6 +128,8 @@ GRC = "GRC"
 GRS, GRSTEST = "GRS", "GRSTEST"
 # Gulden
 NLG = "NLG"
+# Hash
+HASH = "HASH"
 # Helleniccoin
 HNC = "HNC"
 # Hempcoin
@@ -361,6 +363,7 @@ __all__ = [
     "NLG",
     "HNC",
     "THC",
+    "HASH",
     "HUSH",
     "IXC",
     "INSN",

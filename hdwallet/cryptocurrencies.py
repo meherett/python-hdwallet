@@ -2990,6 +2990,44 @@ class HushMainnet(Cryptocurrency):
     DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
     WIF_SECRET_KEY = 0x80
 
+class HashMainnet(Cryptocurrency):
+
+    NAME = "Hash"
+    SYMBOL = "HASH"
+    NETWORK = "mainnet"
+    SOURCE_CODE = None
+    COIN_TYPE = CoinType({
+        "INDEX": 505,
+        "HARDENED": True
+    })
+
+    SCRIPT_ADDRESS = 0xa
+    PUBLIC_KEY_ADDRESS = 0x17
+    SEGWIT_ADDRESS = SegwitAddress({
+        "HRP": "pb",
+        "VERSION": 0x00
+    })
+
+    EXTENDED_PRIVATE_KEY = ExtendedPrivateKey({
+        "P2PKH": 0x488ade4,
+        "P2SH": 0x488ade4,
+        "P2WPKH": 0x488ade4,
+        "P2WPKH_IN_P2SH": 0x488ade4,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+    EXTENDED_PUBLIC_KEY = ExtendedPublicKey({
+        "P2PKH": 0x488b21e,
+        "P2SH": 0x488b21e,
+        "P2WPKH": 0x488b21e,
+        "P2WPKH_IN_P2SH": 0x488b21e,
+        "P2WSH": None,
+        "P2WSH_IN_P2SH": None
+    })
+
+    MASSAGE_PREFIX = "\x18Bitcoin hash Signed Message:\n"
+    DEFAULT_PATH = f"m/44'/{str(COIN_TYPE)}/0'/0/0"
+    WIF_SECRET_KEY = 0x80
 
 class HelleniccoinMainnet(Cryptocurrency):
 

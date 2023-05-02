@@ -74,6 +74,7 @@ def test_symbols():
     assert NLG == "NLG"
     assert HNC == "HNC"
     assert THC == "THC"
+    assert HASH == "HASH"
     assert HUSH == "HUSH"
     assert IXC == "IXC"
     assert INSN == "INSN"
