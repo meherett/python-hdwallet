@@ -455,7 +455,7 @@ class HDWallet:
                 self._path += str("/" + index)
         return self
 
-    def from_index(self, index: int, hardened: bool = False) -> "HDWallet":
+    def from_index(self, index: int, hardened: bool = False) -> Optional["HDWallet"]:
         """
         Derivation from Index.
 
@@ -464,7 +464,7 @@ class HDWallet:
         :param hardened: Hardened address, default to ``False``.
         :type hardened: bool
 
-        :returns: HDWallet -- Hierarchical Deterministic Wallet instance.
+        :returns: Optional[HDWallet] -- Hierarchical Deterministic Wallet instance.
 
         >>> from hdwallet import HDWallet
         >>> from hdwallet.symbols import BTC
@@ -483,7 +483,7 @@ class HDWallet:
 
         if hardened:
             self._path += ("/%d'" % index)
-            self._derive_key_by_index(index + BIP32KEY_HARDEN)
+            return self._derive_key_by_index(index + BIP32KEY_HARDEN)
         else:
             self._path += ("/%d" % index)
             return self._derive_key_by_index(index)
